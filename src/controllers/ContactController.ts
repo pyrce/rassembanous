@@ -1,12 +1,12 @@
+import Render from "../views/Render";
+
 type route={data:Object,view:String }
 
 class ContactController{
 
-getContact() :route{
-    return{
-        view:"Contact",
-        data:{user:"Tom",page:"Home"}
-    }
+getContact() {
+    const view=Render.make("Contact",{user:"toto",page:"Contact"});
+    return view;
 }
 
 }

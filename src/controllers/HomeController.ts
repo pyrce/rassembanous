@@ -1,14 +1,23 @@
-type route={data:Object,view:String }
+import ArticlesModel from "../database/ArticlesModel";
+import Render from "../views/Render";
 
-class HomeController{
+type route = { data: Object, view: String }
 
-getHome() :route{
-    return{
-        view:"home",
-        data:{user:"toto",page:"Home"}
+class HomeController {
+
+    public static getHome() {
+        var articles = ArticlesModel.findAll();
+
+        return articles;
+
+    }
+
+    public static getArticle() {
+        var article = ArticlesModel.findById(1);
+
+        return article;
+
     }
 }
 
-}
-
-export default new HomeController();
+export default HomeController;

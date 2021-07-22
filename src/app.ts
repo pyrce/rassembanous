@@ -1,4 +1,4 @@
-import ConfigServer from "./services/ConfigServer";
+import ConfigServer from "./services/Server";
 import routerhandler from "./routers/Routes";
 
 

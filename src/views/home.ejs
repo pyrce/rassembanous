@@ -1,17 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TypeScript CMS</title>
 </head>
-<body>
-    <a href="/contact">Contact</a>
-    <a href="/books/1">Hary Potter</a>
 
+<body>
+    <a href="/">Home</a>
+    <a href="/contact">Contact</a>
+    <a href="/articles/1">Hary Potter</a>
     <h1>Bienvenue : <%= user %> </h1>
 
     <p>Vous êtes sur <%= page %></p>
+
+
+    listes des articles
+    <div class="content">
+        <% for(let a in articles ) { %>
+
+        <section>
+            <header> <%= articles[a].titre %></header>
+
+            <div>
+                <%= articles[a].contenu %>
+
+            </div>
+            <footer><%= articles[a].auteur %></footer>
+        </section>
+
+
+
+        <% } %>
+    </div>
+    <style>
+        .content {
+            display: flex;
+            flex-direction: row;
+        }
+
+        section {
+            outline: solid 1px black;
+            width: 14em;
+            height: 11em;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 10px;
+        }
+
+        header {
+            background-color: lime;
+            text-align: center;
+            height: 2em;
+    line-height: 2em;
+
+        }
+
+        footer {
+            background-color: darkgray;
+        }
+    </style>
 </body>
+
 </html>

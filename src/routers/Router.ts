@@ -19,7 +19,7 @@ class Router
         return this._instance || (this._instance = new this());
     }
 
-    public  get(url:string,callback:any){
+    public  static get(url:string,callback:any){
         const instance=Router.getInstance();
         instance.add(MethodEnum.GET,url,callback);
     }
