@@ -9,14 +9,14 @@ class Query {
 
     async findAll() {
 
-        const requestData = await Database.query(`SELECT * FROM ${this.table}`, [])
+        const requestData = await Database.query(`SELECT * FROM ${this.table}`, []);
         return requestData;
 
     }
 
     async findById(id: Number) {
 
-        const requestData = await Database.query(`SELECT * FROM ${this.table} where id = ?`, [id])
+        const requestData = await Database.query(`SELECT * FROM ${this.table} where id = ?`, [id]);
         return requestData;
 
     }

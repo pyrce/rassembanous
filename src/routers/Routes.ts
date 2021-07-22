@@ -20,16 +20,16 @@ class Routes{
 
         }) )
 
-        Router.get("/articles/1", HomeController.getArticle().then( async(m:any)=>{
+        // Router.get("/articles/1", HomeController.getArticle().then( async(m:any)=>{
 
 
-            const view=  Render.make("home",{user:"toto",page:"Home",articles:m});
+        //     const view=  Render.make("home",{user:"toto",page:"Home",articles:m});
        
-            return view;
+        //     return view;
            
              
        
-               }) )
+        //        }) )
         Router.get("/contact",ContactController.getContact());
 
     }
