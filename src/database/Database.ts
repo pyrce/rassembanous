@@ -1,6 +1,11 @@
+/**
+ * class qui initialise la connexion et qui execute la query envoyer par la clas Query
+ */
 
+import * as process from "process";
 import mysql from 'mysql2';
-
+import * as dotenv from "dotenv";
+dotenv.config();
 class Database {
 
     private static _instance: Database;
@@ -48,11 +53,11 @@ class Database {
     public static sanitizeData(data: any, fields: any) {
         let item: any;
         const keys: any = fields.map((field: any) => field.name);
-              
+
         if (Array.isArray(data)) {
-      var temp: any = []
+            var temp: any = []
             data.map((elem: any) => {
-                item={}
+                item = {}
                 keys.map((key: string) => {
                     item[key] = elem[key];
                 })

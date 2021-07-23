@@ -37,8 +37,9 @@ class Router
         instance.add(MethodEnum.DELETE,url,callback);
     }
 
-    public add(method:String,url:String,callback:any){
-
+    public add(method:string,url:string,callback:any){
+        let params=url.substr(url.lastIndexOf("/"));
+        //console.log(params)
         let maRoute=new Route(url,callback,method);
 
         this.routes.push(maRoute)

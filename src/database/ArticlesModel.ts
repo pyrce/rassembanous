@@ -11,7 +11,6 @@ class Article extends AbstractModel implements ModelInterface {
         { field: "auteur", type: TypeEnum.STRING },
         { field: "contenu", type: TypeEnum.STRING },
     ];
-
 }
 
 const article = new Article('articles', [

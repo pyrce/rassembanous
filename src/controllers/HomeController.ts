@@ -6,13 +6,16 @@ type route = { data: Object, view: String }
 class HomeController {
 
     public static getHome() {
-        var articles = ArticlesModel.findAll();
+ 
+        const view = Render.make("home", { user: "toto", page: "Home" });
 
-        return articles;
+        return view;
 
     }
 
     public static getArticle() {
+
+      
         var article = ArticlesModel.findById(1);
 
         return article;

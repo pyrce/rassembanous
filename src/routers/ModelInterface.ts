@@ -8,11 +8,5 @@ interface ModelInterface {
 
    
 } 
- function getFields(model:ModelInterface){
-        return model.fields
-    } 
 
-    function getTable(model:ModelInterface){
-        return model.table
-    } 
 export default ModelInterface;

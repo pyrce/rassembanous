@@ -1,18 +1,16 @@
 import Router from '../routers/Router';
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import CustomAdapter from "./Request"
-import * as ejs from "ejs";
-import * as fs from "fs";
-import * as path from "path";
 import Render from '../views/Render';
 import Request from './Request';
 import Response from './Reponse';
+
 /**
  * Singleton to initiate nodejs server
  */
-class ConfigServer {
+class Server {
     port: number = 3000;
-    private static instance: ConfigServer;
+    private static instance: Server;
     adapter!: CustomAdapter;
     SERVER: any
 
@@ -20,7 +18,11 @@ class ConfigServer {
         if (port) this.port = port;
         else this.port = 3000;
     }
-
+    /**Recupere la route et renvoie une vue ou une erreur
+     * 
+     * @param req 
+     * @returns 
+     */
     public  checkRoute(req: any) {
         const method = req.method;
         const url = req.url;
@@ -35,10 +37,9 @@ class ConfigServer {
     }
 
 
-    private static getInstance(): ConfigServer {
+    private static getInstance(): Server {
         if (!this.instance) {
-            this.instance = new ConfigServer();
-            // this.adapter=new CustomAdapter();
+            this.instance = new Server();
         }
         return this.instance;
     }
@@ -60,4 +61,4 @@ class ConfigServer {
 
 }
 
-export default ConfigServer;
+export default Server;
