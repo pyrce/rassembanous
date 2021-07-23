@@ -5,8 +5,12 @@ import TypeEnum from "./TypeEnum";
 
 class Article extends AbstractModel implements ModelInterface {
     table: string = 'articles';
-    fields: Array<FieldsInterface> = [];
-
+    fields: Array<FieldsInterface> = [
+        { field: "id", type: TypeEnum.NUMBER},
+        { field: "titre", type: TypeEnum.STRING },
+        { field: "auteur", type: TypeEnum.STRING },
+        { field: "contenu", type: TypeEnum.STRING },
+    ];
 
 }
 
