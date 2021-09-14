@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rimraf ./build && tsc && cp -R src/views build",
+    "build": "rimraf ./build && tsc && cp -R core/Viewer build",
     "start:dev": "nodemon",
     "start": "nodemon build/app.js"
   },
