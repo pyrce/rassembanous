@@ -1,0 +1,109 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap');
+
+:root {
+  --red: hsl(0, 78%, 62%);
+  --cyan: hsl(180, 62%, 55%);
+  --orange: hsl(34, 97%, 64%);
+  --blue: hsl(212, 86%, 64%);
+  --varyDarkBlue: hsl(234, 12%, 34%);
+  --grayishBlue: hsl(229, 6%, 66%);
+  --veryLightGray: hsl(0, 0%, 98%);
+  --weight1: 200;
+  --weight2: 400;
+  --weight3: 600;
+}
+
+.main {
+  margin-left: 2rem;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  height: 30rem;
+}
+
+
+
+.titre {
+  border-top: solid 1px black;
+  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 1px black;
+  font-family: 'Fira Sans', sans-serif;
+  background-color: gainsboro;
+}
+
+.cards {
+  width: 100%;
+}
+
+.titre i {
+  font-size: 3rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 10%;
+  background-color: gainsboro;
+}
+
+ul li {
+
+  font-family: 'Merriweather', serif;
+  margin: 10px 0;
+  background-color: blanchedalmond;
+}
+
+a {
+  text-decoration: none;
+  line-height: 2%;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

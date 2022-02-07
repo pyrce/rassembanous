@@ -1,0 +1,216 @@
+<%- include (rootDir+"/Core/Views/partial/head") %>
+
+<div class="container flex justify-center">
+
+  <div class="flex flex-col border border-1 border-neutral-400" id="form">
+
+    <div class="my-5 grid grid-cols-4">
+
+      <label class="col-end-2" for="titre">Titre</label>
+      <input class=" col-start-2 col-end-6" type="text" id="titre">
+
+    </div>
+
+    <div class="my-5 grid grid-cols-4 gap-y-7 gap-x-3">
+
+      <span> Prix </span>
+      <input type="number" name="" id="prix">
+      <span> Nombre de place </span>
+      <input type="number" name="" id="nbPlace">
+
+
+      <span> Date de début </span>
+      <input type="datetime-local" name="" id="dateDebut">
+      <span> Date de fin </span>
+      <input type="datetime-local" name="" id="dateFin">
+    </div>
+
+    <div class="my-5 grid grid-cols-4">
+
+      <span>Public</span>
+      <input type="checkbox" name="" id="isPublic">
+
+      <span> Date limit d'inscription </span>
+      <input type="datetime-local" name="" id="dateLimit">
+    </div>
+
+    <div class="my-5 grid grid-cols-4">
+
+      <label class="col-end-2" for="lieu">Lieu</label>
+      <input class=" col-start-2 col-end-6" type="text" id="lieu">
+
+    </div>
+
+
+    <span>Description</span>
+
+    <textarea name="" id="description" cols="30" rows="10"></textarea>
+    <button onclick="ajout_event()"></button>
+
+    <span> <label for="partenaire">Partenaires </label></span>
+    <div class="ui-widget h-32 my-2 grid">
+
+      <div id="listePartenaires" class="grid grid-flow-col auto-cols-max">
+
+      </div>
+      <input type="text" name="" class="h-8 flex flex-row" id="partenaire">
+
+    </div>
+
+    <button class="w-32 col-start-8" onclick="ajout_event()">Créer</button>
+  </div>
+</div>
+<%- include (rootDir+"/core/views/partial/footer") %>
+<style>
+  .contenaire {
+    height: 45em;
+  }
+
+  #form {
+    width: 50em;
+    height: 45em;
+  }
+
+  .form_part {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-content: space-around;
+    justify-content: space-around;
+
+  }
+
+  .part {
+    outline: solid 1px black;
+    border-radius: 5px;
+    background-color: burlywood;
+  }
+
+  .ui-helper-hidden-accessible {
+    display: none;
+  }
+
+  input:not([type="checkbox"]),
+  textarea {
+    outline: solid black 1px;
+  }
+</style>
+
+<script>
+  let listPartenaire = [];
+
+  function ajout_event() {
+    let event = {}
+    let nbErr = 0;
+    event["nom"] = $("#titre").val();
+    event["dateDebut"] = $("#dateDebut").val();
+    event["dateFin"] = $("#dateFin").val();
+    event["nbPlace"] = $("#nbPlace").val();
+    event["prix"] = $("#prix").val();
+    event["lieu"] = $("#lieu").val();
+    event["dateLimit"] = $("#dateLimit").val();
+    event["isPublic"] = $("#isPublic").val() == "on" ? "1" : "0";
+    event["description"] = $("#description").val();
+    event["partenaires"] = listPartenaire;
+
+
+    if ($("#dateDebut").val() == "") {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Veuillez selectionner une heure !',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
+      nbErr += 1;
+    }
+
+    if ($("#dateDebut").val() != "" && $("#dateDebut").val() < new Date() == true) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'La date de début doit être supperieur la date d\'aujourd\'hui!',
+        icon: 'error',
+        confirmButtonTextq: 'ok'
+      })
+      nbErr += 1;
+    }
+
+    if ($("#dateDebut").val() > $("#dateFin").val()) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'La date de fin doit être supperieur la date de debut',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
+      nbErr += 1;
+    }
+
+    if ($("#dateDebut").val() < $("#dateLimit").val()) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'La date limite doit être supperieur la date de debut',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
+      nbErr += 1;
+    }
+
+    if (nbErr == 0) {
+
+
+      $.ajax({
+        url: "/events",
+        data: JSON.stringify(event),
+        type: "POST",
+        dataType: "JSON",
+        success: (ms) => {
+
+        }
+      });
+
+    }
+  }
+
+  function removePartner(id) {
+
+    for (let [i, user] of listPartenaire.entries()) {
+      if (user.item.value.id == id) {
+        listPartenaire.splice(i, 1);
+      }
+    }
+    $(".part[data-id='" + id + "'").remove()
+
+  }
+
+  $("#partenaire").autocomplete({
+    source: function (request, response) {
+      $.ajax({
+        url: "/partenaires/list",
+        type: 'GET',
+        dataType: "json",
+        data: {
+          s: request.term
+        },
+        success: function (data) {
+console.log(data)
+          response(data.map((key, value) => {
+
+            return {
+              label: data[value].nomMoral,
+              value: key
+            };
+          }))
+        }
+      });
+    },
+    select: function (event, ui) {
+
+      listPartenaire.push(ui.item.value);
+
+      $("#partenaire").val("");
+      $("#listePartenaires").append("<span class='w-24 h-6 part flex justify-around' data-id=" + ui.item.value
+        .id + "><span class=''>" + ui.item.value.nomMoral +
+        "</span><i class='m-1 fas fa-trash-alt' onclick='removePartner(" + ui.item.value.id + ")'></i></span>")
+      return false;
+    }
+  });
+</script>

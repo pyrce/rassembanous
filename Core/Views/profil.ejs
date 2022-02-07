@@ -1,0 +1,103 @@
+
+<%- include (rootDir+"/Core/Views/partial/head") %>
+
+<div class="container flex justify-center">
+
+    <div class="flex flex-col border pa-10 border-1 border-neutral-400" id="form">
+      <div class="text-center bg-amber-500">Profil</div>
+        <div class="my-5 grid grid-cols-4 gap-y-7 gap-x-3">
+
+            <span> Nom </span>
+            <input type="text" name="" value="<%= user.nom %>" id="nom">
+            <span> Prenom </span>
+            <input type="text" name="" value="<%= user.prenom %>" id="prenom">
+      
+      
+            <span> email </span>
+            <input type="test" name="" value="<%= user.email %>" id="email">
+            <span> login</span>
+            <input type="text" name="" value="<%= user.login %>" id="login">
+
+
+            <span> Mot de passe </span>
+           
+            <input type="password" name="" value="<%= user.password %>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" id="password">
+            <span> Confirmation</span>
+            <input type="password" name="" value="" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" id="passwordConfirm"> 
+          </div>
+     <span class="error_password"></span>     
+          <div class="my-5 grid grid-cols-4">
+
+            <label class="col-end-2" for="titre">Adresse</label>
+            <input class=" col-start-2 col-end-6" value="<%= user.adresse %>"  type="text" id="adresse">
+      
+          </div>
+         <div class="grid grid-cols-12">
+          <button onclick="updateProfil()" class="w-28 col-start-11" style="background-color: F50756;opacity: 40%;">Modifier</button>
+         </div>
+        </div>
+
+      </div>
+
+      <style>
+        .contenaire {
+          height: 45em;
+        }
+      
+        #form {
+          width: 50em;
+          height: 18em;
+        }
+
+        input:not([type="checkbox"]),
+  textarea {
+    outline: solid black 1px;
+  }
+
+        </style>
+
+    <%- include (rootDir+"/core/views/partial/footer") %>   
+     <script>
+
+            function updateProfil(){
+                let nbError=0;
+                let password=$("#password").val();
+    let confirm=$("#passwordConfirm").val();
+
+
+                if(confirm.length>=password.length){
+        if(password!=confirm){
+           console.log("different") 
+            $(".error_password").html("<p>Les mots de passe de correspondent pas</p>")
+            $(".error_password").addClass("error_msg")
+            $(".error_password").css({'display':"block"})
+            nbError+=1;
+        }else{
+            $(".error_password").html("")
+            $(".error_password").css({'display':"none"})
+        }
+
+    }
+                if(nbError==0){
+
+                data={};
+                data["nom"]=$("#nom").val();
+                data["prenom"]=$("#prenom").val();
+                data["email"]=$("#email").val();
+                data["password"]=$("#password").val();
+                data["adresse"]=$("#adresse").val();
+                data["login"]=$("#adresse").val();
+
+                $.ajax({
+                    url:"/users/profil",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:JSON.stringify(data),
+                    success:()=>{
+location.reload()
+                    }
+                })
+            }
+
+            }
+        </script>
