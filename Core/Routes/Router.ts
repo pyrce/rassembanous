@@ -19,27 +19,27 @@ class Router
         return this._instance || (this._instance = new this());
     }
 
-    public  static get(url:string,callback:any){
+    public  static get(url:string,middleware:any,callback:any){
         const instance=Router.getInstance();
-        instance.add(MethodEnum.GET,url,callback);
+        instance.add(MethodEnum.GET,middleware,url,callback);
     }
 
-    public static post(url:string,callback:any){
+    public static post(url:string,middleware:any,callback:any){
         const instance=Router.getInstance();
-        instance.add(MethodEnum.POST,url,callback);
+        instance.add(MethodEnum.POST,middleware,url,callback);
     }
-    public static put(url:string,callback:any){
+    public static put(url:string,middleware:any,callback:any){
         const instance=Router.getInstance();
-        instance.add(MethodEnum.PUT,url,callback);
+        instance.add(MethodEnum.PUT,middleware,url,callback);
     }
-    public static delete(url:string,callback:any){
+    public static delete(url:string,middleware:any,callback:any){
         const instance=Router.getInstance();
-        instance.add(MethodEnum.DELETE,url,callback);
+        instance.add(MethodEnum.DELETE,middleware,url,callback);
     }
 
-    public add(method:string,url:string,callback:any){
+    public add(method:string,middleware:any,url:string,callback:any){
 
-        let maRoute=new Route(url,callback,method);
+        let maRoute=new Route(url,middleware,callback,method);
 
         this.routes.push(maRoute)
     }

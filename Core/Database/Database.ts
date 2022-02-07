@@ -20,7 +20,7 @@ class Database {
 
     public static connect() {
         return mysql.createConnection({
-            database: "mycms",
+            database: "myevents",
             host: "localhost",
             port: 3306,
             user: "root",

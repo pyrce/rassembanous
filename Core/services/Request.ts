@@ -13,6 +13,7 @@ class Request {
         this.req = req
         this.url = req.url
         this.method = req.method
+
     }
 
 
@@ -51,8 +52,9 @@ class Request {
             req.on('data', (chunk: any) => {
                 body.push(chunk)
             }).on('end', () => {
-             
+       
                 const parsedBody = Buffer.concat(body).toString();
+
                 return resolve(parsedBody)
             });
         })

@@ -1,27 +1,24 @@
 import { ServerResponse } from 'http';
-import Render from '../Viewer/Render';
+import Render from '../Views/Render';
 
 class Response {
 
 
-    reponse: ServerResponse
+    private static _instance: Response;
 
-
-    constructor(rep: ServerResponse) {
-        this.reponse = rep
-
+    constructor(private reponse:ServerResponse) {
+        this.reponse = reponse;
     }
 
     public emit(data: any) {
 
-
         if (typeof data === "string") {
 
             this.reponse.setHeader('Content-Type', 'application/json');
-            this.reponse.end(JSON.stringify(data));
+            this.reponse.end(data);
 
         } else if (data instanceof Render) {
-      
+  
             let rend= data.render();
 
             this.reponse.writeHead(200, { 'Content-Type': 'text/html' });
@@ -33,10 +30,6 @@ class Response {
         }
     }
 
-
-    public static instance(req: ServerResponse){
-        return new Response(req)
-    }
 }
 
 export default Response;

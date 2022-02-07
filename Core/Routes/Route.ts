@@ -4,7 +4,7 @@ class Route implements RouteInterface{
 
 params:any;
 
-    constructor(public url:String,public callback:any,public method:String) {
+    constructor(public url:String,public middleware:any,public callback:any,public method:String) {
         this.params=":" + url.split(':')[1];
   
     }

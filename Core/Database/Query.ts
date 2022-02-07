@@ -1,8 +1,7 @@
-import { runInThisContext } from "vm";
-import AbstractModel from "../Model/AbstractModel";
+import FieldsInterface from "../Interface/FieldsInterface";
 
 class Query {
-    private fields: Array<any> = [];
+    private fields: Array<FieldsInterface> = [];
     private myQuery: string = "";
     private conditions: string = "";
     private table: string;
@@ -10,12 +9,13 @@ class Query {
     private valuesToInsert: Array<any> = []
     private tableJoins: Array<any> = []
     selectedJoin: string = "";
-    selectedJoinField: string = "";
+    selectedJoinField: Array<any> = []
 
 
-    constructor(model: AbstractModel) {
-        this.table = model.table
-        this.fields = model.fields
+    constructor(table: string,fields: Array<FieldsInterface>) {
+        this.table = table
+        this.fields = fields
+        this.selectedJoin="";
     }
 
     select(args: any) {
@@ -27,13 +27,9 @@ class Query {
 
     where(args: any) {
         let conditions: string = ""
-        if ((typeof args === 'object') && !Array.isArray(args)) {
+
+        if ((typeof args === 'object')) {
             conditions += " (" + this.and(args) + ")"
-        } else if (Array.isArray(args)) {
-            args.map((arg: any, index: number) => {
-                if (arg && index === 0) conditions += " (" + this.table + "." + this.and(arg) + ")"
-                if (arg && index > 0) conditions += " OR " + " (" + this.table + "." + this.and(arg) + ")"
-            })
         }
 
         if (conditions) this.conditions += " WHERE " + conditions
@@ -44,14 +40,27 @@ class Query {
     and(args: any) {
         let conditions: string = ""
         const keys: any = Object.keys(args)
-        if (keys && keys.length > 1) {
-            keys.map((key: any, index: number) => {
-                if (key && index === 0) conditions += key + " = " + args[key]
-                if (key && index > 0) conditions += " AND " + key + " = '" + args[key] + "'"
+        let n=0;
+   
+
+        if (args[0]) {
+
+            keys.map( (key: any, index: number) => {
+        
+              let  keys2= Object.keys(args[key] );
+
+               let args2=Object.values(args[key]);
+
+                if (key && index === 0) conditions += keys2[index] +" "+args2[index+1] +" '"+ args2[index]+"'"
+                if (key && index > 0){ conditions += " AND " +  keys2[0] +" "+ args2[1]+" '" + args2[0] + "'" }
+      
             })
         } else {
-            conditions += this.table + "." + keys[0] + " = '" + args[keys[0]] + "'"
+
+            conditions += keys + " = '" + args[keys] + "'"
+             
         }
+     
         return conditions;
     }
 
@@ -68,6 +77,7 @@ class Query {
         if (table != "") {
             this.tableJoins.push(table);
         }
+    
         return this;
     }
     insertInto(args: any) {
@@ -85,7 +95,6 @@ class Query {
             arrayValues += `, '${vals[i]}'`;
         }
 
-        console.log(`INSERT INTO ${this.table} (${arrayField}) values (${arrayValues})`)
         return `INSERT INTO ${this.table} (${arrayField}) values (${arrayValues})`;
 
 
@@ -104,7 +113,7 @@ class Query {
             conditions += keys[0] + " = '" + args[keys[0]] + "'"
         }
 
-
+    
         return "DELETE FROM " + this.table + " WHERE " + conditions;
     }
 
@@ -116,6 +125,7 @@ class Query {
 
 
     update(search: Object, args: any) {
+
         const keys: any = Object.keys(args);
         const vals: any = Object.values(args);
 
@@ -138,50 +148,62 @@ class Query {
     }
 
     Join(queryString: any) {
-        this.selectedJoin += queryString;
+  
+        
+        this.selectedJoin = queryString;
+        console.log("this.selectedJoin : "+this.selectedJoin);
     };
-    Field(joinFields: any) {
+    setJoinField(joinFields: any) {
+
         if (joinFields === void 0) { joinFields = null; }
         if (joinFields)
-            this.selectedJoinField += ", " + joinFields + " ";
+            this.selectedJoinField = joinFields;
+            //console.log(joinFields);
     };
-
     toString() {
-        const allFields: string = (this.fieldToSelect.length > 0) ? this.fieldToSelect.join(', ') : '*'
+
         let query = "SELECT ";
+        let allfields: any = [];
+
+        this.fieldToSelect.forEach(field => {
+            let column = `${this.table}.${field.field}`;
+
+            allfields.push(column)
+        })
+        let selectFields = allfields.join(",");
 
 
         if (this.selectedJoin != "") {
+            let field_a: any = [];
 
-            this.fields.forEach(field => {
+            this.selectedJoinField.forEach(field => {
 
-                query += this.table + "." + field.field
+                let column = `${field}`;
 
-                if (this.fields[this.fields.length - 1].field != field.field) {
-                    query += ",";
-                }
+                field_a.push(column)
 
             })
 
-            query += this.selectedJoinField
 
-            if (this.tableJoins.length > 0) {
-                query += this.selectedJoinField
-            }
+            let joinstring = field_a.join(", ")
+
+            query += selectFields + "," + joinstring;
+
+
             query += " FROM " + this.table + this.selectedJoin;
         }
         else {
-            query = "SELECT " + allFields + " FROM " + this.table;
+            query = "SELECT " + selectFields + " FROM " + this.table;
         }
 
         if (this.conditions) {
             query += this.conditions
         }
-  
+
         this.fieldToSelect = []
         this.table = ""
         this.conditions = ""
-
+  console.log(query)
         return query
     }
 }

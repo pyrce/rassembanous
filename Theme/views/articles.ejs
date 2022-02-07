@@ -5,26 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <title>TypeScript CMS</title>
 </head>
 
 <body>
 
-  <div class="content">
-  <ul id="navigation">
-   <li class="active"> <i class="fas fa-home"></i> <a href="/">Home</a></li>
-   <li><i class="fas fa-address-book"></i>   <a href="/contact">Contact</a></li>
-    <li> <i class="far fa-newspaper"></i>   <a href="/articles">Articles</a></li>
+  <div class="content grid grid-flow-col  md:grid-flow-col lg:grid-flow-row">
+    <ul id="navigation" class="w-3/5 lg:w-full lg:h-10 md:h-auto gap-1 flex flex-col md:flex-col lg:flex-row bg-red-100">
+      <li class="active w-40"> <i class="fas fa-home"></i> <a href="/">Home</a></li>
+      <li class="w-40"><i class="fas fa-address-book"></i> <a href="/contact">Contact</a></li>
+      <li  class="w-40"> <i class="far fa-newspaper"></i> <a href="/articles">Articles</a></li>
 
-      <li><i class="fas fa-plus-circle"></i>   <a href="/articles/ajouter">Ajouter article</a></li>
-</ul>
+      <li class="w-40"><i class="fas fa-plus-circle"></i> <a href="/articles/ajouter">Ajouter article</a></li>
+    </ul>
 
-<div cl6787090ass="main">6+
-    <h1>Bienvenue : <%= user %> </h1>
-
-
-    <p>Vous êtes sur <%= page %></p>
-
+    <div class="main grid-cols-2">
 
     listes des articles
     <div class="cards">
@@ -37,7 +33,7 @@
               <a href="/articles/editer/<%=articles[a].id%>"><i class="fas fa-pen"></i> </a> 
               <h2><%= articles[a].titre %></h2>
               <p><%= articles[a].contenu %></p>
-              <p style="float:right"> <a href="/articles/<%=articles[a].id%>">lire l'article</a> </p>
+              <span style="float:right"> <i class="fas fa-search"></i><a href="/articles/<%=articles[a].id%>">lire l'article</a> </span>
             </div>
           </div>
 
@@ -62,15 +58,6 @@
     --weight3: 600;
 }
 
-
-        .content {
-            display: flex;
-            flex-direction: row;
-        }
-        .main {
-            display: flex;
-            flex-direction: column;
-        }
         .cards {
   display: flex;
   flex-wrap: wrap;
@@ -91,19 +78,7 @@
 .orange {
     border-top: 3px solid var(--orange);
 }
-ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 10%;
-  background-color: gainsboro;
-}
-ul li{
 
-  font-family: 'Merriweather', serif;
-  margin: 10px 0;
-  background-color: blanchedalmond;
-}
 a{
   text-decoration: none;
     line-height: 2%;

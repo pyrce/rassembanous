@@ -7,9 +7,10 @@
     ],
     "allowJs": true,
     "outDir": "build",
-    "rootDir": "core",
+    "rootDir": "Core",
     "strict": true,
     "noImplicitAny": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "typeRoots": [
@@ -17,9 +18,9 @@
     ],
   },
   "include": [
-    "core/**/*"
+    "Core/**/*"
   ],
   "exclude": [
-    "core/**/*.spec.ts"
+
   ]
 }

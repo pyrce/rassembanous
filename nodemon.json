@@ -2,7 +2,7 @@
   "watch": [
     "core"
   ],
-  "ext": ".ts,.js",
+  "ext": ".ts,.js,.ejs",
   "ignore": [],
   "exec": "ts-node ./app.ts"
 }
