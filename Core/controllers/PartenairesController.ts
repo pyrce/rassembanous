@@ -1,11 +1,11 @@
 import Render from "../../Core/Views/Render";
-import partenaireClass from "../Models/PartenaireModel";
+import partenaireClass from "../Models/PartenairesModel";
 import eventsClass from "../Models/Events";
 import EventPartenaire from "../Models/EventPartenaire";
 import Request from "../../Core/services/Request";
 import * as path from "path";
 import partenaireUser from "../Models/PartenaireUserModel";
-
+import bcrypt from "bcrypt"
 
 class PartenairesController {
 
@@ -14,10 +14,11 @@ class PartenairesController {
         try {
             
 
-        let partenaires=await partenaireClass.findAll({"id_role":2});
+        let partenaires=await partenaireClass.findAll({});
         partenaires = JSON.parse(JSON.stringify(partenaires));
 
-        return Render.make('partenaires', { user: "toto", page: "detail", partenaires: partenaires})
+        return JSON.stringify(partenaires)
+      //  return Render.make('partenaires', { user: "toto", page: "detail", partenaires: partenaires})
    } catch (error) {
             
         }
@@ -42,7 +43,9 @@ class PartenairesController {
         follow = JSON.parse(JSON.stringify(follow));
 
         let isFollowed=follow.length >0 ? 1 :0;
-        return Render.make('partenaire', { user: "toto", page: "detail",isFollowed:isFollowed,listEvents:listEvents, partenaire: partenaire[0] })
+        let response={isFollowed:isFollowed,listEvents:listEvents, partenaire: partenaire[0]};
+        return JSON.stringify(response);
+     //   return Render.make('partenaire', { user: "toto", page: "detail",isFollowed:isFollowed,listEvents:listEvents, partenaire: partenaire[0] })
    } catch (error) {
             
         }
@@ -53,7 +56,7 @@ class PartenairesController {
             const { data } = request;
             let search=data.query.s;
 
-        let partenaires=await partenaireClass.findAll([{"nomMoral":"'"+"%"+search+"%"+"'","op":"LIKE"},{"id_role":"2","op":"="}]);
+        let partenaires=await partenaireClass.findAll([{"nomMoral":"%"+search+"%","op":"LIKE"}]);
         partenaires = JSON.parse(JSON.stringify(partenaires));
 
         return JSON.stringify(partenaires)

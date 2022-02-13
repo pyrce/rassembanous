@@ -4,9 +4,10 @@ import Request from "../services/Request";
 type route = { data: Object, view: String }
 import * as path from "path";
 import Response from "../services/Reponse";
-import partenaireModel from "../Models/PartenaireModel";
+import partenaireModel from "../Models/PartenairesModel";
 import JWTToken from "../services/JWToken";
-
+import UsersModel from "../Models/UsersModel";
+import bcrypt from "bcrypt"
 class HomeController {
 
     public static getHome() {
@@ -37,18 +38,21 @@ class HomeController {
         let {data}=req;
         data = JSON.parse(data);
 
-        let user=await partenaireModel.find({"login":data.login});
+        let user=await UsersModel.find({"login":data.login});
         user = JSON.parse(JSON.stringify(user));
        
 
 if(user.length>0){
  
-        if(user[0].password==data.password){
+    bcrypt.compare(data.passowrd, user[0].password, function(err, result) {
+
             let userData={ userId :user[0].id,role:user[0].id_role,nom:user[0].nom,prenom:user[0].prenom }
-            JWTToken.makeJWT(userData);
+           JWTToken.makeJWT(userData);
+           let userToken=JWTToken.getToken();
+     
             console.log("connecté")
-            return JSON.stringify({msg:'ok'});
-        }
+            return JSON.stringify({msg:'connecter',token:userToken});
+      });    
     }else{
      console.log("user not found")
     }

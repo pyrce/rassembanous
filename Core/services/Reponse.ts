@@ -15,6 +15,9 @@ class Response {
         if (typeof data === "string") {
 
             this.reponse.setHeader('Content-Type', 'application/json');
+            this.reponse.setHeader('Access-Control-Allow-Origin', '*');
+            this.reponse.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+            this.reponse.setHeader('Access-Control-Allow-Methods', '*');
             this.reponse.end(data);
 
         } else if (data instanceof Render) {

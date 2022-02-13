@@ -34,11 +34,11 @@
   </div>
 
   <div class=" grid-cols-4 lg:col-start-7 lg:col-span-5">
-    <section class=" info_date col-start-1 col-span-2 lg:grid-rows-3">
+    <section class=" demo-card-wide mdl-card mdl-shadow--2dp col-start-1 col-span-2 gap-2 lg:grid-rows-3 lg:grid-cols-12">
 
-      <span class="infos">date de debut : </span> <%= new Date(event.dateDebut).toLocaleString() %> <br>
-      <span class="infos">date fin : </span><%= new Date(event.dateFin).toLocaleString() %> <br>
-      <span class="infos">date limit d'inscription : </span><%= new Date(event.dateLimit).toLocaleString() %>
+      <span class="infos">date de debut :  <%= new Date(event.dateDebut).toLocaleString() %></span> <br>
+      <span class="infos">date fin : <%= new Date(event.dateFin).toLocaleString() %> </span><br>
+      <span class="infos">date limit d'inscription : <%= new Date(event.dateLimit).toLocaleString() %></span>
 
 
     </section>
@@ -100,13 +100,6 @@
   async function initMap() {
 
   let data=await $.get(location.protocol + '//nominatim.openstreetmap.org/search?format=json&q='+$("#eventLieu").val());
-
-
-  return data;
-
-
-  }
-</script>tim.openstreetmap.org/search?format=json&q='+$("#eventLieu").val());
 
 
   return data;

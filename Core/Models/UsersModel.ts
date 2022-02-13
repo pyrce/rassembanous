@@ -9,7 +9,6 @@ class UsersModel extends AbstractModel implements ModelInterface {
         { field: "id", type: TypeEnum.NUMBER},
         { field: "nom", type: TypeEnum.STRING },
         { field: "prenom", type: TypeEnum.STRING },
-        { field: "nomMoral", type: TypeEnum.STRING },
         { field: "login", type: TypeEnum.STRING },
         { field: "password", type: TypeEnum.STRING },
         { field: "avatar", type: TypeEnum.STRING },

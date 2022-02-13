@@ -8,6 +8,7 @@ class Query {
     private fieldToSelect: Array<any> = []
     private valuesToInsert: Array<any> = []
     private tableJoins: Array<any> = []
+    private queryLimit:string="";
     selectedJoin: string = "";
     selectedJoinField: Array<any> = []
 
@@ -15,7 +16,7 @@ class Query {
     constructor(table: string,fields: Array<FieldsInterface>) {
         this.table = table
         this.fields = fields
-        this.selectedJoin="";
+       // this.selectedJoin="";
     }
 
     select(args: any) {
@@ -28,7 +29,7 @@ class Query {
     where(args: any) {
         let conditions: string = ""
 
-        if ((typeof args === 'object')) {
+        if ((typeof args === 'object') && args!="undefined") {
             conditions += " (" + this.and(args) + ")"
         }
 
@@ -57,13 +58,28 @@ class Query {
             })
         } else {
 
-            conditions += keys + " = '" + args[keys] + "'"
+            conditions += this.table+"."+ keys + " = '" + args[keys] + "'"
              
         }
      
         return conditions;
     }
 
+    limit(data:any){
+        let limit="";
+        
+
+        if(data["limit"]){
+       
+            limit=" limit "+data ["limit"];
+            if(data["offset"]){
+                limit+=" offset "+data["offset"]
+            }
+        }
+        
+        this.queryLimit=limit;
+        return this;
+    }
     from(table: any, alias: any = null) {
         if (!alias) {
             this.table = table;
@@ -151,7 +167,7 @@ class Query {
   
         
         this.selectedJoin = queryString;
-        console.log("this.selectedJoin : "+this.selectedJoin);
+       
     };
     setJoinField(joinFields: any) {
 
@@ -199,10 +215,15 @@ class Query {
         if (this.conditions) {
             query += this.conditions
         }
+        if (this.queryLimit) {
+            console.log(this.queryLimit)
+            query += this.queryLimit
+        }
 
         this.fieldToSelect = []
         this.table = ""
         this.conditions = ""
+        this.queryLimit = ""
   console.log(query)
         return query
     }

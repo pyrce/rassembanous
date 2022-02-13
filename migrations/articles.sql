@@ -1,4 +1,6 @@
 drop table if exists event_partenaire;
+drop table if exists reponse;
+drop table if exists postes;
 drop table if exists media;
 drop table if exists mediaType;
 drop table if exists partenaire_user;
@@ -24,17 +26,18 @@ nomMoral varchar(30),
 email varchar(30),
 login varchar(10),
 password varchar(30),
+avatar varchar(20),
 id_role int,
 adresse varchar(50)
 );
 
-insert into users(nom,prenom,nomMoral,email,login,password,id_role,adresse) 
-values ("admin","admin","","admin@mail.fr","admin","",1,""),
-("","","part1","part1@mail.fr","part1","",2,""),
-("","","part2","part2@mail.fr","part2","",2,""),
-("","","part3","part3@mail.fr","part3","",2,""),
-("","","part4","part4@mail.fr","part4","",2,""),
-("user","user","","user@mail.fr","user","user",3,"");
+insert into users(nom,prenom,nomMoral,email,login,password,avatar,id_role,adresse) 
+values ("admin","admin","","admin@mail.fr","admin","","",1,""),
+("","","part1","part1@mail.fr","part1","","kabardock.png",2,""),
+("","","part2","part2@mail.fr","part2","","evian.png",2,""),
+("","","part3","part3@mail.fr","part3","","kabardock.png",2,""),
+("","","part4","part4@mail.fr","part4","","kabardock.png",2,""),
+("user","user","","user@mail.fr","user","user","",3,"");
 
 CREATE TABLE evenements (
 id int primary key not null AUTO_INCREMENT,
@@ -172,3 +175,31 @@ CONSTRAINT fk_Partenaire_User FOREIGN KEY (id_user)
     CONSTRAINT fk_User_Partenaire FOREIGN KEY (id_partenaire)
     REFERENCES users(id)
 );
+
+create table postes(
+id int primary key not null AUTO_INCREMENT,
+titre varchar(20),
+text varchar(255),
+date_creation datetime,
+id_user int,
+CONSTRAINT fk_Posts_User FOREIGN KEY (id_user)
+    REFERENCES users(id)
+);
+
+create table reponse(
+id int primary key not null AUTO_INCREMENT,
+date_creation datetime,
+text varchar(30),
+id_poste int,
+id_user int,
+CONSTRAINT fk_Reponse_Post FOREIGN KEY (id_poste)
+    REFERENCES postes(id),
+CONSTRAINT fk_Reponse_User FOREIGN KEY (id_user)
+    REFERENCES users(id)
+);
+insert into postes(titre,date_creation,text,id_user) 
+values ("titre1",CAST('2022-10-05 08:00:00' AS datetime),"sometexta  e e",3),
+("titre2",CAST('2022-10-05 08:00:00' AS datetime),"sometexta  e e",3);
+
+insert into reponse(date_creation,text,id_poste,id_user) VALUES
+(CAST('2022-10-05 08:00:00' AS datetime),"ok",1,3),(CAST('2022-10-05 08:00:00' AS datetime),"essaye ça",1,3)

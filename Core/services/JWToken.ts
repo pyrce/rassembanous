@@ -11,6 +11,7 @@ private static token : any
 public static makeJWT(data:any){
 
     this.token=jwt.sign(data, config.jwtSecret,{ expiresIn: '1h' });
+
 }
 
 public static getToken(){

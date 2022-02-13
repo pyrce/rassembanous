@@ -17,9 +17,9 @@ class AbstractModel {
         this.query = new Query(table,fields)
     }
 
-    public async findAll(data?:Object) {
-        const queryString: string = this.query.select(this.fields).from(this.table).where(data).toString()
-       
+    public async findAll(data?:Object,limit?:Object) {
+        const queryString: string = this.query.select(this.fields).from(this.table).where(data).limit(limit).toString()
+      
         return await this.runQuery(queryString)
     }
 
@@ -85,7 +85,7 @@ const arrayFields: any = [];
 
         //let id= model.fields.filter( (item:any)=>{return item.field.match(/id_/) })
 
-        let joinQuery =" LEFT JOIN "+model.class.table+" on "+model.class.table+"."+model.fk+"="+this.table+".id";
+        let joinQuery =" LEFT JOIN "+model.class.table+" on "+model.class.table+".id"+"="+this.table+"."+model.fk;
 
         this.setJoin(joinQuery)
   });

@@ -21,13 +21,13 @@ class checkJWT {
     //res.locals.jwtPayload = jwtPayload;
     return true
   } else {
-   
+   return false;
     //If token is not valid, respond with 401 (unauthorized
- let loginRoute=Router.getAll().find((element:any) =>
- element.url.match("/login") )
+//  let loginRoute=Router.getAll().find((element:any) =>
+//  element.url.match("/login") )
 
-  let data=loginRoute.callback();
-return data;
+//   let data=loginRoute.callback();
+// return data;
   }
 }
 
