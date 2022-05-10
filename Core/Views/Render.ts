@@ -20,7 +20,7 @@ class Render {
     }
 
     public render(){
-    
+  
         const rootFolder = path.resolve('./');
         let templatePath = path.join(rootFolder, 'Theme', 'views', `${this.file}.ejs`);
    let fileExist= fs.existsSync(templatePath);

@@ -27,7 +27,6 @@ class Server {
     constructor(port?: number) {
         if (port) this.port = port;
         else this.port = 3500;
-   
     }
     /**Recupere la route et renvoie une vue ou une erreur
      * 
@@ -46,24 +45,11 @@ class Server {
                        );
 
         if (someRoute) {
- 
-            if(someRoute.middleware!=null){
-           
-                let cb= someRoute.middleware[0].checkToken()
-                if(cb ==true){
-               let loginRoute=     Router.getAll().find((element:any) =>
-                    element.url.match("/login") )
+            //if(someRoute.middleware[0]!=null){
+              //  console.log(someRoute);
+          //  }
+           return someRoute.callback(req);
 
-   let data=loginRoute.callback();
-   return JSON.stringify({"msg":"ko"});
-                }else{
-                    return someRoute.callback(req);
-               }
-          
-            }else{
-                     return someRoute.callback(req);
-                }
-           
         } else {
             const erreur = Render.make("404", {});
             return erreur;
@@ -81,7 +67,8 @@ class Server {
     private init() {
        app.use(express.static(path.join( 'public')))
         app.use(cors());
-    // JWTToken.makeJWT({id:2,role:2,nom:"user",prenom:"user"});
+
+    // JWTToken.makeJWT({id:1,role:3,nom:"DOE",prenom:"John"});
         let server = createServer( async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');

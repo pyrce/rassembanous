@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "target": "es6",
     "module": "commonjs",
     "lib": [
-      "es6"
+      "es6",
+      "dom.iterable",
+      "dom"
     ],
     "allowJs": true,
     "outDir": "build",

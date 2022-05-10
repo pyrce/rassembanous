@@ -1,21 +1,22 @@
 import FieldsInterface from "../Interface/FieldsInterface";
 import Database from "../Database/Database";
 import Query from "../Database/Query";
+import { Model } from 'sequelize-typescript'
 /**
  * toutes les classes qui etendent cette classe ont acces à ses fonctions
  */
-class AbstractModel {
+class AbstractModel extends Model {
     table: string;
     fields: Array<FieldsInterface> = [];
     ref?: AbstractModel
     query: Query;
 
-    constructor(table: string, fields: Array<FieldsInterface>,ref?:AbstractModel) {
-        this.table = table;
-        this.fields = fields;
-        this.ref=ref
-        this.query = new Query(table,fields)
-    }
+    // constructor(table: string, fields: Array<FieldsInterface>,ref?:AbstractModel) {
+    //     this.table = table;
+    //     this.fields = fields;
+    //     this.ref=ref
+    //     this.query = new Query(table,fields)
+    // }
 
     public async findAll(data?:Object,limit?:Object) {
         const queryString: string = this.query.select(this.fields).from(this.table).where(data).limit(limit).toString()
@@ -39,8 +40,11 @@ public async insert(data: Object){
     return await this.runQuery(query)
 }
 public async update(search:Object, data: Object){
-    const query=this.query.update(search,data);
-    //return await this.runQuery(query)
+
+
+   // const query=this.query.update(search,data);
+  //  return await this.runQuery(query)
+
 }
 
 
@@ -52,7 +56,7 @@ public async update(search:Object, data: Object){
     }
 
 
-    private async runQuery(queryString: any) {
+    public async runQuery(queryString: any) {
         try {
 
             const data: any = await Database.query(queryString)
@@ -85,7 +89,7 @@ const arrayFields: any = [];
 
         //let id= model.fields.filter( (item:any)=>{return item.field.match(/id_/) })
 
-        let joinQuery =" LEFT JOIN "+model.class.table+" on "+model.class.table+".id"+"="+this.table+"."+model.fk;
+        let joinQuery =" LEFT JOIN "+model.class.table+" on "+this.table+".id"+"="+model.class.table+"."+model.fk;
 
         this.setJoin(joinQuery)
   });

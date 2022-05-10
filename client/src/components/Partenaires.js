@@ -8,7 +8,7 @@ name:"partenaires",
       partenaires:[],
      dialog:false,
      disabled:false,
-
+     api:process.env.VUE_APP_BASE_URL,
     }
  },
     created(){
@@ -18,14 +18,16 @@ this.initialize();
         initialize(){
           
                             this.partenaires=[]
-                  Axios.get("http://localhost:3500/partenaires").then(( {data} )=>{
+                  Axios.get(this.api+"/partenaires").then(( {data} )=>{
          
-console.log(data)
                     this.partenaires=data;
         
         })
 
 
+        },
+        voirPart(id){
+            this.$router.push("/partenaires/"+id)
         }
     }
 };

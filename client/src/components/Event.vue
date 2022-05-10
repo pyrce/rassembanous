@@ -1,70 +1,61 @@
 <template>
-  <v-container height="35%">
-    <v-row v-if="dataEvent.estTermine == 0">
-      <v-col width="200vw">
-        <v-card>
-          <v-card-title>
-            <v-row>
-              <v-col> {{ dataEvent.event.nom }} </v-col>
-            </v-row>
-          </v-card-title>
-          <v-card-text>
-            <v-row> Lieu : {{ dataEvent.event.lieu }} </v-row>
-            <v-row> description : {{ dataEvent.event.description }} </v-row>
+  <v-container  class="grid grid-cols-11 grid-flow-row auto-rows-max" style="height:120vh">
 
-            <v-row v-if="dataEvent.estInscrit == 0">
-              <v-row
-                v-if="
-                  new Date( dataEvent.event.dateLimit).getTime() > new Date().getTime()
-                "
-              >
-                    <v-card-actions>
-        <v-btn @click="inscription">S'inscrire</v-btn>
-      </v-card-actions>
+<v-col class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-6">
 
-              </v-row>
-              <v-row v-else>
-                <span
-                  class="w-32 row-start-8"
-                  style="background-color: F50756; opacity: 40%"
-                  >Date limit dépassé</span
-                >
-              </v-row>
-            </v-row>
-            <v-row v-else>
-              <span
-                class="w-32 row-start-8"
-                style="background-color: F50756; opacity: 40%"
-                >Vous ête déjà inscrit</span
-              >
-              <button
-                onclick="getQRCode('<%= event.id%>')"
-                class="w-28 row-start-8"
-                style="background-color: F50756; opacity: 40%"
-              >
-                Télécharger le QRCode
-              </button>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
+<v-row  class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-10">
+  <span class="titre h-12 w-full mb-10">Date et lieu</span>
 
-      <v-col class="infos border-2 border-blue-400">
+<v-row v-if="dataEvent.estTermine==1">
+Dernienre représentation le {{ dataEvent.event.dateDebut | formatDate }}
 
-        <v-row
-          style="background-color: darkcyan"
-          class="col-12 d-flex justify-content-center"
-        >
-          Infos
-        </v-row>
-        <v-row> Date debut {{ dataEvent.event.dateDebut | formatDate }} </v-row>
-        <v-row> Fin : {{ dataEvent.event.dateFin | formatDate }} </v-row>
-        <v-row>
-          Date limit : {{ dataEvent.event.dateLimit | formatDate }}
-        </v-row>
+{{ dataEvent.event.lieu.nomLieu  }}
+</v-row>
+
+<v-row v-else>
+
+<v-row v-if="dataEvent.estInscrit==1">
+Vous êtes déjà inscrit
+
+</v-row>
+
+<v-row v-else>
+  {{ dataEvent.event.lieu.nomLieu  }} à
+  {{ dataEvent.event.dateDebut | formatDate }}
+  <v-row class="grid-grid-cols-10 mt-10">
+  <v-btn @click="inscription" class="mt-5">s'inscrire </v-btn>
+  </v-row>
+</v-row>
+</v-row>
+  {{ dataEvent.event.lieu.nomLieu }} - {{ dataEvent.event.lieu.adresse }}
+</v-row>
 
 
- <div id="mapp" class="mt-5">
+
+<v-row class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-10">
+  <span class="titre h-12 w-full mb-10">Description</span>
+
+<v-row >
+ {{ dataEvent.event.description }}
+
+
+</v-row>
+
+</v-row>
+
+
+<v-row class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-10">
+  <span class="titre h-12 w-full mb-10">Tarif</span>
+
+<v-row >
+Plein Tarif :  {{ dataEvent.event.prix }}€
+</v-row>
+
+</v-row>
+
+</v-col>
+<v-col class="grid grid-cols-10 ">
+
  <l-map
    :center="center"
    :zoom="zoom"
@@ -89,27 +80,21 @@
 </eventPlace>
 </v-row>
    </l-map>
- </div>
-      </v-col>
-    </v-row>
 
-<v-row  v-else>
+</v-col>
 
-</v-row>
+
   </v-container>
 </template>
 
 <style scoped>
  .map {
    position: absolute;
-   width: 39%;
-   height: 40%;
+   width: 40%;
+   height: 20%;
    overflow :hidden
  }
-.infos{
-  width: 270vh;
-  height: 50vh;
-}
+
 </style>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 <script src="./event.js"></script>

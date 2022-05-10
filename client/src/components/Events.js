@@ -9,10 +9,11 @@ name:"home",
      listeEvents:[],
      dialog:false,
      disabled:false,
-     itemParPage:1,
+     itemParPage:15,
      nbPage:0,
      offset:0,
      total:0,
+     api:process.env.VUE_APP_BASE_URL,
      page:1,
      date: new Date().toISOString().substr(0, 10),
 
@@ -28,21 +29,22 @@ name:"home",
         getEvents(currentPage){
           
                             this.listeCurrentEvent=[]
-                            let type= this.$route.params.type
+
                                     
                             let offset=this.itemParPage*currentPage-1;
-                            console.log("offset");
-                            console.log(offset);
                         this.page=currentPage
-                  Axios.post("http://localhost:3500/allevent",{limit:this.itemParPage,offset:offset,type:type}).then(( {data} )=>{
+                  Axios.post(this.api+"/allevent",{limit:this.itemParPage,offset:offset}).then(( {data} )=>{
 
                     this.listeEvents=data.listEvents;
-                    this.total=data.total
+                   // this.total=data.total
                 
                     this.nbPage= Math.round(this.total/this.itemParPage);
         })
 
 
+        },
+        voirCategorie(catId){
+            this.$router.push("/events/category/"+catId)
         }
     }
 };

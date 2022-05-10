@@ -1,0 +1,14 @@
+page accueil voir unevenement
+s'inscrire
+voir les partenaires
+voir un partenaire
+suivre un partenaire
+s'inscire à un évènement
+se mettre sur le télephone
+voir l'évènement
+voir le QRCode
+répondre à une enquête
+se connecter en tant que partenaire
+voir ses évènements
+modifier un évènement
+supprimer un évènement

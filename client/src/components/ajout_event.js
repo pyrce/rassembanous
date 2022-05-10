@@ -8,28 +8,43 @@ export default {
 name:"ajout_event",
   data: () => ({
      event:{
-       isPublic:0
+       isPublic:1,
+      description:""
      },
+     select:{},
+     calid:false,
+     api:process.env.VUE_APP_BASE_URL,
+     file:undefined,
      partenaires:[],
+     categories:[],
+     lieus:[],
      search:"",
      liste:[],
-     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
-    }
- }),
+ }),created(){
+this.getListCategories();
+this.getListLieus();
+ },
     methods:{
         getListePartenaires(val){
           
-          axios.get("http://localhost:3500/partenaires/list",{params:{s:val}}).then(data=>{
+          axios.get(this.api+"/partenaires/list",{params:{s:val}}).then(data=>{
 
     this.partenaires=data.data;
 })  
+        },getListCategories(){
+          axios.get(this.api+"/categories").then(data=>{
+
+    this.categories=data.data;
+})  
+        },getListLieus(){
+          axios.get(this.api+"/lieu").then(data=>{
+
+    this.lieus=data.data;
+})  
         },
-        async submit() {
-            const result = await this.$refs.form.validate();
-            console.log(result)
+         submit() {
+         //    this.$refs.form.validate();
+          
             let event = {}
 
             event["nom"] = this.event.nom
@@ -37,15 +52,43 @@ name:"ajout_event",
             event["dateFin"] =  this.event.dateFin
             event["nbPlace"] =  this.event.nbPlace
             event["prix"] =  this.event.prix
-            event["lieu"] =  this.event.lieu
+            event["id_lieu"] =  this.event.id_lieu
+            event["id_categorie"] =  this.event.id_categorie
             event["dateLimit"] =  this.event.dateLimit
             event["isPublic"] =  this.event.isPublic
             event["description"] =  this.event.description
             event["partenaires"] = this.partenaires;
+            event["affiche"] = JSON.stringify(this.event.affiche)
+           
 
-            axios.post("http://localhost:3500/events",event).then(msg=>{
-                console.log("add")
+// const fd=new FormData();
+// fd.append("nom",this.event.nom);
+// fd.append("dateDebut",this.event.dateDebut);
+// fd.append("dateFin",this.event.dateFin);
+// fd.append("nbPlace",this.event.nbPlace);
+// fd.append("prix",this.event.prix);
+// fd.append("lieu",this.event.lieu);
+// fd.append("dateLimit",this.event.dateLimit);
+// fd.append("isPublic",this.event.isPublic);
+// fd.append("description",this.event.description);
+// fd.append("partenaires",this.event.partenaires);
+//fd.append("affiche",this.event.affiche,this.event.affiche.name);
+
+
+
+            axios.post(this.api+"/events",event,{ headers: {
+              'content-type': 'application/json'
+            }}) .then(msg=>{
+               this.$router.push("/")
             })
+
+
+          },
+          handleFileUpload(){
+            console.log("file change")
+      console.log(this.$refs.file.files)
+            this.file =this.$refs.file.files
+
           }
     },
     watch: {

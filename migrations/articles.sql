@@ -1,43 +1,52 @@
-drop table if exists event_partenaire;
-drop table if exists reponse;
-drop table if exists postes;
-drop table if exists media;
-drop table if exists mediaType;
 drop table if exists partenaire_user;
-drop table if exists event_user;
-drop table if exists categories;
-drop table if exists evenements;
+drop table if exists event_partenaire;
+drop table if exists question_user;
+drop table if exists questions;
+drop table if exists questionnaire;
 drop table if exists partenaires;
-drop table if exists roles;
+drop table if exists media;
+drop table if exists event_stand;
+drop table if exists stands;
+drop table if exists lieu;
+drop table if exists mediaType;
+drop table if exists event_user;
+drop table if exists evenements;
+drop table if exists categories;
+drop table if exists partenaires;
 drop table if exists users;
-
+drop table if exists roles;
 
 create table roles(
 id int primary key not null AUTO_INCREMENT,
-nom varchar(10)
+role varchar(10)
 );
-insert into roles(nom) values("admin"),("partenaire"),("user");
+insert into roles(role) values("admin"),("user"),("partener");
+
+CREATE TABLE categories(
+id int primary key not null AUTO_INCREMENT,
+categorie varchar(30),
+icon varchar(20)
+);
 
 create table users(
 id int primary key not null AUTO_INCREMENT,
 nom varchar(10),
 prenom varchar(10),
-nomMoral varchar(30),
 email varchar(30),
 login varchar(10),
-password varchar(30),
+password varchar(255),
 avatar varchar(20),
 id_role int,
-adresse varchar(50)
+adresse varchar(50),
+token varchar(255),
+    CONSTRAINT fk_Role FOREIGN KEY (id_role)
+    REFERENCES roles(id)
 );
 
-insert into users(nom,prenom,nomMoral,email,login,password,avatar,id_role,adresse) 
-values ("admin","admin","","admin@mail.fr","admin","","",1,""),
-("","","part1","part1@mail.fr","part1","","kabardock.png",2,""),
-("","","part2","part2@mail.fr","part2","","evian.png",2,""),
-("","","part3","part3@mail.fr","part3","","kabardock.png",2,""),
-("","","part4","part4@mail.fr","part4","","kabardock.png",2,""),
-("user","user","","user@mail.fr","user","user","",3,"");
+insert into users(nom,prenom,email,login,password,id_role,adresse,token) 
+values ("admin","admin","admin@mail.fr","admin","$04$nsMDTMy8Nf25vJ.r.zA6WO.wt5ZMlkQWN38JAmXsXEliYNf31DEji",1,"",""),
+("user1","user1","user1@mail.fr","user1","$2y$10$2bKE00JV6HAMbXsPaHW1PeV6gFtwIwXBwKyVmy.cwRG.lH4g20gxO",2,"	adresse1",""),
+("user","user","user@mail.fr","user","$2y$10$wLGDCA9pb9uiqibA1zuHQeTDr3CFGDFys8TFrQJqA91xouBTslWue",2,"adresse2","");
 
 CREATE TABLE evenements (
 id int primary key not null AUTO_INCREMENT,
@@ -46,58 +55,54 @@ id int primary key not null AUTO_INCREMENT,
   dateDebut datetime DEFAULT NULL,
   dateFin datetime DEFAULT NULL,
   dateLimit datetime DEFAULT NULL,
-  lieu  varchar(45) DEFAULT NULL,
-  categorie varchar(30),
+  id_lieu int DEFAULT NULL,
+  id_categorie int,
   isPublic int DEFAULT NULL,
   nbPlace int DEFAULT NULL,
   prix int DEFAULT NULL,
-  affiche varchar(30) default null
+  affiche varchar(30) default null,
+      CONSTRAINT fk_Categorie FOREIGN KEY (id_categorie)
+    REFERENCES categories(id)
 );
-CREATE TABLE partenaires(
 
+insert into categories(categorie,icon) VALUES("theatre","mdi-theater"),("music","mdi-music"),("exposition","mdi-account-group");
+create table lieu(
 id int primary key not null AUTO_INCREMENT,
-  nom varchar(45) DEFAULT NULL,
-adresse varchar(45) DEFAULT NULL
-
+nomLieu varchar(30),
+adresse varchar(255)
 );
-
-CREATE TABLE categories(
-id int primary key not null AUTO_INCREMENT,
-categorie varchar(30)
-);
-insert into categories(categorie) VALUES("theatre"),("music"),("exposition");
-
+insert into lieu (nomLieu,adresse) values("Nordev","1, Rue du Karting, B.P. 287 97494 Sainte-Clotilde"),("lieu2","4 Rue Emile Hugot"),("dance","8 Rue de la Fraternité");
 INSERT INTO evenements
 (
 nom,description,
 dateDebut,
 dateFin,
 dateLimit,
-lieu,
-categorie,
+id_lieu,
+id_categorie,
 isPublic,
 nbPlace,
 prix,affiche
 )
 VALUES(
-'test1',
+'dance1',
 'event test',
 CAST('2021-01-10 08:00:00' AS datetime),
 CAST('2021-01-15 17:00:00' AS datetime),
 CAST('2021-12-20 15:00:00' AS datetime),
-"4 Rue Emile Hugot",
-"music",
+2,
+2,
 1,
 200,
 15,"5560.jpg"),
 (
-'test2',
+'dance2',
 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit nulla eget tortor bibendum, ac suscipit eros consequat. Suspendisse molestie massa nec metus rhoncus, nec fermentum leo tempor. Pellentesque vitae luctus metus.',
 CAST('2021-05-05 08:00:00' AS datetime),
 CAST('2021-05-15 17:00:00' AS datetime),
 CAST('2021-04-20 15:00:00' AS datetime),
-"20 rue des praies",
-"theatre",
+1,
+1,
 1,
 200,
 15,"5560.jpg"),
@@ -107,8 +112,8 @@ CAST('2021-04-20 15:00:00' AS datetime),
 CAST('2022-10-05 08:00:00' AS datetime),
 CAST('2022-10-15 17:00:00' AS datetime),
 CAST('2022-09-20 15:00:00' AS datetime),
-"4 Rue Emile Hugot",
-"exposition",
+1,
+3,
 1,
 200,
 15,"5560.jpg"),
@@ -118,31 +123,43 @@ CAST('2022-09-20 15:00:00' AS datetime),
 CAST('2022-10-05 08:00:00' AS datetime),
 CAST('2022-10-15 17:00:00' AS datetime),
 CAST('2022-09-20 15:00:00' AS datetime),
-"20 rue des praies",
-"theatre",
+1,
+1,
+1,
+200,
+15,"5560.jpg"),
+(
+'ballet',
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit nulla eget tortor bibendum, ac suscipit eros consequat.',
+CAST('2022-10-05 08:00:00' AS datetime),
+CAST('2022-10-15 17:00:00' AS datetime),
+CAST('2022-09-20 15:00:00' AS datetime),
+3,
+2,
 1,
 200,
 15,"5560.jpg");
+
 CREATE TABLE event_partenaire(
 id int primary key not null AUTO_INCREMENT,
 id_event int not null,
-id_user int not null,
+id_partenaire int not null,
 CONSTRAINT fk_Events FOREIGN KEY (id_Event)
     REFERENCES evenements(id),
-    CONSTRAINT fk_Partenaire FOREIGN KEY (id_user)
+    CONSTRAINT fk_Partenaire FOREIGN KEY (id_partenaire)
     REFERENCES users(id)
 );
-insert into event_partenaire (id_Event,id_user) VALUES(1,2),(1,3) ;
+insert into event_partenaire (id_Event,id_partenaire) VALUES(1,2),(1,3) ;
 create table mediaType(
 id int primary key not null AUTO_INCREMENT,
 libelle varchar(10)
 );
 
-insert into mediaType(libelle) values ("gallerie"),("qrcode");
+insert into mediaType(libelle) values ("gallerie"),("qrcode"),("plan");
 
 CREATE TABLE media(
 id int primary key not null AUTO_INCREMENT,
-nom varchar(30) default null,
+image varchar(30) default null,
 id_event int not null,
 id_user int ,
 id_type int not null,
@@ -153,8 +170,8 @@ CONSTRAINT fk_Events_Media FOREIGN KEY (id_event)
     CONSTRAINT fk_User_Media FOREIGN KEY (id_user)
     REFERENCES users(id)
 );
-insert into media(nom,id_Event,id_type)
-values("20759.jpg",1,1), ("20759.jpg",2,1),("5560.jpg",3,1),("5560.jpg",4,1),("5560.jpg",1,1);
+insert into media(image,id_Event,id_type,id_user)
+values("concert1.jpg",1,1,null), ("concert2.jpg",2,1,null),("concert1.jpg",3,1,null),("nordev1.png",3,3,null),("concert3.jpg",4,1,null),("2025_22156.png",1,2,3);
 
 create table event_user(
 id int primary key not null AUTO_INCREMENT,
@@ -176,30 +193,55 @@ CONSTRAINT fk_Partenaire_User FOREIGN KEY (id_user)
     REFERENCES users(id)
 );
 
-create table postes(
+
+create table stands(
 id int primary key not null AUTO_INCREMENT,
-titre varchar(20),
-text varchar(255),
-date_creation datetime,
-id_user int,
-CONSTRAINT fk_Posts_User FOREIGN KEY (id_user)
+nomStand varchar(30),
+id_lieu int not null,
+ CONSTRAINT fk_lieu FOREIGN KEY (id_lieu)
+    REFERENCES lieu(id)
+);
+
+create table event_stand(
+id int primary key not null AUTO_INCREMENT,
+id_event int not null,
+id_stand int not null,
+ id_user int not null,
+ activite varchar(255),
+ CONSTRAINT fk_event_stand FOREIGN KEY (id_event)
+    REFERENCES evenements(id),
+ CONSTRAINT fk_stand FOREIGN KEY (id_stand)
+    REFERENCES stands(id),
+    CONSTRAINT fk_Partenaire_stand FOREIGN KEY (id_user)
     REFERENCES users(id)
 );
 
-create table reponse(
+create table questionnaire(
 id int primary key not null AUTO_INCREMENT,
-date_creation datetime,
-text varchar(30),
-id_poste int,
+id_event int,
+ CONSTRAINT fk_questionaire FOREIGN KEY (id_event)
+    REFERENCES evenements(id),
+libelle varchar(50)
+);
+
+create table questions(
+id int primary key not null AUTO_INCREMENT,
+id_questionnaire int,
+question varchar(30),
+ CONSTRAINT fk_question FOREIGN KEY (id_questionnaire)
+    REFERENCES questionnaire(id)
+);
+create table question_user(
+id int primary key not null AUTO_INCREMENT,
 id_user int,
-CONSTRAINT fk_Reponse_Post FOREIGN KEY (id_poste)
-    REFERENCES postes(id),
-CONSTRAINT fk_Reponse_User FOREIGN KEY (id_user)
+id_question int,
+stars int,
+ CONSTRAINT fk_user_question FOREIGN KEY (id_user)
     REFERENCES users(id)
 );
-insert into postes(titre,date_creation,text,id_user) 
-values ("titre1",CAST('2022-10-05 08:00:00' AS datetime),"sometexta  e e",3),
-("titre2",CAST('2022-10-05 08:00:00' AS datetime),"sometexta  e e",3);
 
-insert into reponse(date_creation,text,id_poste,id_user) VALUES
-(CAST('2022-10-05 08:00:00' AS datetime),"ok",1,3),(CAST('2022-10-05 08:00:00' AS datetime),"essaye ça",1,3)
+insert into stands (nomStand,id_lieu) values("Paille en queue",1),("tec tect",1);
+insert into event_stand(id_event,id_stand,id_user,activite) values(3,1,3,"lecon de danse"),(3,2,2,"lecon de danse rap");
+insert into event_user(id_user,id_event) values (1,3);
+insert into questionnaire(libelle,id_event) value("Amélioration",3);
+insert into questions(question,id_questionnaire) values ("Propreté",1),("organisation",1),("Diversité",1);

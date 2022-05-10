@@ -28,7 +28,8 @@ class Response {
             this.reponse.end(rend);
 
         } else {
-
+console.log("data");
+console.log(data);
             this.reponse.end(JSON.stringify({ "erreur": "format incorrect" }));
         }
     }

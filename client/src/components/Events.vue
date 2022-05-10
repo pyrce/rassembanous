@@ -1,46 +1,40 @@
 <template>
 
-    <v-container>
-      <v-row style="background-color:darkcyan;" class="grid grid-cols-12 flex justify-center">
- Events recents
+    <v-container class="flex flex-column">
 
-      </v-row>
-
-        <!-- event to get new desktop info from child component -->
-        <v-row>
-  <v-col md='4' v-for='(evt,key) in listeEvents' :key='key'>
-
-<v-card width="15vw">
+<v-row v-for="(cat,key) in listeEvents" :key="key" class=" grid grid-cols-12 grid-rows-6 mt-15">
+<v-card class="grid grid-cols-12 w-full">
     <v-card-title>
-      <v-row> 
-       <v-col>  {{ evt.nom }}   </v-col>
-      <v-col>   {{ evt.categorie }} </v-col>
-        </v-row>
+  <v-row class="w-full grid border-2 border-black-500 grid-cols-12 ma-0"> 
 
-  <v-row>  {{ evt.dateDebut }}</v-row>
+   <v-col class=" col-start-1 col-end-3"> <v-icon>{{cat.icon }} </v-icon> </v-col>
+    
+    <v-col class=" col-start-3 col-end-12">  {{ cat.categorie }} </v-col>
+    
+    </v-row>
     </v-card-title>
-    <v-card-text>
+<v-row class=" bg-red-100 ma-3">
+<v-col v-for="(evt,key) in cat.events" :key="key">
 
-      <img :src="'/image/'+evt.affiche"     height="250"
-           width="350vw" >
-      <v-row>
- {{ evt.description }}
-      </v-row>
-    </v-card-text>
+<v-card class="w-48 ma-5">
+ <v-card-title> {{ evt.nom }}</v-card-title>
+ <v-card-text> {{ evt.dateDebut | formatDate}} </v-card-text>
+
+
+ <img :src="'/image/'+evt.affiche" />
+   
 </v-card>
+
+
 </v-col>
 
+</v-row>
 
-        </v-row>
-
-        <div class="grid grid-cols-12 gap-1">
-<v-col v-for='(p,key) in nbPage' :key="key">
-
-
- <v-btn @click="getEvents(p)">{{ p }}</v-btn>
-
-</v-col>
-        </div>
+<v-card-actions>
+<v-btn @click="voirCategorie(cat.id)">voir cette categorie</v-btn>
+</v-card-actions> 
+</v-card>
+</v-row>
     </v-container>
 </template>
 

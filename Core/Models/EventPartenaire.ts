@@ -2,21 +2,41 @@ import FieldsInterface from "../Interface/FieldsInterface";
 import ModelInterface from "../Interface/ModelInterface";
 import AbstractModel from "./AbstractModel";
 import TypeEnum from "./TypeEnum";
+import { Table, Column, Model, DataType,HasMany, BelongsTo } from 'sequelize-typescript'
+import Events from "./Events"
+import Users from "./UsersModel"
 
-class EventPartenaire extends AbstractModel implements ModelInterface {
-    table: string = 'event_partenaire';
-    fields: Array<FieldsInterface> = [
-        { field: "id", type: TypeEnum.NUMBER},
-        { field: "id_event", type: TypeEnum.NUMBER },
-        { field: "id_user", type: TypeEnum.NUMBER },
-    ];
+@Table({modelName:"EventPartenaire",tableName:"event_partenaire"})
+class EventPartenaire extends Model {
+    // table: string = 'event_partenaire';
+    // fields: Array<FieldsInterface> = [
+    //     { field: "id", type: TypeEnum.NUMBER},
+    //     { field: "id_event", type: TypeEnum.NUMBER },
+    //     { field: "id_partenaire", type: TypeEnum.NUMBER },
+    // ];
+
+    @Column({
+        type: DataType.NUMBER,
+        allowNull: false,
+        field: 'id',
+        primaryKey: true,
+      })
+      id: number
+
+    @BelongsTo(()=>Events)
+    @Column
+    id_event: number
+
+    @BelongsTo(()=>Users)
+    @Column
+    id_partenaire: number
 
 }
 
-const eventPartenaire = new EventPartenaire('event_partenaire', [
-    { field: "id", type: TypeEnum.NUMBER},
-    { field: "id_event", type: TypeEnum.NUMBER },
-    { field: "id_user", type: TypeEnum.NUMBER },
-]);
+// const eventPartenaire = new EventPartenaire('event_partenaire', [
+//     { field: "id", type: TypeEnum.NUMBER},
+//     { field: "id_event", type: TypeEnum.NUMBER },
+//     { field: "id_partenaire", type: TypeEnum.NUMBER },
+// ]);
 
-export default eventPartenaire;
+export default EventPartenaire;

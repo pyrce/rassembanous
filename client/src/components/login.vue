@@ -1,19 +1,19 @@
 <template>
-    
- <v-card>
-    <v-card-title>
-      <v-row> 
+    <v-container  class="grid grid-cols-12  h-45">
+ <v-card class="elevation-12 h-45 w-full grid col-start-3 col-end-10">
+  <v-card-title  class="titles justify-center">
+ 
  Login 
 
-        </v-row>
+      
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="mt-3 formulaire">
 
       <v-row>
 <v-col>Login</v-col>
 <v-col>            <v-text-field
               name="login"
-              label="titre"
+              label="login"
               outlined
               required
               v-model="login"
@@ -25,20 +25,27 @@
 <v-col>Mot de passe</v-col>
 <v-col>            <v-text-field
               name="password"
-              label="titre"
+              label="mot de passe"
               outlined
+              type="password"
               required
               v-model="password"
               :rules="[ v => !!v || 'mot de passe est requis']"
             ></v-text-field></v-col>
       </v-row>
-    </v-card-text>
-          <v-card-actions>
-        <v-btn @click="connect">Validate</v-btn>
-      </v-card-actions>
-</v-card>
 
+                <v-card-actions class="grid grid-cols-12">
+        <v-btn @click="connect" class="grid col-start-10">Validate</v-btn>
+      </v-card-actions>
+        <div class="msg" ref="msg"></div>
+    </v-card-text>
+
+    
+</v-card>
+    </v-container>
 </template>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 import Axios from 'axios';
 /* eslint-disable no-unused-vars */
@@ -47,16 +54,29 @@ name:"login",
  data(){
  return{
 login:"",
-password:""
-
+password:"",
+     api:process.env.VUE_APP_BASE_URL,
     }
  },
  methods:{
      connect(){
-         Axios.post("http://localhost:3500/identifier",{login:this.login,password:this.password}).then( ({data})=>{
+         Axios.post(this.api+"/identifier",{login:this.login,password:this.password}).then( ({data})=>{
          
+         if(data.msg!="KO"){
           localStorage.user=data.token
+this.$emit("loginEvent");
               this.$router.push('/')
+         }else{
+  
+      Swal.fire({
+        title: 'Error!',
+        text: 'utilisateur non trouvé',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
+
+         
+         }
          } )
      }
  }

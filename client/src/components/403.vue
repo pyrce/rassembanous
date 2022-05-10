@@ -1,3 +1,3 @@
 <template>
-    <h3>erreur</h3>
+    <h3>vous n'avez pas l'authorisation</h3>
 </template>

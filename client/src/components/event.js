@@ -20,6 +20,7 @@ components: {
      date: new Date().toISOString().substr(0, 10),
      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
      center: [ 49.114910, 6.178810],
+     api:process.env.VUE_APP_BASE_URL,
      zoom: 15,
     markers: [
         {id: 1, imageUrl: 'https://img.icons8.com/windows/32/000000/marker.png', coordinates: [  49.114910, 6.178810]},
@@ -39,7 +40,7 @@ components: {
         console.log("begin init");
                             this.dataEvent=[]
                            let id= this.$route.params.id 
-                  Axios.get("http://localhost:3500/events/"+id).then( ( {data} )=>{
+                  Axios.get(this.api+"/events/"+id).then( ( {data} )=>{
                 this.dataEvent=data;
                
                      Axios.get(location.protocol + '//nominatim.openstreetmap.org/search?format=json&q='+this.dataEvent.event.lieu).then(( {data} )=>{
@@ -58,7 +59,7 @@ components: {
         },
         inscription(){
             let id= this.$route.params.id 
-            Axios.post("/events/inscription",id).then(( {data} )=>{
+            Axios.post(this.api+"/events/inscription",id).then(( {data} )=>{
          this.initialize();
 
             console.log("ok")

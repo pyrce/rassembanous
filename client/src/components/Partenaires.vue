@@ -1,27 +1,28 @@
 <template>
 
     <v-container>
-      <div style="background-color:darkcyan;" class="col-12 d-flex justify-content-center">
 
-      </div>
 
         <!-- event to get new desktop info from child component -->
         <v-row>
-  <v-col md='4' v-for='(part,key) in partenaires' :key='key'>
+  <v-col md='3' v-for='(part,key) in partenaires' :key='key'>
 
-<v-card>
+<v-card class="w-56 h-32 grid justify-content-center">
     <v-card-title>
-      <v-row> 
-       <v-col> <a :href="'/partenaires/'+part.id" > {{ part.nomMoral }} </a>  </v-col>
-      
+      <v-row class="text-center"> 
+   {{ part.nom }} 
         </v-row>
+       
     </v-card-title>
     <v-card-text>
-
+ <v-row> {{part.adresse }} </v-row>
       <v-row>
 
       </v-row>
     </v-card-text>
+    <v-card-actions>
+<v-btn @click="voirPart(part.id)"> Voir partenaire</v-btn>
+    </v-card-actions>
 </v-card>
 
 

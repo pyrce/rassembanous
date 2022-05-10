@@ -1,10 +1,10 @@
 <template>
-    
-                <v-card class="elevation-12" >
-      <v-toolbar dark color="primary">
-        <v-toolbar-title> </v-toolbar-title>
-      </v-toolbar>
-      <v-card-text>
+    <v-container fluid class="grid grid-cols-12 h-auto ">
+          <v-card class="elevation-12 h-45 w-full grid col-start-3 col-end-10">
+      <v-card-title  class="titles justify-center">
+      S'inscrire
+      </v-card-title>
+      <v-card-text class="mt-3 formulaire">
            <v-form ref="form">
 <v-row>
 <v-col> Nom </v-col>
@@ -57,6 +57,7 @@
               label="titre"
               outlined
               required
+              type="password"
               v-model="user.password"
               :rules="[ v => !!v || 'Mot de passe est requis']"
             ></v-text-field></v-col>
@@ -67,8 +68,9 @@
               label="titre"
               outlined
               required
+              type="password"
               v-model="confirm_password"
-              :rules="[ v => !!v || 'ce champ est requis est requis']"
+              :rules="[ [v => !!v || 'ce champ est requis'],(user.password === confirm_password) || 'Les mots de passes ne correspondent pas']"
             ></v-text-field></v-col>       
     </v-row>
 
@@ -85,13 +87,16 @@
             ></v-text-field></v-col> 
     </v-row>
        </v-form>
-      </v-card-text>
 <v-card-actions>
-  <div>
-<v-btn @click="register"> s'enregistrer</v-btn>
+  <div class="grid grid-cols-12"> 
+<v-btn @click="register" class="grid col-start-10 col-span-3"> s'enregistrer</v-btn>
 </div>
 </v-card-actions>
+
+      </v-card-text>
+
                 </v-card>
+    </v-container>
 </template>
 
 
@@ -103,7 +108,8 @@ name:"layout",
  data(){
  return{
 user:{},
-confirmPassword:"",
+confirm_password:"",
+     api:process.env.VUE_APP_BASE_URL,
 showUser:false
     }
 
@@ -126,7 +132,7 @@ data["adresse"]=this.user.adresse;
 data["email"]=this.user.email;
 
 
-Axios.post("http://localhost:3500/users/signup",data).then(( )=>{
+Axios.post(this.api+"/users/signup",data).then(( )=>{
 
 this.$router.push("/")
         })

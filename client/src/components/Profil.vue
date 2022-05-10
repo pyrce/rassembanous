@@ -58,6 +58,7 @@
               label="titre"
               outlined
               required
+              type="password"
               v-model="user.password"
               :rules="[ v => !!v || 'Mot de passe est requis']"
             ></v-text-field></v-col>
@@ -98,7 +99,8 @@ name:"layout",
  data(){
  return{
 user:{},
-showUser:false
+     api:process.env.VUE_APP_BASE_URL,
+showUser:true
     }
 
  },
@@ -108,10 +110,10 @@ showUser:false
 methods:{
   getUser(){
 
-Axios.get("http://localhost:3500/user/profil").then(( {data} )=>{
+Axios.get(this.api+"/user/profil").then(( {data} )=>{
 console.log(data)
          if(!data.msg){
-console.log("ok")
+this.user=data
          }else{
        
        this.$router.push("/403")
