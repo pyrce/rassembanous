@@ -162,7 +162,7 @@ if(user){
             var payload = Buffer.from(base64Payload, 'base64');
             let infoUser = JSON.parse(payload.toString());
 
-            partenaireModel.update({ id: infoUser.id }, data);
+            //partenaireModel.update({ id: infoUser.id }, data);
         }
     }
 
