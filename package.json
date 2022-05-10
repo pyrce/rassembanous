@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "engines": {
-    "node": "16.14.2",
-     "npm": "8.5.5"
+    "node": "16.14.2"
   },
   "scripts": {
     "build": "rimraf ./build ; tsc ; copy -R ./Core/Views ./build/app/ ; copy -R ./Core/public ./build ; copy -R ./Core/Views ./build/Core/",
