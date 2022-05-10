@@ -1,20 +1,10 @@
 import Render from "../../Core/Views/Render";
-import mediaModel from "../Models/MediaModel";
-import eventsClass from "../Models/Events";
-import eventsPartenaire from "../Models/EventPartenaire";
-import categoriesModel from "../Models/CategorieEvent";
 import Request from "../../Core/services/Request";
 import * as path from "path";
-import eventUser from "../Models/EventUser";
-import MediaModel from "../Models/MediaModel";
-import LieuModel from "../Models/Lieu";
 import * as jwt from "jsonwebtoken";
 import multiparty from "multiparty";
 import config from "../routes/config/config";
-import partenaireUser from "../Models/PartenaireUserModel";
-import UsersModel from "../Models/UsersModel";
-import StandModel from "../Models/StandModel";
-import EventStandModel from "../Models/EventStandModel";
+
 import JWTToken from "../services/JWToken";
 import * as fs from "fs";
 import * as dotenv from "dotenv";

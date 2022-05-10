@@ -5,7 +5,6 @@ type route = { data: Object, view: String }
 import * as path from "path";
 import Response from "../services/Reponse";
 import JWTToken from "../services/JWToken";
-import UsersModel from "../Models/UsersModel";
 import bcrypt from "bcrypt"
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer"

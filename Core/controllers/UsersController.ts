@@ -1,17 +1,13 @@
-import Render from "../../Core/Views/Render";
-import eventUser from "../Models/EventUser";
-import partenaireUser from "../Models/PartenaireUserModel";
-import userModel from "../Models/UsersModel";
-import eventsClass from "../Models/Events";
+import Render from "../../Core/Views/Render";;
 import * as jwt from "jsonwebtoken";
 import Request from "../../Core/services/Request";
 import * as path from "path";
-import partenaireModel from "../Models/UsersModel";
+
 import Response from "../services/Reponse";
 import * as qrcode from "qrcode";
 import JWTToken from "../services/JWToken";
 import * as fs from "fs";
-import mediaModel from "../Models/MediaModel";
+
 import { saveAs } from 'file-saver';
 import bcrypt from "bcrypt"
 import { PrismaClient } from '@prisma/client'

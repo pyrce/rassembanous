@@ -1,16 +1,10 @@
 import Render from "../../Core/Views/Render";
-import eventsClass from "../Models/Events";
-import EventPartenaire from "../Models/EventPartenaire";
 import Request from "../../Core/services/Request";
 import * as path from "path";
-import partenaireUser from "../Models/PartenaireUserModel";
+
 import bcrypt from "bcrypt"
-import eventUser from "../Models/EventUser";
-import categoriesModel from "../Models/CategorieEvent";
+
 import JWTToken from "../services/JWToken";
-import LieuModel from "../Models/Lieu";
-import eventPartenaire from "../Models/EventPartenaire";
-import Users from "../Models/UsersModel";
 import fs from "fs";
 import { PrismaClient } from '@prisma/client'
 

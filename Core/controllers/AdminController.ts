@@ -5,8 +5,6 @@ type route = { data: Object, view: String }
 import * as path from "path";
 import Response from "../services/Reponse";
 import JWTToken from "../services/JWToken";
-import UsersModel from "../Models/UsersModel";
-import RolesModel from "../Models/RolesModel";
 import bcrypt from "bcrypt"
 import { PrismaClient } from '@prisma/client'
 
