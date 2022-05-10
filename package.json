@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "16.x",
+    "npm": "6.x"
+  },
   "scripts": {
     "build": "rimraf ./build ; tsc ; copy -R ./Core/Views ./build/app/ ; copy -R ./Core/public ./build ; copy -R ./Core/Views ./build/Core/",
     "watch": "npm run build ; nodemon build/app.js",
