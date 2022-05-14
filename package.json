@@ -7,7 +7,7 @@
     "node": "16.14.2"
   },
   "scripts": {
-    "build": "rimraf ./build ; tsc ; copy -R ./Core/Views ./build/app/ ; copy -R ./Core/public ./build ; copy -R ./Core/Views ./build/Core/",
+    "build": "rimraf ./build ; tsc ; cp -R ./Core/Views ./build/app/ ; cp -R ./Core/public ./build ; cp -R ./Core/Views ./build/Core/",
     "watch": "npm run build ; nodemon build/app.js",
     "start": "nodemon build/app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
