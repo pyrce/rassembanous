@@ -10,6 +10,9 @@
   "dependencies": {
     "node":"16.14.2",
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "@vue/cli-plugin-babel": "^5.0.4",
+    "@vue/cli-plugin-eslint": "^5.0.4",
+    "@vue/cli-service": "^5.0.4",
     "axios": "~0.25.0",
     "core-js": "~3.21.0",
     "leaflet": "^1.7.1",
