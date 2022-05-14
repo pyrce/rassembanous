@@ -323,15 +323,15 @@ lastEvents[0].events.forEach( (element:any)=>{
 
     private static async isInsrit(id: any) {
         let userToken =await JWTToken.getUser();
-        let myEvent: any = [];
+        let myEvent: any = {};
         if (userToken) {
 
-            myEvent = await prisma.event_user.findFirst({ where: { id_event: parseInt(id), id_user: userToken.id } });
+            myEvent = await prisma.event_user.findFirst({ where: { id_event: parseInt(id), id_user: userToken.userId } });
             //myEvent = JSON.parse(JSON.stringify(myEvent));
         }
         console.log("myEvent");
         console.log(myEvent);
-        let estInscrit = myEvent.length>0 ? 1 : 0;
+        let estInscrit =myEvent ? 1 : 0;
         return estInscrit;
     }
 

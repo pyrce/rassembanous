@@ -41,8 +41,8 @@ class Routes {
        Router.get("/partenaires/:id",null, PartenairesController.getPartenaire )
 
        Router.post("/partenaires/follow",null,  UsersController.follow )
-       Router.post("/events/inscription",null,  UsersController.inscrire )
        Router.post("/users",null, UsersController.getUser )
+       Router.post("/users/inscription",null,  UsersController.inscrire )
        Router.get("/user/profil",null, UsersController.getUserProfil )
        Router.post("/users/profil",null, UsersController.updateProfil )
        Router.post("/users/signup",null, UsersController.signup )

@@ -85,9 +85,11 @@ class HomeController {
 
 
         if (user ) {
-
+console.log("user : ");
+console.log(user)
             bcrypt.compare(data.password, user.password, function (err, result) {
-
+                console.log("result : ");
+                console.log(result)
 
                 if (result==true) {
                     let userData = { userId: user.id, role: user.id_role, nom: user.nom, prenom: user.prenom }
@@ -106,7 +108,7 @@ class HomeController {
         } else {
             return JSON.stringify({ msg: "KO" });
         }
-
+        return JSON.stringify({ msg: "KO" });
     }
 
 }

@@ -45,7 +45,7 @@
     </v-container>
 </template>
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="http//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 import Axios from 'axios';
 /* eslint-disable no-unused-vars */

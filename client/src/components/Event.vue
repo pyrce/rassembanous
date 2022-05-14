@@ -3,9 +3,13 @@
 
 <v-col class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-6">
 
-<v-row  class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-10">
+<v-row  class=" grid grid-cols-10 h-24 ma-10 gap-y-3 col-start-1 col-end-10">
   <span class="titre h-12 w-full mb-10">Date et lieu</span>
-
+<v-row>
+  {{ dataEvent.event.lieu.nomLieu  }} à
+  {{ dataEvent.event.dateDebut | formatDate }}
+  {{ dataEvent.event.lieu.nomLieu }} - {{ dataEvent.event.lieu.adresse }}
+</v-row>
 <v-row v-if="dataEvent.estTermine==1">
 Dernienre représentation le {{ dataEvent.event.dateDebut | formatDate }}
 
@@ -19,15 +23,18 @@ Vous êtes déjà inscrit
 
 </v-row>
 
-<v-row v-else>
-  {{ dataEvent.event.lieu.nomLieu  }} à
-  {{ dataEvent.event.dateDebut | formatDate }}
-  <v-row class="grid-grid-cols-10 mt-10">
-  <v-btn @click="inscription" class="mt-5">s'inscrire </v-btn>
-  </v-row>
+<v-row v-else >
+
+
+
+  <v-btn v-if="user" @click="inscription" class="mt-5">s'inscrire </v-btn>
+
+
+
 </v-row>
+
 </v-row>
-  {{ dataEvent.event.lieu.nomLieu }} - {{ dataEvent.event.lieu.adresse }}
+
 </v-row>
 
 
@@ -96,5 +103,8 @@ Plein Tarif :  {{ dataEvent.event.prix }}€
  }
 
 </style>
+
+
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./event.js"></script>

@@ -45,7 +45,7 @@ class UserController {
 
         let userToken = await JWTToken.getUser();
         if (userToken != false) {
-            await prisma.event_user.create({ data:{id_event: data, "id_user": userToken.id} });
+            await prisma.event_user.create({ data:{id_event: data, "id_user": userToken.userId} });
         
             qrcode.toFile(
                 './public/image/' + nom + '.png',
@@ -162,6 +162,7 @@ if(user){
             var payload = Buffer.from(base64Payload, 'base64');
             let infoUser = JSON.parse(payload.toString());
 
+            await prisma.users.update({data:data,where:{id:infoUser.id}})
             //partenaireModel.update({ id: infoUser.id }, data);
         }
     }
@@ -181,7 +182,7 @@ if(user){
         });
         //qrcode = JSON.parse(JSON.stringify(qrcode));
 
-
+        if(qrcode!=null){
         let fichier = qrcode.image;
         let rootDir = path.resolve('./');
    
@@ -189,6 +190,9 @@ if(user){
 
 
         return JSON.stringify({code:code});
+        }else{
+            return JSON.stringify({ "msg": "ko" });
+        }
         
     }
 
@@ -207,7 +211,7 @@ let questionsUser:any = await prisma.questions.findMany({
 })
 
 
-        data.questions.forEach(async (element:any)=>{
+        data.forEach(async (element:any)=>{
 
   let quest:any=questionsUser[0].users.filter((q:any)=>q.id_user==element.id_user);
 console.log("quest");

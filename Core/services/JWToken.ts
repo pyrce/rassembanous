@@ -1,6 +1,6 @@
 import config  from "../Routes/config/config";
 import * as jwt from "jsonwebtoken";
-import UserModel from "../Models/UsersModel";
+
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient();

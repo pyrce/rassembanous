@@ -44,9 +44,12 @@ components: {
         console.log("composant home");
         console.log(Layout)
   
-        this.initialize();
+     //   this.initialize();
 
            
+    },
+    mounted(){
+        this.initialize();
     },
     methods:{
         initialize(){

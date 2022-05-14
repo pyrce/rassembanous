@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { LMap, LTileLayer } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import eventPlace from "./event_place.vue"
+import Swal from 'sweetalert2'
 //import _ from 'lodash';
 export default {
 name:"event",
@@ -16,6 +17,7 @@ components: {
  return{
     dataEvent:{},
      dialog:false,
+     user:{},
      disabled:false,
      date: new Date().toISOString().substr(0, 10),
      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -31,7 +33,9 @@ components: {
     created(){
         console.log("composant events");
         
-  
+        const userToken = localStorage.user
+            let user = JSON.parse(userToken);
+            this.user=user
         this.initialize();
 
     },
@@ -59,10 +63,17 @@ components: {
         },
         inscription(){
             let id= this.$route.params.id 
-            Axios.post(this.api+"/events/inscription",id).then(( {data} )=>{
+            Axios.post(this.api+"/users/inscription",id).then(( {data} )=>{
+
+              Swal.fire({
+                title: '',
+                text: 'Vous ête inscrit !',
+                icon: 'success',
+                confirmButtonText: 'ok'
+              });
          this.initialize();
 
-            console.log("ok")
+            
     
     })
         },
