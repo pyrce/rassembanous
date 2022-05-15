@@ -106,8 +106,7 @@ class UserController {
 
         let { data } = request;
 let user= await JWTToken.getUser();
-console.log("user connecté");
-console.log(user)
+
 if(user){
       await  prisma.partenaire_user.create({data:{ id_partenaire: parseInt(data), id_user: user.userId} });
       return JSON.stringify({msg:"Ok"})
