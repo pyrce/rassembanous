@@ -7,7 +7,6 @@ import Response from './Reponse';
 import * as Url  from 'url';
 import { copyFileSync } from 'fs';
 import * as jwt from "jsonwebtoken";
-import config from "../routes/config/config";
 import JWTToken from './JWToken';
 import express from 'express';
 import * as path from "path";
