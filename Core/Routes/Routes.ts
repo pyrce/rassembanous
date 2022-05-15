@@ -3,7 +3,7 @@ import HomeController from "../controllers/HomeController";
 
 import Request from "../../Core/services/Request";
 import * as jwt from "jsonwebtoken";
-import config from "../routes/config/config";
+
 import EventsController from "../controllers/EventsController";
 import PartenairesController from "../controllers/PartenairesController";
 import UsersController from "../controllers/UsersController";

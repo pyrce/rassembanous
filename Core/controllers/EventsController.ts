@@ -3,7 +3,7 @@ import Request from "../../Core/services/Request";
 import * as path from "path";
 import * as jwt from "jsonwebtoken";
 import multiparty from "multiparty";
-import config from "../routes/config/config";
+
 
 import JWTToken from "../services/JWToken";
 import * as fs from "fs";
