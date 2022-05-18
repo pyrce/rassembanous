@@ -19,48 +19,50 @@ class Routes {
   
            
       // Router.get("/", null,HomeController.getHome)
-       Router.get("/login",null,HomeController.login )
-       Router.post("/identifier",null,HomeController.identifier )
+       Router.get("/api/login",null,HomeController.login )
+       Router.post("/api/identifier",null,HomeController.identifier )
 
 
-       Router.get("/categories",null, EventsController.getCategories )
-       Router.get("/lieus",null, EventsController.getLieu )
-       Router.post("/allevents",null, EventsController.getAllEvents )
-       Router.post("/galleries",null, EventsController.getGallerie )
-       Router.post("/events/questions",null, AdminController.getEventQuestionnaire );
-       Router.post("/events",null, EventsController.addEvent )
-       Router.get("/events",null, EventsController.getEvents )
-       Router.get("/events/:id",null, EventsController.getEvent )
-       Router.post("/events/:id",null, EventsController.updateEvent )
-       Router.get("/ajoutevent",Multer,  EventsController.ajoutEvent )
+       Router.get("/api/categories",null, EventsController.getCategories )
+       Router.get("/api/lieus",null, EventsController.getLieu )
+       Router.post("/api/allevents",null, EventsController.getAllEvents )
+       Router.post("/api/galleries",null, EventsController.getGallerie )
+       Router.post("/api/events",{ id_role:1 }, EventsController.addEvent )
+       Router.post("/api/events/questions",null, AdminController.getEventQuestionnaire );
+       Router.get("/api/events",null, EventsController.getEvents )
+       Router.get("/api/events/:id",null, EventsController.getEvent )
+       Router.post("/api/events/:id",null, EventsController.updateEvent )
+       Router.get("/api/ajoutevent",Multer,  EventsController.ajoutEvent )
 
-       Router.get("/partenaires",null, PartenairesController.getPartenaires )
-       Router.post("/partenaires/events",null, PartenairesController.getEvents )
-       Router.post("/partenaires/events/get",null, PartenairesController.getMyEvent )
-       Router.get("/partenaires/list",null, PartenairesController.getListPartenaires )
-       Router.get("/partenaires/:id",null, PartenairesController.getPartenaire )
+       Router.get("/api/partenaires",null, PartenairesController.getPartenaires )
+       Router.post("/api/partenaires/events",null, PartenairesController.getEvents )
+       Router.post("/api/partenaires/events/get",null, PartenairesController.getMyEvent )
+       Router.get("/api/partenaires/list",null, PartenairesController.getListPartenaires )
+       Router.get("/api/partenaires/:id",null, PartenairesController.getPartenaire )
 
-       Router.post("/partenaires/follow",null,  UsersController.follow )
-       Router.post("/users",null, UsersController.getUser )
-       Router.post("/users/inscription",null,  UsersController.inscrire )
-       Router.get("/user/profil",null, UsersController.getUserProfil )
-       Router.post("/users/profil",null, UsersController.updateProfil )
-       Router.post("/users/signup",null, UsersController.signup )
-       Router.post("/users/logout",null, UsersController.logout )
-       Router.post("/users/qrcode",null, UsersController.getQRCODE )
-       Router.post("/users/partner",null, UsersController.becomePartner )
-       Router.post("/users/questionnaire",null, UsersController.repondreQuestionnaire )
+       Router.post("/api/partenaires/follow",null,  UsersController.follow )
+       Router.post("/api/users",null, UsersController.getUser )
+       Router.post("/api/users/inscription",null,  UsersController.inscrire )
+       Router.get("/api/user/profil",null, UsersController.getUserProfil )
+       Router.post("/api/users/profil",null, UsersController.updateProfil )
+       Router.post("/api/users/signup",null, UsersController.signup )
+       Router.post("/api/users/logout",null, UsersController.logout )
+       Router.post("/api/users/qrcode",null, UsersController.getQRCODE )
+       Router.post("/api/users/partner",null, UsersController.becomePartner )
+       Router.post("/api/users/questionnaire",null, UsersController.repondreQuestionnaire )
        
-       Router.post("/admin/users",null, AdminController.getUsers );
-       Router.post("/admin/users/add",null, AdminController.addUser );
-       Router.put("/admin/users",null, AdminController.updateUser );
-       Router.post("/admin/users/delete",null, AdminController.deleteUser );
-       Router.post("/admin/partenaires",null, AdminController.attribuerStand );
-       Router.get("/questions",null, AdminController.listeQuestions );
-       Router.post("/questions/:id",null, AdminController.getQuestions );
-       Router.post("/questions",null, AdminController.submitQuestionnaire );
-       Router.post("/stats",null, AdminController.eventStats );
-
+       Router.post("/api/admin/users",{ id_role:1 }, AdminController.getUsers );
+       Router.get("/api/admin/categories",{ id_role:1 }, AdminController.getCategories );
+       Router.post("/api/admin/categories",{ id_role:1 }, AdminController.addCategorie );
+       Router.post("/api/admin/users/add",{ id_role:1 }, AdminController.addUser );
+       Router.put("/api/admin/users",{ id_role:1 }, AdminController.updateUser );
+       Router.post("/api/admin/users/delete",{ id_role:1 }, AdminController.deleteUser );
+       Router.post("/api/admin/partenaires",{ id_role:1 }, AdminController.attribuerStand );
+       Router.get("/api/questions",{ id_role:1 }, AdminController.listeQuestions );
+       Router.post("/api/questions/:id",{ id_role:1 }, AdminController.getQuestions );
+       Router.post("/api/questions",{ id_role:1 }, AdminController.submitQuestionnaire );
+       Router.post("/api/stats",{ id_role:1 }, AdminController.eventStats );
+       Router.delete("/api/galleries",{ id_role:1 }, AdminController.deleteImage );
        Router.post("/contact",null, HomeController.contact );
     }
 }

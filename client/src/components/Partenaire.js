@@ -24,7 +24,7 @@ this.initialize();
           
                             this.partenaire=[]
                             let id= this.$route.params.id 
-                  Axios.get(this.api+"/partenaires/"+id).then(( {data} )=>{
+                  Axios.get(this.api+"/api/partenaires/"+id).then(( {data} )=>{
          
                     this.partenaire=data.partenaire;
                     this.listevents=data.listEvents;
@@ -36,7 +36,7 @@ this.initialize();
         }
         ,
         suivrePart(id){
-            Axios.post(this.api+"/partenaires/follow",id).then(( {data} )=>{
+            Axios.post(this.api+"/api/partenaires/follow",id).then(( {data} )=>{
                 if(data.msg!="KO"){
                 console.log("init")
          this.initialize();

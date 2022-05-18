@@ -15,12 +15,13 @@ export default {
 
   },
   created() {
-    this.getUser();
+   // this.getUser();
     console.log("layout created")
   },
   mounted() {
     this.getUser();
-    console.log("layout mounted")
+    console.log("layout mounted : this.api")
+    console.log(this.api)
   },
   computed: {
     updateUser: () => {
@@ -29,7 +30,7 @@ export default {
   },
   methods: {
     getUser() {
-      Axios.post(this.api+"/users").then(({ data }) => {
+      Axios.post(this.api+"/api/users").then(({ data }) => {
 
         if (data.msg != "ko") {
           console.log("this data");
@@ -57,7 +58,7 @@ export default {
       this.$router.push("/profil/" + id);
     },
     logout() {
-      Axios.post(this.api+"/users/logout").then(({ data }) => {
+      Axios.post(this.api+"/api/users/logout").then(({ data }) => {
     
         this.user = {};
         localStorage.setItem("user", JSON.stringify(this.user))

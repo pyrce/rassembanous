@@ -20,7 +20,7 @@ public static makeJWT(data:any){
 public static async logout(){
     let token=await this.getUser();
 
-   await prisma.users.update({data:{token:""},where:{ id:token.userId } })
+   await prisma.users.update({data:{token:""},where:{ id:token.id } })
    // UserModel.update({id:token.id},{token:null});
 
 }
@@ -36,10 +36,13 @@ public static async getUser(){
     var payload = Buffer.from(base64Payload, 'base64');
     let infoUser=JSON.parse(payload.toString());
 
-    let token:any=    await prisma.users.findFirst({where:{id:infoUser.userId}});
+    let user:any=    await prisma.users.findFirst({
+        where:{id:infoUser.userId},
 
-    if(token.token.length>0){
-    return infoUser;
+    });
+    if(user.token.length>0){
+        return user;
+    
     }else{
         return false;
     }

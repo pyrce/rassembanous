@@ -44,7 +44,7 @@ components: {
         console.log("begin init");
                             this.dataEvent=[]
                            let id= this.$route.params.id 
-                  Axios.get(this.api+"/events/"+id).then( ( {data} )=>{
+                  Axios.get(this.api+"/api/events/"+id).then( ( {data} )=>{
                 this.dataEvent=data;
                
                      Axios.get(location.protocol + '//nominatim.openstreetmap.org/search?format=json&q='+this.dataEvent.event.lieu).then(( {data} )=>{
@@ -63,7 +63,7 @@ components: {
         },
         inscription(){
             let id= this.$route.params.id 
-            Axios.post(this.api+"/users/inscription",id).then(( {data} )=>{
+            Axios.post(this.api+"/api/users/inscription",id).then(( {data} )=>{
 
               Swal.fire({
                 title: '',

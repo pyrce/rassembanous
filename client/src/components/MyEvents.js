@@ -54,7 +54,7 @@ name:"MyEvents",
                         this.page=currentPage
                         const userToken=localStorage.user
                         let user=JSON.parse(userToken);
-                  Axios.post(this.api+"/partenaires/events",{id:user.userId,limit:this.itemParPage,offset:offset}).then(( {data} )=>{
+                  Axios.post(this.api+"/api/partenaires/events",{id:user.userId,limit:this.itemParPage,offset:offset}).then(( {data} )=>{
 
                     this.listeEvents=data.listEvents;
                     this.total=data.total

@@ -60,7 +60,7 @@ password:"",
  },
  methods:{
      connect(){
-         Axios.post(this.api+"/identifier",{login:this.login,password:this.password}).then( ({data})=>{
+         Axios.post(this.api+"/api/identifier",{login:this.login,password:this.password}).then( ({data})=>{
          
          if(data.msg!="KO"){
           localStorage.user=data.token

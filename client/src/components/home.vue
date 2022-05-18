@@ -1,6 +1,6 @@
 <template>
 
-    <v-container class="grid gap-y-10" style="height:120vh" :loginEvent="GetUser()">
+    <v-container class="grid gap-y-10" style="height:120vh" @hook:mounted="loadEvent">
 
         <!-- event to get new desktop info from child component -->
    <div class="flex">

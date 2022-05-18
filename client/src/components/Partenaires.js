@@ -18,7 +18,7 @@ this.initialize();
         initialize(){
           
                             this.partenaires=[]
-                  Axios.get(this.api+"/partenaires").then(( {data} )=>{
+                  Axios.get(this.api+"/api/partenaires").then(( {data} )=>{
          
                     this.partenaires=data;
         

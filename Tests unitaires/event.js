@@ -1,6 +1,20 @@
-import request from './request';
 
 
-export function getUserName(userID) {
-  return request(`/events/${userID}`).then(user => user.nom);
+const config = {
+  apiUrl: {
+    myFleetAPI: 'http://localhost:3500/user',
+  },
+};
+export async function getUserTest() {
+  return fetch(config.apiUrl.myFleetAPI, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((reject) => console.log(reject));
 }

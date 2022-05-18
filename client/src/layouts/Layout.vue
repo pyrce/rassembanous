@@ -19,11 +19,11 @@
                        <router-link class=" nav" to="/about"><i class="fas fa-home"></i> Qui somme nous</router-link> 
     <router-link class=" nav" to="/partenaires"><i class="far fa-newspaper"></i> Partenaires</router-link>
     
-        <router-link v-if="user.role && user.role!=2" class=" nav" to="/ajoutevent"><i class="fas fa-plus-circle"></i> Ajout evenement</router-link>
+        <router-link v-if="user.id_role && user.id_role!=2" class=" nav" to="/ajoutevent"><i class="fas fa-plus-circle"></i> Ajout evenement</router-link>
 
          <router-link class=" nav" to="/gallerie"><i class="fas fa-plus-circle"></i> Gallerie</router-link>
-<router-link v-if="user.role==1" class=" nav" to="/admin"><i class="fas fa-plus-circle"></i> Admin</router-link>
-<router-link v-if="user.role==3" class=" nav" to="/MyEvents"><i class="fas fa-plus-circle"></i> Mes events</router-link>
+<router-link v-if="user.id_role==1" class=" nav" to="/admin"><i class="fas fa-plus-circle"></i> Admin</router-link>
+<router-link v-if="user.id_role==3" class=" nav" to="/MyEvents"><i class="fas fa-plus-circle"></i> Mes events</router-link>
 
 </v-col>
 

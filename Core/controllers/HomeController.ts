@@ -82,7 +82,7 @@ class HomeController {
 
         let user:any = await prisma.users.findFirst({where:{ "login": data.login }});
        // user = JSON.parse(JSON.stringify(user));
-
+        let response="";
 
         if (user ) {
 console.log("user : ");
@@ -99,16 +99,16 @@ console.log(user)
                     prisma.users.update({data:{token:userToken},where:{ id:user.id } }).then( ()=>{
 
            
-                    return JSON.stringify({ msg: 'connecter', token: userToken });
+                    response= JSON.stringify({ msg: 'connecter', token: userToken });
                 })
                 } else {
-                    return JSON.stringify({ msg: "KO" });
+                    response=JSON.stringify({ status: "KO",msg:"identifiants incorrect" });
                 }
             });
         } else {
-            return JSON.stringify({ msg: "KO" });
+            response= JSON.stringify({ status: "KO", msg:"utilisateur non trouvé"});
         }
-        return JSON.stringify({ msg: "KO" });
+        return response;
     }
 
 }

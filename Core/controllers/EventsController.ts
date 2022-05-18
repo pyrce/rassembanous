@@ -52,11 +52,11 @@ class EventsController {
             //   let currentEvents = await eventsClass.findAll([{ "dateLimit": today, "op": ">" }], queryLimit);
             /* let currentEvents = await eventsClass.findAll({   offset: data.limit,
                  limit: data.offset, where:{dateFin:{gt:today} }});*/
-              
+              console.log(data)
             let currentEvents = await prisma.evenements.findMany(
                 {
-                    skip: data.offset != null ? data.offset : undefined,
-                    take: data.limit,
+                    skip: data.query.offset != null ? parseInt(data.query.offset) : undefined,
+                    take: parseInt(data.query.limit),
                     where: {
                         dateFin: { gt:new Date() },
                     },
@@ -99,6 +99,7 @@ class EventsController {
 
         data = JSON.parse(data);
 
+        let user=await JWTToken.getUser()
 
         let queryLimit: any = {}
         queryLimit["limit"] = data.limit
@@ -130,7 +131,7 @@ class EventsController {
 
         total = JSON.parse(JSON.stringify(total)).length;
 
-        return JSON.stringify({ gallerie: images, total: total });
+        return JSON.stringify({ gallerie: images, total: total,user:user });
     }
 
     public static async getAllEvents(request: Request) {
@@ -149,23 +150,20 @@ class EventsController {
         // let lastEvents = await eventsClass.findAll([{ "dateFin": today, "op": ">" }], queryLimit);
 
 let opt:any =           {
-    skip: data.offset ? data.offset : 0,
-    take: data.limit,           
+         
     include: {
         
         events:{
             include:{
-                lieu:true,
-      
-                
+                lieu:true,             
             },
              where: {
         dateFin: { gt: new Date() },
 
     },
-
-        },
-        
+    skip: data.offset ? data.offset : 0,
+    take: data.limit,  
+        }        
     }
 }
     let where={}
@@ -174,7 +172,7 @@ let opt:any =           {
             opt.where = where
         }
         let lastEvents:any = await prisma.categories.findMany(
- opt
+   opt
         );
 
 lastEvents[0].events.forEach( (element:any)=>{
@@ -223,15 +221,18 @@ lastEvents[0].events.forEach( (element:any)=>{
                 "nbPlace": parseInt(data.nbPlace),
                 "prix": parseInt(data.prix),
                 "id_lieu": data.id_lieu,
+                "affiche":"5560.jpg",
                 "id_categorie": data.id_categorie,
                 "dateLimit": new Date(data.dateLimit),
                 "isPublic": data.isPublic ==1 ? true : false,
                 "description": data.description,
-                "affiche":"",
                 "dateFin": new Date(data.dateFin)
             }
         });
+
+   
         let follows = [];
+        if(partenaires){
         partenaires.forEach(async (element: any) => {
             //   let f = await prisma.users.findFirst({ where: {user: 5, "id_partenaire": element.id} });
             //   await prisma.users.findFirst({ 
@@ -255,6 +256,7 @@ lastEvents[0].events.forEach( (element:any)=>{
                 }
             })
         });
+    }
 
         return JSON.stringify({ msg: "ok" });
 

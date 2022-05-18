@@ -160,7 +160,7 @@ data["email"]=this.user.email;
 data["token"]=this.user.token;
 data["password"]=this.user.password;
 data["id_role"]=this.user.id_role;
-Axios.post(this.api+"/admin/users/add",{data:data}).then( ({data})=>{
+Axios.post(this.api+"/api/admin/users/add",{data:data}).then( ({data})=>{
 console.log('redraw')
   this.$emit("redraw")
 })

@@ -19,8 +19,15 @@ single-line type="text"
 
 <v-card class="">
     <v-card-title class="text-center">
-        <h5>{{g.event.nom}}</h5>
-  
+      <v-col>  <h5>{{g.event.nom}}</h5>
+      </v-col>
+      <v-col>
+<v-btn v-if="user.id_role==1" @click="deleteImage(g.id)">
+<v-icon>
+mdi-trash-can
+</v-icon>
+</v-btn>
+      </v-col>
     </v-card-title>
       <v-card-subtitle>   {{ g.image.split(".")[0] }} </v-card-subtitle>
 <img :src="'/image/'+g.image" class="w-full" width="10vw"/>
@@ -50,6 +57,7 @@ name:"gallerie",
       galleries:[],
        itemParPage:15,
      nbPage:0,
+     user:{},
      offset:0,
      total:0,
      page:1,
@@ -69,9 +77,17 @@ this.init()
 
                     this.galleries=data.gallerie;
                     this.total=data.total
-                
+                  this.user=data.user
                     this.nbPage= Math.round(this.total/this.itemParPage);
                 })
+            },
+            deleteImage(id){
+
+              Axios.delete(this.api+"/galleries",{id:id}).then(({data} )=>{
+                  this.init()
+                })
+
+
             }
         },
             watch:{

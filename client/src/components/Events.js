@@ -9,7 +9,7 @@ name:"home",
      listeEvents:[],
      dialog:false,
      disabled:false,
-     itemParPage:15,
+     itemParPage:6,
      nbPage:0,
      offset:0,
      total:0,
@@ -31,9 +31,9 @@ name:"home",
                             this.listeCurrentEvent=[]
 
                                     
-                            let offset=this.itemParPage*currentPage-1;
+                            let offset=this.itemParPage*(this.page-1);
                         this.page=currentPage
-                  Axios.post(this.api+"/allevent",{limit:this.itemParPage,offset:offset}).then(( {data} )=>{
+                  Axios.post(this.api+"/api/allevent",{limit:this.itemParPage,offset:offset}).then(( {data} )=>{
 
                     this.listeEvents=data.listEvents;
                    // this.total=data.total
@@ -44,7 +44,7 @@ name:"home",
 
         },
         voirCategorie(catId){
-            this.$router.push("/events/category/"+catId)
+            this.$router.push("/api/events/category/"+catId)
         }
     }
 };

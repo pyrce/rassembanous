@@ -3,6 +3,10 @@
 
 <v-col class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-6">
 
+<v-row class="" style="width:30vw">
+<img :src="'/image/'+dataEvent.event.affiche" class="" width=""/>
+</v-row>
+
 <v-row  class=" grid grid-cols-10 h-24 ma-10 gap-y-3 col-start-1 col-end-10">
   <span class="titre h-12 w-full mb-10">Date et lieu</span>
 <v-row>
@@ -23,11 +27,11 @@ Vous êtes déjà inscrit
 
 </v-row>
 
-<v-row v-else >
+<v-row v-else  class="mt-5">
 
 
 
-  <v-btn v-if="user" @click="inscription" class="mt-5">s'inscrire </v-btn>
+  <v-btn v-if="user" @click="inscription">s'inscrire </v-btn>
 
 
 
@@ -39,7 +43,7 @@ Vous êtes déjà inscrit
 
 
 
-<v-row class=" grid grid-cols-10 h-24 ma-10 col-start-1 col-end-10">
+<v-row class=" grid grid-cols-10 h-24 ma-15 col-start-1 col-end-10">
   <span class="titre h-12 w-full mb-10">Description</span>
 
 <v-row >

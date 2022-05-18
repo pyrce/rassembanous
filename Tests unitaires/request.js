@@ -1,15 +1,37 @@
-const http = require('http');
 
 
-export default function request(url) {
-  return new Promise(resolve => {
-    // This is an example of an http request, for example to fetch
-    // user data from an API.
-    // This module is being mocked in __mocks__/request.js
-    http.get({path: url}, response => {
-      let data = '';
-      response.on('data', _data => (data += _data));
-      response.on('end', () => resolve(data));
-    });
-  });
+const config = {
+  apiUrl: {
+    myFleetAPI: 'http://localhost:3500',
+  },
+};
+export async function getUserTest() {
+  return fetch(config.apiUrl.myFleetAPI+"/users", {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+
+      return response.json();
+    })
+    .catch((reject) => console.log(reject));
+}
+
+export async function logUser() {
+  return fetch(config.apiUrl.myFleetAPI, {
+    method: 'POST',
+    data:{"login":"ladmin",password:"admin" },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      console.log(response.json())
+      return response.json();
+    })
+    .catch((reject) => console.log(reject));
 }

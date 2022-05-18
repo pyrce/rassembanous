@@ -27,7 +27,7 @@ name:"event",
         console.log("begin init");
                             this.dataEvent=[]
                            let id= this.$route.params.id 
-                  Axios.post(this.api+"/partenaires/events/get",{id:id}).then( ( {data} )=>{
+                  Axios.post(this.api+"/api/partenaires/events/get",{id:id}).then( ( {data} )=>{
                 this.dataEvent=data.event;
                 this.categories=data.categories
 
@@ -67,7 +67,7 @@ name:"event",
    
    
    
-Axios.post(this.api+"/events/"+this.dataEvent.id,{event:event,id:this.dataEvent.id},{ headers: {
+Axios.post(this.api+"/api/events/"+this.dataEvent.id,{event:event,id:this.dataEvent.id},{ headers: {
                  'content-type': 'application/json'
                }}) .then(msg=>{
                   this.$router.push("/MyEvents");

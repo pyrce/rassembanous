@@ -44,8 +44,10 @@ class UserController {
         let nom:any = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
 
         let userToken = await JWTToken.getUser();
+        console.log("user connected :");
+        console.log(userToken);
         if (userToken != false) {
-            await prisma.event_user.create({ data:{id_event: data, "id_user": userToken.userId} });
+            await prisma.event_user.create({ data:{"id_event": data, "id_user": userToken.id} });
         
             qrcode.toFile(
                 './public/image/' + nom + '.png',
@@ -118,8 +120,7 @@ if(user){
     public static async getUser() {
 
         let userToken =await JWTToken.getUser();
-      console.log("my token")
-         console.log(userToken)
+      console.log(userToken)
         if ( userToken ) {
    
 

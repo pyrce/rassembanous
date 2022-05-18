@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -112,7 +112,7 @@ model stands{
 
 model event_stand{
     id              Int           @id @default(autoincrement())
-    id_stand Int
+    id_stand Int?
     id_event Int
     id_user Int
     idStand stands? @relation(fields:  [id_stand], references: [id])

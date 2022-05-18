@@ -8,7 +8,7 @@ import JWTToken from "../../services/JWToken";
 
 class checkJWT {
 
-  public static checkToken(){
+  public static checkToken(options:any){
   //Get the jwt token from the head
   const token = <string> JWTToken.getToken();
   let jwtPayload;
@@ -17,8 +17,11 @@ class checkJWT {
   if(token!=undefined) {
     jwtPayload = <any>jwt.verify(token, config.jwtSecret);
  
+    let user:any=JWTToken.getUser();
+    if(options.id_role === user.role){
+      return false;
+    }
 
-    //res.locals.jwtPayload = jwtPayload;
     return true
   } else {
    return false;

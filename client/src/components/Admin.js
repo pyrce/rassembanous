@@ -15,12 +15,15 @@ components: {
  data(){
  return{
      listeUser:[],
+     listeCategories:[],
      itemParPage:15,
      roles:[],
      user:{},
      ajoutUser:{},
      nbPage:0,
      offset:0,
+     categorie:{},
+     addCategorieDialogue:false,
      total:0,
      search:"",
      page:1,
@@ -54,6 +57,25 @@ components: {
               { text: '', value: 'roles' },
               { text: '', value: 'actions' },
             ]
+          },
+
+          headersCat(){
+              return [
+{
+  text: 'id',
+  value: 'id',
+},
+{
+  text: 'categorie',
+  value: 'categorie',
+},{
+  text: 'icone',
+  value: 'icon',
+},
+{ text: '', value: 'actions' },
+
+              ]
+
           }
     },
     methods:{
@@ -62,7 +84,7 @@ components: {
                             this.listeUser=[]
                             let offset=this.itemParPage*currentPage-1;
                             this.page=currentPage
-                  Axios.post("/admin/users",{params:{limit:this.itemParPage,offset:0,search:this.search}}).then(( {data} )=>{
+                  Axios.post(this.api+"/api/admin/users",{limit:this.itemParPage,offset:0,search:this.search}).then(( {data} )=>{
 
                this.listeUser=data.alluser;
                this.total=data.total
@@ -72,7 +94,22 @@ components: {
            
         })
 
+        Axios.get(this.api+"/api/admin/categories").then(( {data} )=>{
 
+          this.listeCategories=data.categories;
+
+          
+      
+      
+   })
+
+        },
+        addCat(){
+     
+          Axios.post(this.api+"/api/admin/categorie",this.categorie).then( ({data})=>{
+           this.addCategorieDialogue=false
+           this.initialize();
+            })
         },
         edit(id){
            
@@ -82,8 +119,20 @@ components: {
             )[0]
             this.editDialog=true;
         },
+
+        editCat(id){
+           
+          this.categorie= this.listeCategories.filter( ( item )=>
+               item.id==id
+          
+           )[0]
+           this.addCategorieDialogue=true;
+       },
         addUser(){
 this.addUserDialog=true;
+        },
+        addCategories(){
+this.addCategorieDialogue=true;
         },
         redraw(){
           console.log("redraw2")
@@ -93,11 +142,18 @@ this.addUserDialog=true;
         },
         deleteUser(id){
 console.log(id)
-          Axios.post("/admin/users/delete",{id:id}).then( ({data})=>{
+          Axios.post(this.api+"/api/admin/users/delete",{id:id}).then( ({data})=>{
            
            this.initialize();
             })
         },
+        deleteCat(id){
+          console.log(id)
+                    Axios.post(this.api+"/api/admin/categories/delete",{id:id}).then( ({data})=>{
+                     
+                     this.initialize();
+                      })
+                  },
         updateRole(id){
           this.user= this.listeUser.filter( ( item )=>
           item.id==id
@@ -106,7 +162,7 @@ console.log(id)
 
       let data={};
       data["id_role"]=this.user.id_role
-      Axios.put("/admin/users",{id:id,data}).then( ({data})=>{
+      Axios.put(this.api+"/api/admin/users",{id:id,data}).then( ({data})=>{
            
         this.initialize();
          })

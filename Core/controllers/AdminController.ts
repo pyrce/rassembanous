@@ -37,11 +37,8 @@ class HomeController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let queryLimit: any = {}
-        queryLimit["limit"] = data.params.limit
-        queryLimit["offset"] = data.params.offset
 
-        let search = data.params.search != "undefined" ? data.params.search : "";
+        let search = data.search != "undefined" ? data.search : "";
 
         // UsersModel.setJoinTable([{class:RolesModel,fk:"id"}]);
         let allUsers = await prisma.users.findMany({
@@ -62,6 +59,30 @@ class HomeController {
         return JSON.stringify({ alluser: allUsers, roles: roles, total: total });
 
     }
+
+    public static async getCategories(request: Request){
+        let { data } = request;
+        //data = JSON.parse(data);
+console.log(data)
+        let categories=await prisma.categories.findMany({  skip: data.offset != null ? data.offset : undefined,
+            take: data.limit});
+
+            return JSON.stringify({ categories: categories});
+    }
+
+    public static async addCategorie(request: Request){
+        let { data } = request;
+        data = JSON.parse(data);
+console.log(data)
+if(data.id){
+await prisma.categories.update({ data:{categorie:data.categorie,icon:data.icon},where:{id:data.id} })
+
+}else{
+        let categories=await prisma.categories.create({ data:data });
+}
+            return JSON.stringify({"msg":"ok"});
+    }
+
 
     public static async addUser(request: Request) {
 
@@ -95,6 +116,38 @@ class HomeController {
         }
     }
 
+    
+    public static async deleteCat(request: Request) {
+
+        let { data } = request;
+        data = JSON.parse(data);
+
+        let id = data.id
+        try {
+
+
+          await  prisma.categories.delete({ where: { id: id } })
+            return JSON.stringify({ "msg": "ok" })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    public static async deleteImage(request: Request) {
+
+        let { data } = request;
+      //  data = JSON.parse(data);
+console.log("data media")
+console.log(data)
+        let id = data.id
+        try {
+
+
+          await  prisma.media.delete({ where: { id: id } })
+            return JSON.stringify({ "msg": "ok" })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     public static async updateUser(request: Request) {
 
         let { data } = request;

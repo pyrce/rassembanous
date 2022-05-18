@@ -110,7 +110,7 @@ showUser:true
 methods:{
   getUser(){
 
-Axios.get(this.api+"/user/profil").then(( {data} )=>{
+Axios.get(this.api+"/api/user/profil").then(( {data} )=>{
 console.log(data)
          if(!data.msg){
 this.user=data

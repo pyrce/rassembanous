@@ -27,17 +27,17 @@ this.getListLieus();
     methods:{
         getListePartenaires(val){
           
-          axios.get(this.api+"/partenaires/list",{params:{s:val}}).then(data=>{
+          axios.get(this.api+"/api/partenaires/list",{params:{s:val}}).then(data=>{
 
     this.partenaires=data.data;
 })  
         },getListCategories(){
-          axios.get(this.api+"/categories").then(data=>{
+          axios.get(this.api+"/api/categories").then(data=>{
 
     this.categories=data.data;
 })  
         },getListLieus(){
-          axios.get(this.api+"/lieu").then(data=>{
+          axios.get(this.api+"/api/lieu").then(data=>{
 
     this.lieus=data.data;
 })  
@@ -76,7 +76,7 @@ this.getListLieus();
 
 
 
-            axios.post(this.api+"/events",event,{ headers: {
+            axios.post(this.api+"/api/events",event,{ headers: {
               'content-type': 'application/json'
             }}) .then(msg=>{
                this.$router.push("/")

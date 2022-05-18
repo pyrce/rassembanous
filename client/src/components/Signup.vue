@@ -132,7 +132,7 @@ data["adresse"]=this.user.adresse;
 data["email"]=this.user.email;
 
 
-Axios.post(this.api+"/users/signup",data).then(( )=>{
+Axios.post(this.api+"/api/users/signup",data).then(( )=>{
 
 this.$router.push("/")
         })

@@ -22,6 +22,7 @@ components: {
      listeCurrentEvent:[],
      lastEvents:[],
      dialog:false,
+     monted:false,
      message:{},
      disabled:false,
      showUser:false,
@@ -55,7 +56,7 @@ components: {
         initialize(){
           
                             this.listeCurrentEvent=[]
-                  Axios.get(this.api+"/events",{params:{limit:6,offset:0}}).then(( {data} )=>{
+                  Axios.get(this.api+"/api/events",{params:{limit:6,offset:0}}).then(( {data} )=>{
                       console.log("data")
          
                     this.listeCurrentEvent=data.currentEvents;
@@ -67,8 +68,14 @@ components: {
         becomePartner(){
             this.$router.push("/partner");
         },GetUser(){
+    
             console.log("get user event")
             Layout.methods.getUser();
+                
+        },
+        loadEvent(){
+                this.monted=true
+                this.getUser();
         },
         seeMap(id){
             let evt=this.listeCurrentEvent.filter( ( item )=>
@@ -112,7 +119,7 @@ components: {
                 data["objet"]=this.message.objet;
                 data["message"]=this.message.message;
 
-                Axios.post(this.api+"/contact",data).then(( {data} )=>{
+                Axios.post(this.api+"/api/contact",data).then(( {data} )=>{
                         this.message={};
          
       })
