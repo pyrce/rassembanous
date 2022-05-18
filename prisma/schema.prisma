@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgres"
-  url      ="postgres://gnedowbfvcjizg:5675969d63b86822bb8e5492160cd708526a414efe73f66f0cc431112787743c@ec2-44-195-169-163.compute-1.amazonaws.com:5432/d2m8uprhfmc5mq"
+  url      = env("DATABASE_URL")
 }
 
 model Roles{
