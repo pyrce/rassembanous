@@ -108,7 +108,7 @@
             v-model="liste"
             hide-details
             hide-selected
-            item-text="nomMoral"
+            item-text="nom"
             item-value="id"
             placeholder="Où ?"
             return-object

@@ -33,7 +33,7 @@ name:"home",
                                     
                             let offset=this.itemParPage*(this.page-1);
                         this.page=currentPage
-                  Axios.post(this.api+"/api/allevent",{limit:this.itemParPage,offset:offset}).then(( {data} )=>{
+                  Axios.get(this.api+"/api/allevents",{limit:this.itemParPage,offset:offset}).then(( {data} )=>{
 
                     this.listeEvents=data.listEvents;
                    // this.total=data.total

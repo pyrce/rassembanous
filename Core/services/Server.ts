@@ -45,20 +45,20 @@ class Server {
 
         if (someRoute) {
             if(someRoute.middleware !=null){
-                let check=checkJWT.checkToken(someRoute.middleware)
+                let check= checkJWT.checkToken(someRoute.middleware)
                 console.log("check : "+check)
                if(check){
                 return someRoute.callback(req);
                }else{
               
-                return JSON.stringify({status:"403",msg:"KO"})
+                return JSON.stringify({status:"403",msg:"KO - token not found"})
                }
            }else{
             return someRoute.callback(req);
            }
         } else {
            
-            return JSON.stringify({status:"404",msg:"KO"})
+            return JSON.stringify({status:"404",msg:"KO - not found"})
         }
     }
 
@@ -74,7 +74,7 @@ class Server {
        app.use(express.static(path.join( 'public')))
         app.use(cors());
 
-    // JWTToken.makeJWT({id:1,role:1,nom:"DOE",prenom:"John"});
+     //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         let server = createServer( async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');

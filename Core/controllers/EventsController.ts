@@ -99,7 +99,7 @@ class EventsController {
 
         data = JSON.parse(data);
 
-        let user=await JWTToken.getUser()
+        let user= JWTToken.getUser()
 
         let queryLimit: any = {}
         queryLimit["limit"] = data.limit
@@ -140,7 +140,8 @@ class EventsController {
         let queryLimit: any = {}
         queryLimit["limit"] = data.limit
         queryLimit["offset"] = data.offset
-
+console.log("data all event:" );
+console.log(data)
         let response = {};
         let total = 0;
         let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
@@ -324,7 +325,7 @@ lastEvents[0].events.forEach( (element:any)=>{
     }
 
     private static async isInsrit(id: any) {
-        let userToken =await JWTToken.getUser();
+        let userToken:any = JWTToken.getUser();
         let myEvent: any = {};
         if (userToken) {
 

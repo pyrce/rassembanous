@@ -43,7 +43,7 @@ class UserController {
         let dateJour = new Date();
         let nom:any = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
 
-        let userToken = await JWTToken.getUser();
+        let userToken:any =  JWTToken.getUser();
         console.log("user connected :");
         console.log(userToken);
         if (userToken != false) {
@@ -107,7 +107,7 @@ class UserController {
     public static async follow(request: Request) {
 
         let { data } = request;
-let user= await JWTToken.getUser();
+let user:any=  JWTToken.getUser();
 
 if(user){
       await  prisma.partenaire_user.create({data:{ id_partenaire: parseInt(data), id_user: user.userId} });
@@ -119,8 +119,9 @@ if(user){
 
     public static async getUser() {
 
-        let userToken =await JWTToken.getUser();
-      console.log(userToken)
+        let userToken:any =await JWTToken.getUser();
+      console.log("userToken ! :");
+      console.log(userToken);
         if ( userToken ) {
    
 
@@ -132,11 +133,11 @@ if(user){
 
     public static async getUserProfil() {
 
-        let userToken = JWTToken.getToken();
+        let userToken:any = JWTToken.getToken();
    
         if (typeof userToken != "undefined") {
  
-            let infoUser =await JWTToken.getUser();
+            let infoUser:any = JWTToken.getUser();
 
             let id = infoUser.userId;
 
