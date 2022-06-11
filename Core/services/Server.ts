@@ -18,14 +18,13 @@ const app = express();
  * Singleton to initiate nodejs server
  */  
 class Server {
-    port: number = 3500;
+    port: number = 0;
     private static instance: Server;
     adapter!: CustomAdapter;
     SERVER: any
 
-    constructor(port?: number) {
-        if (port) this.port = port;
-        else this.port = 3500;
+    constructor() {
+       this.port=process.env.PORT ? parseInt(process.env.PORT) : 3500  
     }
     /**Recupere la route et renvoie une vue ou une erreur
      * 
