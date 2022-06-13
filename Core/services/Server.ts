@@ -86,7 +86,7 @@ class Server {
 
             myResponse.emit(data);
         })
-        server.listen(this.port);
+        server.listen(this.port, '0.0.0.0');
     }
     public static start() {
 

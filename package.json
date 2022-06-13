@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "rimraf ./build ; tsc ; cp -R ./Core/Views ./build/app/ ; cp -R ./Core/public ./build ; cp -R ./Core/Views ./build/Core/",
-    "watch": "npm run build ; nodemon build/app.js",
-    "start": "nodemon build/app.js",
+    "postinstall": "npm run build",
+    "start": "node server.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
     
   },
