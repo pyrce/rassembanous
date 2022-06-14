@@ -9,6 +9,7 @@
   "scripts": {
     "build": "rimraf ./build ; tsc ; cp -R ./Core/Views ./build/app/ ; cp -R ./Core/public ./build ; cp -R ./Core/Views ./build/Core/",
     "postinstall": "npm run build",
+    "heroku-postbuild": "yarn prisma migrate dev",
     "start": "npm run build ; nodemon build/app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
     
