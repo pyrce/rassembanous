@@ -10,7 +10,7 @@
     "build": "rimraf ./build ; tsc ; cp -R ./Core/Views ./build/app/ ; cp -R ./Core/public ./build ; cp -R ./Core/Views ./build/Core/",
     "postinstall": "npm run build",
     "heroku-postbuild": "npx prisma migrate dev;npm run build",
-    "start": "npm run build && node build/app.ts",
+    "start": "npm run build && node ./build/app.ts",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
     
   },
