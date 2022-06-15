@@ -4,9 +4,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "target": "es6",
-    "ts-node": {
-      "esm": true
-  },
+
     "module": "commonjs",
     "lib": [
       "es6",
@@ -25,6 +23,9 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
+  },
+      "ts-node": {
+      "esm": true
   },
   "include": [
     "Core/**/*"
