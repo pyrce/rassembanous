@@ -4,7 +4,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "target": "es6",
-    "module": "commonjs",
+    "module": "commonJS",
     "lib": [
       "es6",
       "dom.iterable",
