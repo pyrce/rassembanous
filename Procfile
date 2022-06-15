@@ -1,3 +1,3 @@
-web: node build/app.ts
+web: node app.ts
 
 release: npx prisma migrate deploy
