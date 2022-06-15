@@ -1,5 +1,4 @@
 
-import Render from "../../Core/Views/Render";
 import Request from "../services/Request";
 type route = { data: Object, view: String }
 import * as path from "path";

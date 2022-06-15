@@ -1,4 +1,4 @@
-import Render from "../../Core/Views/Render";
+
 import Request from "../../Core/services/Request";
 import * as path from "path";
 import * as jwt from "jsonwebtoken";

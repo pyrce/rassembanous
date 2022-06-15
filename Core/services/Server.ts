@@ -1,7 +1,6 @@
 import Router from '../Routes/Router';
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import CustomAdapter from "./Request"
-import Render from '../Views/Render';
 import Request from './Request';
 import Response from './Reponse';
 import * as Url  from 'url';

@@ -3,15 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "type": "module",
   "engines": {
     "node": "16.14.2"
   },
   "scripts": {
-    "start": "node build/app.ts",
-    "postinstall": "tsc",
-    "watch-node": "nodemon build/app.ts",
-    "watch-ts": "tsc -w",
+    "build": "rimraf ./build ; tsc ; cp -R ./Core/Views ./build/app/ ; cp -R ./Core/public ./build ; cp -R ./Core/Views ./build/Core/",
+    "watch": "npm run build ; nodemon build/app.js",
+    "start": "nodemon build/app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
     
   },

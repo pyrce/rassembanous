@@ -1,5 +1,5 @@
 import { ServerResponse } from 'http';
-import Render from '../Views/Render';
+
 
 class Response {
 
@@ -20,14 +20,7 @@ class Response {
             this.reponse.setHeader('Access-Control-Allow-Methods', '*');
             this.reponse.end(data);
 
-        } else if (data instanceof Render) {
-  
-            let rend= data.render();
-
-            this.reponse.writeHead(200, { 'Content-Type': 'text/html' });
-            this.reponse.end(rend);
-
-        } else {
+        }  else {
 console.log("data");
 console.log(data);
             this.reponse.end(JSON.stringify({ "erreur": "format incorrect" }));

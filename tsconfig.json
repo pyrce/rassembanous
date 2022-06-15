@@ -4,8 +4,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "target": "es6",
-    "moduleResolution": "node",
-    "module": "ESNEXT",
+    "module": "commonjs",
     "lib": [
       "es6",
       "dom.iterable",
@@ -15,6 +14,7 @@
     "outDir": "build",
     "rootDir": "Core",
     "strict": true,
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
