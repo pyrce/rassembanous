@@ -4,8 +4,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "target": "es6",
-
-    "module": "commonjs",
+    "module": "CommonJS",
     "lib": [
       "es6",
       "dom.iterable",
@@ -25,7 +24,10 @@
     ],
   },
       "ts-node": {
-      "esm": true
+      "esm": true,
+      "compilerOptions": {
+        "module": "CommonJS"
+      }
   },
   "include": [
     "Core/**/*"
