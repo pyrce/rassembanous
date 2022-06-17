@@ -7,7 +7,7 @@
     "node": "16.14.2"
   },
   "scripts": {
-    "build": "rimraf ./build ; tsc ; c cp -R ./Core/public ./build",
+    "build": "",
     "watch": "npm run build ; nodemon build/app.js",
     "start": "nodemon app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
