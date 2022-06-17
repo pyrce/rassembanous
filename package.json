@@ -7,13 +7,13 @@
     "node": "16.14.2"
   },
   "scripts": {
-    "build": "rimraf ./build ; tsc ; cp -R ./Core/Views ./build/app/ ; cp -R ./Core/public ./build ; cp -R ./Core/Views ./build/Core/",
+    "build": "rimraf ./build ; tsc ; c cp -R ./Core/public ./build",
     "watch": "npm run build ; nodemon build/app.js",
-    "start": "nodemon build/app.js",
+    "start": "nodemon app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
     
   },
-  "author": "",
+  "author": "ETHEVE Florent",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
