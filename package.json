@@ -2,6 +2,7 @@
   "name": "cms",
   "version": "1.0.0",
   "description": "",
+  "type":"module",
   "main": "app.js",
   "engines": {
     "node": "16.14.2"
