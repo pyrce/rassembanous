@@ -3,8 +3,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "target": "es6",
-    "module": "CommonJS",
+    "module": "ESNext",
+    "target": "ESNext",
     "lib": [
       "es6",
       "dom.iterable",
