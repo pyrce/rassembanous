@@ -9,7 +9,7 @@
   "scripts": {
     "build": "",
     "watch": "npm run build ; nodemon build/app.js",
-    "start": "node ./app.js",
+    "start": "node app.ts",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
     
   },
