@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "node":"16.14.2",
+    "nodemon": "^2.0.12",
     "@babel/preset-env": "^7.16.11",
     "@prisma/client": "^3.11.0",
     "@types/csurf": "^1.11.2",
