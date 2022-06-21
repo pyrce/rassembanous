@@ -12,7 +12,7 @@ import * as path from "path";
 import cors from 'cors';
 import csurf from "csurf";
 import checkJWT from "../Routes/middleware/checkJWT";
-const app = express();
+//const app = express();
 /**
  * Singleton to initiate nodejs server
  */  
@@ -69,8 +69,8 @@ class Server {
     }
 
     private init() {
-       app.use(express.static(path.join( 'public')))
-        app.use(cors());
+       //app.use(express.static(path.join( 'public')))
+       // app.use(cors());
 
      //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         let server = createServer( async (request: IncomingMessage, response: ServerResponse) => {

@@ -3,12 +3,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "module": "ESNext",
-    "target": "ESNext",
+
+    "target": "ES6",
     "lib": [
-      "es6",
-      "dom.iterable",
-      "dom"
+      "es6"
     ],
     "allowJs": true,
     "outDir": "build",
