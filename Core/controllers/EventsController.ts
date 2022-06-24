@@ -52,18 +52,10 @@ class EventsController {
             //   let currentEvents = await eventsClass.findAll([{ "dateLimit": today, "op": ">" }], queryLimit);
             /* let currentEvents = await eventsClass.findAll({   offset: data.limit,
                  limit: data.offset, where:{dateFin:{gt:today} }});*/
+              console.log("data :")
               console.log(data)
             let currentEvents = await prisma.evenements.findMany(
-                {
-                    skip: data.query.offset != null ? parseInt(data.query.offset) : undefined,
-                    take: parseInt(data.query.limit),
-                    where: {
-                        dateFin: { gt:new Date() },
-                    },
-                    include: {
-                        lieu: true
-                    }
-                }
+   
             );
 
             //  currentEvents = JSON.parse(JSON.stringify(currentEvents));
