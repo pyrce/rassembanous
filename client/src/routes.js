@@ -21,7 +21,7 @@ import MyEvent from "./components/MyEvent.vue"
 import categoryEvent from "./components/CategoryEvent.vue"
 Vue.use(VueRouter);
 
-const router = new VueRouter({
+const Routes = new VueRouter({
     mode: 'history',
     routes: [
         {
@@ -108,7 +108,7 @@ const router = new VueRouter({
     ]
 })
 
-router.beforeEach((to, from, next) => {
+Routes.beforeEach((to, from, next) => {
     const { requiresAuth, role } = to.meta;
 
     if (requiresAuth == true) {
@@ -137,4 +137,4 @@ router.beforeEach((to, from, next) => {
     }
     next();
 });
-export default router;
+export default Routes;
