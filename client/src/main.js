@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import Routes from './routes.js';
+import {Routes} from './routes.js';
 import Layout from './layouts/Layout.vue';
 import 'vuetify/dist/vuetify.min.css';
 import moment from 'moment'
