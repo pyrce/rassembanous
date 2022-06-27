@@ -9,7 +9,7 @@
   "scripts": {
     "build": "",
     "heroku-prebuild": "npm install",
-    "watch":  "tsc -w", "dev":  "node app.js",
+    "watch":  "tsc -w", "dev":  "node app.js && cd client npm run serve",
     "postinstall": "cd client && npm install",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
