@@ -24,7 +24,7 @@
     "moment": "^2.29.1",
     "sweetalert2": "^11.4.13",
     "vee-validate": "^4.5.8",
-    "vue": "~2.6.14",
+    "vue": "^3.0.0",
     "vue-card-carousel": "^1.0.0",
     "vue-pagination-tw": "^0.1.2",
     "vue-router": "~3.5.3",
