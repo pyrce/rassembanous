@@ -12,7 +12,7 @@
     "heroku-prebuild": "npm install",
     "watch": "tsc -w",
     "dev": "node app.js && cd client npm run serve",
-    "postinstall": "cd client && npm install",
+    "heroku-postbuild": "cd client && npm install && cd ..",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
   "author": "ETHEVE Florent",
