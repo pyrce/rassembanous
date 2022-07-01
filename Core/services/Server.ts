@@ -71,9 +71,7 @@ class Server {
     private init() {
        //app.use(express.static(path.join( 'public')))
        // app.use(cors());
-        app.get(/.*/,function(req,res){
-            res.sendFile(__dirname+"/client/dist/index.html")
-        })
+
      //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         let server = createServer( async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
