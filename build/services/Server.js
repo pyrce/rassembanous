@@ -12,8 +12,10 @@ import { createServer } from 'http';
 import Request from './Request';
 import Response from './Reponse';
 import * as Url from 'url';
+import express from 'express';
+import * as path from "path";
 import checkJWT from "../Routes/middleware/checkJWT";
-//const app = express();
+const app = express();
 /**
  * Singleton to initiate nodejs server
  */
@@ -63,6 +65,9 @@ class Server {
     init() {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
+        app.get("*", (req, res) => {
+            res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+        });
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         let server = createServer((request, response) => __awaiter(this, void 0, void 0, function* () {
             response.setHeader('Access-Control-Allow-Origin', '*');

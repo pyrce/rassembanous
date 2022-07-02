@@ -8,11 +8,10 @@
     "npm": "^8.13.1"
   },
   "scripts": {
-    "build": "",
-    "heroku-prebuild": "npm install",
-    "watch": "tsc -w",
-    "dev": "node app.js && cd client && npm install && npm run serve",
-    "heroku-postbuild": "cd client && npm install && cd ..",
+    "start": "node app.js",
+    "postinstall": "tsc",
+    "watch-node": "nodemon app.js",
+    "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
   "author": "ETHEVE Florent",
