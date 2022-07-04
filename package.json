@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "postinstall": "tsc",
+    "heroku-postbuild": "tsc",
     "heroku-prebuild":"npm i",
     "watch-node": "nodemon app.js",
     "watch-ts": "tsc -w",
