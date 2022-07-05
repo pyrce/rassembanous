@@ -19,8 +19,8 @@ class Request {
 
 
 
-    public async setData(req:IncomingMessage) {
-    
+    public async setData(req: IncomingMessage) {
+
         let baseURI = url.parse(req.url, true);
         let path = baseURI.pathname?.split('/');
         let params = path?.slice(1)[path.length - 2];
@@ -43,16 +43,16 @@ class Request {
                 break;
             default:
                 break;
-        }     
+        }
     }
 
-    private parseBody(req:IncomingMessage) {
+    private parseBody(req: IncomingMessage) {
         let body: Array<any> = [];
         return new Promise((resolve, reject) => {
             req.on('data', (chunk: any) => {
                 body.push(chunk)
             }).on('end', () => {
-       
+
                 const parsedBody = Buffer.concat(body).toString();
 
                 return resolve(parsedBody)
@@ -60,7 +60,7 @@ class Request {
         })
     }
 
-    public static async instance(req: IncomingMessage){
+    public static async instance(req: IncomingMessage) {
         const request = new Request(req)
         await request.setData(req)
         return request
