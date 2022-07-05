@@ -31,7 +31,7 @@ const prisma = new PrismaClient({
 
 prisma.$on('query', async (e) => {
 
-     console.log(`${e.query} ${e.params} \n`)
+    console.log(`${e.query} ${e.params} \n`)
 
 });
 class EventsController {
@@ -52,10 +52,9 @@ class EventsController {
             //   let currentEvents = await eventsClass.findAll([{ "dateLimit": today, "op": ">" }], queryLimit);
             /* let currentEvents = await eventsClass.findAll({   offset: data.limit,
                  limit: data.offset, where:{dateFin:{gt:today} }});*/
-              console.log("data :")
-              console.log(data)
+ 
             let currentEvents = await prisma.evenements.findMany(
-   
+
             );
 
             //  currentEvents = JSON.parse(JSON.stringify(currentEvents));
@@ -91,7 +90,7 @@ class EventsController {
 
         data = JSON.parse(data);
 
-        let user= JWTToken.getUser()
+        let user = JWTToken.getUser()
 
         let queryLimit: any = {}
         queryLimit["limit"] = data.limit
@@ -123,7 +122,7 @@ class EventsController {
 
         total = JSON.parse(JSON.stringify(total)).length;
 
-        return JSON.stringify({ gallerie: images, total: total,user:user });
+        return JSON.stringify({ gallerie: images, total: total, user: user });
     }
 
     public static async getAllEvents(request: Request) {
@@ -132,8 +131,8 @@ class EventsController {
         let queryLimit: any = {}
         queryLimit["limit"] = data.limit
         queryLimit["offset"] = data.offset
-console.log("data all event:" );
-console.log(data)
+        console.log("data all event:");
+        console.log(data)
         let response = {};
         let total = 0;
         let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
@@ -142,41 +141,41 @@ console.log(data)
         // eventsClass.setJoinTable([{ class: categoriesModel, fk: "id" }]);
         // let lastEvents = await eventsClass.findAll([{ "dateFin": today, "op": ">" }], queryLimit);
 
-let opt:any =           {
-         
-    include: {
-        
-        events:{
-            include:{
-                lieu:true,             
-            },
-             where: {
-        dateFin: { gt: new Date() },
+        let opt: any = {
 
-    },
-    skip: data.offset ? data.offset : 0,
-    take: data.limit,  
-        }        
-    }
-}
-    let where={}
-        if(data.id_categorie){
-             where={id:parseInt(data.id_categorie)}
+            include: {
+
+                events: {
+                    include: {
+                        lieu: true,
+                    },
+                    where: {
+                        dateFin: { gt: new Date() },
+
+                    },
+                    skip: data.offset ? data.offset : 0,
+                    take: data.limit,
+                }
+            }
+        }
+        let where = {}
+        if (data.id_categorie) {
+            where = { id: parseInt(data.id_categorie) }
             opt.where = where
         }
-        let lastEvents:any = await prisma.categories.findMany(
-   opt
+        let lastEvents: any = await prisma.categories.findMany(
+            opt
         );
 
-lastEvents[0].events.forEach( (element:any)=>{
+        lastEvents[0].events.forEach((element: any) => {
 
-    element.affiche=fs.readFileSync("./public/image/"+element.affiche ,'base64');
-})
+            element.affiche = fs.readFileSync("./public/image/" + element.affiche, 'base64');
+        })
 
-         total=await (await prisma.evenements.findMany({where})).length;
+        total = await (await prisma.evenements.findMany({ where })).length;
         //  total = JSON.parse(JSON.stringify(total)).length;
         // lastEvents = JSON.parse(JSON.stringify(lastEvents));
-        response = { listEvents: lastEvents,total:total };
+        response = { listEvents: lastEvents, total: total };
 
 
         return JSON.stringify(response);
@@ -214,42 +213,42 @@ lastEvents[0].events.forEach( (element:any)=>{
                 "nbPlace": parseInt(data.nbPlace),
                 "prix": parseInt(data.prix),
                 "id_lieu": data.id_lieu,
-                "affiche":"5560.jpg",
+                "affiche": "5560.jpg",
                 "id_categorie": data.id_categorie,
                 "dateLimit": new Date(data.dateLimit),
-                "isPublic": data.isPublic ==1 ? true : false,
+                "isPublic": data.isPublic == 1 ? true : false,
                 "description": data.description,
                 "dateFin": new Date(data.dateFin)
             }
         });
 
-   
-        let follows = [];
-        if(partenaires){
-        partenaires.forEach(async (element: any) => {
-            //   let f = await prisma.users.findFirst({ where: {user: 5, "id_partenaire": element.id} });
-            //   await prisma.users.findFirst({ 
-            //     where: {id_: 5, "id_partenaire": element.id}
 
-            // });
-            //   //f = JSON.parse(JSON.stringify(f));
-            //   if (f.length > 0) {
-            //       //  follows.push(element.nomSoc)
-            //   }
-          await  prisma.event_stand.create({
-                data: {
-                    idEvent: {
-                        connect: {
-                            id: newEvent.id,
+        let follows = [];
+        if (partenaires) {
+            partenaires.forEach(async (element: any) => {
+                //   let f = await prisma.users.findFirst({ where: {user: 5, "id_partenaire": element.id} });
+                //   await prisma.users.findFirst({ 
+                //     where: {id_: 5, "id_partenaire": element.id}
+
+                // });
+                //   //f = JSON.parse(JSON.stringify(f));
+                //   if (f.length > 0) {
+                //       //  follows.push(element.nomSoc)
+                //   }
+                await prisma.event_stand.create({
+                    data: {
+                        idEvent: {
+                            connect: {
+                                id: newEvent.id,
+                            },
                         },
-                    }, 
-                    idUser:{
-                        connect:{id:element.id}
+                        idUser: {
+                            connect: { id: element.id }
+                        }
                     }
-                }
-            })
-        });
-    }
+                })
+            });
+        }
 
         return JSON.stringify({ msg: "ok" });
 
@@ -277,7 +276,7 @@ lastEvents[0].events.forEach( (element:any)=>{
 
             const id = data.params;
 
-            let event: any = await prisma.evenements.findFirst({ where: { id: parseInt(id) },include: {lieu:true} });
+            let event: any = await prisma.evenements.findFirst({ where: { id: parseInt(id) }, include: { lieu: true } });
 
             //event = JSON.parse(JSON.stringify(event));
             console.log("event")
@@ -286,22 +285,22 @@ lastEvents[0].events.forEach( (element:any)=>{
             let estTermine = new Date(event.dateLimit).getTime() < new Date().getTime() ? 1 : 0;
 
             let stands = await prisma.stands.findMany({});
-           // stands = JSON.parse(JSON.stringify(stands));
+            // stands = JSON.parse(JSON.stringify(stands));
 
-            let questionaire=await prisma.questionnaire.findFirst({
-                where:{id_event:parseInt(id)},
-                include:{questions:true},
-                
+            let questionaire = await prisma.questionnaire.findFirst({
+                where: { id_event: parseInt(id) },
+                include: { questions: true },
+
             });
 
-            let listePartenaireEvent=await prisma.event_stand.findMany({
-                where:{
-                    id_event:parseInt(id),
-                    
+            let listePartenaireEvent = await prisma.event_stand.findMany({
+                where: {
+                    id_event: parseInt(id),
+
                 },
-                include:{
-                    idUser:true,     
-                           
+                include: {
+                    idUser: true,
+
                 }
             })
 
@@ -309,7 +308,7 @@ lastEvents[0].events.forEach( (element:any)=>{
 
             let user = JWTToken.getUser();
 
-            let response = { estInscrit: estInscrit,listePartenaireEvent:listePartenaireEvent,questionaire:questionaire, estTermine: estTermine, event: event, stands: stands, partenaireByStands: partenaireByStands, user: user }
+            let response = { estInscrit: estInscrit, listePartenaireEvent: listePartenaireEvent, questionaire: questionaire, estTermine: estTermine, event: event, stands: stands, partenaireByStands: partenaireByStands, user: user }
             return JSON.stringify(response);
         } catch (error) {
             console.log(error)
@@ -317,7 +316,7 @@ lastEvents[0].events.forEach( (element:any)=>{
     }
 
     private static async isInsrit(id: any) {
-        let userToken:any = JWTToken.getUser();
+        let userToken: any = JWTToken.getUser();
         let myEvent: any = {};
         if (userToken) {
 
@@ -326,7 +325,7 @@ lastEvents[0].events.forEach( (element:any)=>{
         }
         console.log("myEvent");
         console.log(myEvent);
-        let estInscrit =myEvent ? 1 : 0;
+        let estInscrit = myEvent ? 1 : 0;
         return estInscrit;
     }
 

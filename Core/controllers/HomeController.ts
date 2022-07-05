@@ -32,37 +32,37 @@ class HomeController {
 
     }
 
-    public static async contact(request:Request){
+    public static async contact(request: Request) {
         let { data } = request;
         data = JSON.parse(data);
         console.log(data)
 
-    
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    //requireTLS: true,
-    auth: {
-        type: "OAuth2",
-      user: process.env.MAIL_USER,
-     // pass: process.env.MAIL_PASS,
-      clientId:process.env.CLIENT_ID,
-      clientSecret:process.env.SECRET_CLIENT,
-      refreshToken:process.env.REFRESH_TOKEN,
-      accessToken:process.env.ACCESS_TOKEN
-    },
-    logger: true
-  });
 
-  const info = await transporter.sendMail({
-    from: data.email,
-    to: "fetheve2@gmail.com",
-    subject: data.objet,
-    text: "Hello world?",
-    html: data.message,
-    headers: { 'x-myheader': 'test header' }
-  });
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            //requireTLS: true,
+            auth: {
+                type: "OAuth2",
+                user: process.env.MAIL_USER,
+                // pass: process.env.MAIL_PASS,
+                clientId: process.env.CLIENT_ID,
+                clientSecret: process.env.SECRET_CLIENT,
+                refreshToken: process.env.REFRESH_TOKEN,
+                accessToken: process.env.ACCESS_TOKEN
+            },
+            logger: true
+        });
+
+        const info = await transporter.sendMail({
+            from: data.email,
+            to: "fetheve2@gmail.com",
+            subject: data.objet,
+            text: "Hello world?",
+            html: data.message,
+            headers: { 'x-myheader': 'test header' }
+        });
 
 
     }
@@ -79,33 +79,33 @@ class HomeController {
         let { data } = req;
         data = JSON.parse(data);
 
-        let user:any = await prisma.users.findFirst({where:{ "login": data.login }});
-       // user = JSON.parse(JSON.stringify(user));
-        let response="";
+        let user: any = await prisma.users.findFirst({ where: { "login": data.login } });
+        // user = JSON.parse(JSON.stringify(user));
+        let response = "";
 
-        if (user ) {
-console.log("user : ");
-console.log(user)
+        if (user) {
+            console.log("user : ");
+            console.log(user)
             bcrypt.compare(data.password, user.password, function (err, result) {
                 console.log("result : ");
                 console.log(result)
 
-                if (result==true) {
+                if (result == true) {
                     let userData = { userId: user.id, role: user.id_role, nom: user.nom, prenom: user.prenom }
                     JWTToken.makeJWT(userData);
                     let userToken = JWTToken.getToken();
-                   //UsersModel.update({id:user[0].id},{token:userToken});
-                    prisma.users.update({data:{token:userToken},where:{ id:user.id } }).then( ()=>{
+                    //UsersModel.update({id:user[0].id},{token:userToken});
+                    prisma.users.update({ data: { token: userToken }, where: { id: user.id } }).then(() => {
 
-           
-                    response= JSON.stringify({ msg: 'connecter', token: userToken });
-                })
+
+                        response = JSON.stringify({ msg: 'connecter', token: userToken });
+                    })
                 } else {
-                    response=JSON.stringify({ status: "KO",msg:"identifiants incorrect" });
+                    response = JSON.stringify({ status: "KO", msg: "identifiants incorrect" });
                 }
             });
         } else {
-            response= JSON.stringify({ status: "KO", msg:"utilisateur non trouvé"});
+            response = JSON.stringify({ status: "KO", msg: "utilisateur non trouvé" });
         }
         return response;
     }

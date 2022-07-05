@@ -10,24 +10,24 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient({
     log: [
-		{
-			emit: 'stdout',
-			level: 'info'
-		},
-		{
-			emit: 'stdout',
-			level: 'warn'
-		},
-		{
-			emit: 'event',
-			level: 'query'
-		}
-	],
-  });
+        {
+            emit: 'stdout',
+            level: 'info'
+        },
+        {
+            emit: 'stdout',
+            level: 'warn'
+        },
+        {
+            emit: 'event',
+            level: 'query'
+        }
+    ],
+});
 
-  prisma.$on('query', async (e) => {
+prisma.$on('query', async (e) => {
     console.log(`${e.query} ${e.params} \n`)
-  });
+});
 class PartenairesController {
 
     public static async getPartenaires() {
@@ -35,7 +35,7 @@ class PartenairesController {
         try {
 
 
-            let partenaires = await prisma.users.findMany({where:{id_role:2} });
+            let partenaires = await prisma.users.findMany({ where: { id_role: 2 } });
             //partenaires = JSON.parse(JSON.stringify(partenaires));
 
             return JSON.stringify(partenaires)
@@ -54,51 +54,51 @@ class PartenairesController {
 
             //  partenaireClass.setJoinTable(EventPartenaire,"id_Partenaire");
             //  eventsClass.setJoinTable([{class:categoriesModel,fk:"id"}] )
-          //  EventPartenaire.setJoinTable([  { class: eventsClass, fk: "id" } ]);
-            
+            //  EventPartenaire.setJoinTable([  { class: eventsClass, fk: "id" } ]);
+
             let listEvents = await prisma.evenements.findMany({
-                include:{
-                    eventStand:{
-                        where:{
+                include: {
+                    eventStand: {
+                        where: {
                             id_user: parseInt(id)
                         },
-           
+
                     },
-           media:{where:{id_type:1},select:{image:true} }         
+                    media: { where: { id_type: 1 }, select: { image: true } }
                 }
             })
-            let partenaire = await prisma.users.findUnique({where:{id:+id} })
+            let partenaire = await prisma.users.findUnique({ where: { id: +id } })
 
             //partenaire = JSON.parse(JSON.stringify(partenaire));
-           // listEvents = JSON.parse(JSON.stringify(listEvents));
+            // listEvents = JSON.parse(JSON.stringify(listEvents));
 
             let follow = {};
             let isFollowed = false;
 
-            let userToken:any = JWTToken.getUser();
+            let userToken: any = JWTToken.getUser();
             console.log("usertoken");
             console.log(userToken)
             if (userToken != false) {
-            
-                let follow = await prisma.partenaire_user.findFirst({ 
-                    where:{
-                       id_user: userToken.id,id_partenaire:+id
-                    } 
-                
+
+                let follow = await prisma.partenaire_user.findFirst({
+                    where: {
+                        id_user: userToken.id, id_partenaire: +id
+                    }
+
                 });
-console.log(follow)
-               // follow = JSON.parse(JSON.stringify(follow));
-                 isFollowed = follow ? true : false;
+                console.log(follow)
+                // follow = JSON.parse(JSON.stringify(follow));
+                isFollowed = follow ? true : false;
             }
             let response = { isFollowed: isFollowed, listEvents: listEvents, partenaire: partenaire };
             return JSON.stringify(response);
-              //return Render.make('partenaire', { user: "toto", page: "detail",isFollowed:isFollowed,listEvents:listEvents, partenaire: partenaire[0] })
+            //return Render.make('partenaire', { user: "toto", page: "detail",isFollowed:isFollowed,listEvents:listEvents, partenaire: partenaire[0] })
         } catch (error) {
             console.log(error)
         }
     }
 
-    public static async getEvents(request: Request){
+    public static async getEvents(request: Request) {
         let { data } = request;
         data = JSON.parse(data);
         let queryLimit: any = {}
@@ -110,24 +110,24 @@ console.log(follow)
         let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
 
         //eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
-       /// eventsClass.setJoinTable([{ class: categoriesModel, fk: "id_categorie" }]);
-      //  eventsClass.setJoinTable([{ class: eventPartenaire, fk: "id_partenaire" }]);
+        /// eventsClass.setJoinTable([{ class: categoriesModel, fk: "id_categorie" }]);
+        //  eventsClass.setJoinTable([{ class: eventPartenaire, fk: "id_partenaire" }]);
 
-     //   let lastEvents = await eventsClass.findAll({"id_partenaire":data.id}, queryLimit);
-       let lastEvents=await prisma.evenements.findMany({   
-        skip: data.offset !=null ? data.offset : undefined ,
-        take: data.limit,
-        where:{
-            dateFin:{gt:new Date()} 
-    }
-    }
-    );
-
-        total =await prisma.evenements.findMany({   
-
-            where:{
-                dateFin:{gt:new Date()} 
+        //   let lastEvents = await eventsClass.findAll({"id_partenaire":data.id}, queryLimit);
+        let lastEvents = await prisma.evenements.findMany({
+            skip: data.offset != null ? data.offset : undefined,
+            take: data.limit,
+            where: {
+                dateFin: { gt: new Date() }
+            }
         }
+        );
+
+        total = await prisma.evenements.findMany({
+
+            where: {
+                dateFin: { gt: new Date() }
+            }
         }
         );
 
@@ -140,14 +140,14 @@ console.log(follow)
 
     }
 
-    public static async getMyEvent(request: Request){
+    public static async getMyEvent(request: Request) {
         try {
             let { data } = request;
             data = JSON.parse(data);
             const id = data.id;
-console.log("my events")
-           // eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
-            let event:any = await prisma.evenements.findFirst({where:{id:parseInt(id)}})
+            console.log("my events")
+            // eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
+            let event: any = await prisma.evenements.findFirst({ where: { id: parseInt(id) } })
             //event = JSON.parse(JSON.stringify(event));
             let rootDir = path.resolve('./');
 
@@ -155,12 +155,12 @@ console.log("my events")
             let response = {};
             let myEvent = [];
 
-            let categories=await prisma.categories.findMany();
+            let categories = await prisma.categories.findMany();
 
             let estTermine = new Date(event.dateLimit).getTime() < new Date().getTime() ? 1 : 0;
 
 
- response = {  estTermine: estTermine, event: event,categories:categories }
+            response = { estTermine: estTermine, event: event, categories: categories }
             return JSON.stringify(response);
         } catch (error) {
             console.log(error)
@@ -173,14 +173,14 @@ console.log("my events")
             let search = data.query.s;
 
             let partenaires = await prisma.users.findMany({
-                skip: data.offset !=null ? data.offset : undefined ,
+                skip: data.offset != null ? data.offset : undefined,
                 take: data.limit,
-                where:{ 
-                    nom:{contains:search} 
-                  ,
-                   prenom:{contains:search}  
-    }
-               } );
+                where: {
+                    nom: { contains: search }
+                    ,
+                    prenom: { contains: search }
+                }
+            });
 
             partenaires = JSON.parse(JSON.stringify(partenaires));
 
