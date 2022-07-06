@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node app.js",
     "heroku-postbuild": "tsc",
+    "build":"npm i",
     "heroku-prebuild":"npm i",
     "watch-node": "nodemon app.js",
     "watch-ts": "tsc -w",
