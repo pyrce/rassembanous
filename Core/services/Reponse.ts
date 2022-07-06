@@ -6,7 +6,7 @@ class Response {
 
     private static _instance: Response;
 
-    constructor(private reponse:ServerResponse) {
+    constructor(private reponse: ServerResponse) {
         this.reponse = reponse;
     }
 
@@ -20,9 +20,8 @@ class Response {
             this.reponse.setHeader('Access-Control-Allow-Methods', '*');
             this.reponse.end(data);
 
-        }  else {
-console.log("data");
-console.log(data);
+        } else {
+
             this.reponse.end(JSON.stringify({ "erreur": "format incorrect" }));
         }
     }

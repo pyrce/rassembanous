@@ -30,15 +30,15 @@ class JWTToken {
 
     public static getUser() {
         let userToken = JWTToken.getToken();
-        let user={}
+        let user = {}
         if (this.token) {
             var base64Payload = this.token.split('.')[1];
             var payload = Buffer.from(base64Payload, 'base64');
             let infoUser = JSON.parse(payload.toString());
 
-console.log("infouser: ")
-console.log(infoUser)
-          user=  prisma.users.findFirst({
+            console.log("infouser: ")
+            console.log(infoUser)
+            user = prisma.users.findFirst({
                 where: { id: infoUser.userId },
 
             }).then((user: any) => {
