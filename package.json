@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "heroku-postbuild": "tsc",
     "build": "npm i && npm install",
+    "heroku-postbuild": "tsc",
     "watch-node": "nodemon app.js",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
