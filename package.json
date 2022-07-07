@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "build": "npm i && npm install",
+    "build": "npm i && npm install jsonwebtoken",
     "heroku-postbuild": "tsc && cd client && npm i",
     "watch-node": "nodemon app.js",
     "watch-ts": "tsc -w",
