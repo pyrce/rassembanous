@@ -9,7 +9,6 @@
   "scripts": {
     "start": "npm run build vue-cli-service serve",
     "build": "npm i && vue-cli-service build",
-    "heroku-prebuild": "npm install -g @vue/cli-service",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
