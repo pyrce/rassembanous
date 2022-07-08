@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "heroku-prebuild": "npm i && tsc && cd client && npm i",
+    "heroku-prebuild": "npm i && npm i --prefix client",
+    "heroku-postbuild":"tsc",
     "watch-node": "nodemon app.js",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
