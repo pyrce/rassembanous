@@ -9,8 +9,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "build": "npm install jsonwebtoken",
-    "heroku-postbuild": "npm i && npm install jsonwebtoken && tsc && cd client && npm i",
+    "build": "npm i && npm install jsonwebtoken && tsc && cd client && npm i",
     "watch-node": "nodemon app.js",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
