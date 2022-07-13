@@ -8,9 +8,10 @@
     "npm": "^8.13.1"
   },
   "scripts": {
-    "start": "node build/app.js",
-    "heroku-prebuild": "npm i && npm i --prefix client",
-    "watch-node": "nodemon app.js",
+    "start": "node app.js",
+    "install-client": "cd client && npm install && npm run build && cd ..",
+    "install-server": "npm install ",
+    "heroku-postbuild": "npm run install-client && npm run install-server",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },

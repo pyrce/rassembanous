@@ -94,7 +94,7 @@ class Server {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
         app.get(/.*/, (req, res) => {
-            res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+            res.sendFile(path.join(__dirname, "..", "..", "client", "dist", "index.html"));
         });
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
