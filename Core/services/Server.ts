@@ -42,9 +42,10 @@ class Server {
         );
 
         if (someRoute) {
+
             if (someRoute.middleware != null) {
                 let check = checkJWT.checkToken(someRoute.middleware)
-                console.log("check : " + check)
+                console.log("is check : " + check)
                 if (check) {
                     return someRoute.callback(req);
                 } else {
@@ -71,10 +72,11 @@ class Server {
     private init() {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
-        // app.get("*", (req, res) => {
-        //     res.sendFile(path.join(__dirname,"../", "client", "dist", "index.html"));
-        // });
+        app.get("*", (req, res) => {
+            res.sendFile(path.join(__dirname,"../../", "client", "dist", "index.html"));
+        });
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
+
         let server = createServer(async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -87,6 +89,8 @@ class Server {
 
             myResponse.emit(data);
         })
+
+
         server.listen(this.port, '0.0.0.0');
     }
     public static start() {

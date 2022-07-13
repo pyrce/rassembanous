@@ -8,7 +8,7 @@
     "npm": "^8.13.1"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node build/app.js",
     "heroku-prebuild": "npm i && npm i --prefix client",
     "heroku-postbuild": "npm install jsonwebtoken --save && tsc",
     "watch-node": "nodemon app.js",
