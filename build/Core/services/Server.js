@@ -61,10 +61,13 @@ class Server {
         var _a;
         const method = req.method;
         let baseURI = Url.parse(req.url, true);
-        let path = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
-        let params = path === null || path === void 0 ? void 0 : path.slice(1)[path.length - 2];
+        let URIpath = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
+        let params = URIpath === null || URIpath === void 0 ? void 0 : URIpath.slice(1)[URIpath.length - 2];
         const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
+        app.get("*", (req, res) => {
+            res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
+        });
         if (someRoute) {
             if (someRoute.middleware != null) {
                 let check = checkJWT_1.default.checkToken(someRoute.middleware);
@@ -98,9 +101,6 @@ class Server {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
-            app.get("*", (req, res) => {
-                res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
-            });
             let myRequest = yield Request_1.default.instance(request);
             let myResponse = new Reponse_1.default(response);
             myRequest.setData(request);

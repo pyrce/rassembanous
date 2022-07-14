@@ -33,14 +33,16 @@ class Server {
     public checkRoute(req: any) {
         const method = req.method;
         let baseURI = Url.parse(req.url, true);
-        let path = baseURI.pathname?.split('/');
-        let params = path?.slice(1)[path.length - 2];
+        let URIpath:any = baseURI.pathname?.split('/');
+        let params = URIpath?.slice(1)[URIpath.length - 2];
 
         const someRoute = Router.getAll().find((element: any) =>
             (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method)
         );
-
+        app.get("*" ,(req, res) => {
+            res.sendFile(path.join(__dirname,"../../client/dist", "index.html"));
+        });
         if (someRoute) {
 
             if (someRoute.middleware != null) {
@@ -81,9 +83,7 @@ class Server {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
-        app.get("*" ,(req, res) => {
-            res.sendFile(path.join(__dirname,"../../client/dist", "index.html"));
-        });
+
             let myRequest = await Request.instance(request)
             let myResponse = new Response(response);
             myRequest.setData(request);
