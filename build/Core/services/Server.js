@@ -99,7 +99,7 @@ class Server {
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
             app.get("*", (req, res) => {
-                res.sendFile(path.join(__dirname, "../", "../", "client", "dist", "index.html"));
+                res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
             });
             let myRequest = yield Request_1.default.instance(request);
             let myResponse = new Reponse_1.default(response);
