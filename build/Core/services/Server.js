@@ -93,14 +93,14 @@ class Server {
     init() {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
-        app.get("*", (req, res) => {
-            res.sendFile(path.join(__dirname, "..", "..", "client", "dist", "index.html"));
-        });
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
+            app.get("*", (req, res) => {
+                res.sendFile(path.join(__dirname, "../", "../", "client", "dist", "index.html"));
+            });
             let myRequest = yield Request_1.default.instance(request);
             let myResponse = new Reponse_1.default(response);
             myRequest.setData(request);
