@@ -74,7 +74,7 @@ class Server {
         // app.use(cors());
  
         app.get("*" ,(req, res) => {
-            res.sendFile(path.join(__dirname,"..","..", "client", "dist", "index.html"));
+            res.sendFile(path.join(__dirname,"../","../", "client", "dist", "index.html"));
         });
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
 
