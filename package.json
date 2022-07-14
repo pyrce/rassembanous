@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node build/app.js",
-    "install-client": "cd client && npm install && npm run build && cd ..",
+    "install-client": "cd client && npm install && cd ..",
     "install-server": "npm install ",
     "heroku-postbuild": "npm run install-client && npm run install-server",
     "watch-ts": "tsc -w",
