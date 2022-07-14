@@ -73,9 +73,7 @@ class Server {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
  
-        app.get("*" ,(req, res) => {
-            res.sendFile(path.join(__dirname,"../","../", "client", "dist", "index.html"));
-        });
+
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
 
 
@@ -83,7 +81,9 @@ class Server {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
-
+        app.get("*" ,(req, res) => {
+            res.sendFile(path.join(__dirname,"../","../", "client", "dist", "index.html"));
+        });
             let myRequest = await Request.instance(request)
             let myResponse = new Response(response);
             myRequest.setData(request);
