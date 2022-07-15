@@ -41,6 +41,7 @@ const Request_1 = __importDefault(require("./Request"));
 const Reponse_1 = __importDefault(require("./Reponse"));
 const Url = __importStar(require("url"));
 const express_1 = __importDefault(require("express"));
+const path = __importStar(require("path"));
 const checkJWT_1 = __importDefault(require("../Routes/middleware/checkJWT"));
 const app = (0, express_1.default)();
 /**
@@ -49,6 +50,9 @@ const app = (0, express_1.default)();
 class Server {
     constructor() {
         this.port = 0;
+        app.get("/", (req, res) => {
+            res.sendFile(path.join(__dirname, "/dist/index.html"));
+        });
         this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500;
     }
     /**Recupere la route et renvoie une vue ou une erreur

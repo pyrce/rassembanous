@@ -23,6 +23,9 @@ class Server {
     SERVER: any
 
     constructor() {
+        app.get("/", (req, res) => {
+            res.sendFile(path.join(__dirname, "/dist/index.html"));
+          });
         this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500
     }
     /**Recupere la route et renvoie une vue ou une erreur
