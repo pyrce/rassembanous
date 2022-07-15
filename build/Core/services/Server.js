@@ -41,7 +41,6 @@ const Request_1 = __importDefault(require("./Request"));
 const Reponse_1 = __importDefault(require("./Reponse"));
 const Url = __importStar(require("url"));
 const express_1 = __importDefault(require("express"));
-const path = __importStar(require("path"));
 const checkJWT_1 = __importDefault(require("../Routes/middleware/checkJWT"));
 const app = (0, express_1.default)();
 /**
@@ -65,10 +64,6 @@ class Server {
         let params = URIpath === null || URIpath === void 0 ? void 0 : URIpath.slice(1)[URIpath.length - 2];
         const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
-        app.get("*", (req, res) => {
-            console.log("index vuejs");
-            res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
-        });
         if (someRoute) {
             if (someRoute.middleware != null) {
                 let check = checkJWT_1.default.checkToken(someRoute.middleware);

@@ -40,10 +40,7 @@ class Server {
             (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method)
         );
-        app.get("*" ,(req, res) => {
-            console.log("index vuejs")
-            res.sendFile(path.join(__dirname,"../../client/dist", "index.html"));
-        });
+
         if (someRoute) {
 
             if (someRoute.middleware != null) {
@@ -76,7 +73,7 @@ class Server {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
  
-
+   
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
 
 
