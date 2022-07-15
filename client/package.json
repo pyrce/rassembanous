@@ -7,7 +7,7 @@
     "npm": "^8.13.1"
   },
   "scripts": {
-    "start": "npmi && vue-cli-service serve --port 3000 && echo \"vuejs start\" ",
+    "start": "npmi && vue-cli-service serve ",
     "build": "npm i && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
