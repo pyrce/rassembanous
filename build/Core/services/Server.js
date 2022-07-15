@@ -66,6 +66,7 @@ class Server {
         const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
         app.get("*", (req, res) => {
+            console.log("index vuejs");
             res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
         });
         if (someRoute) {

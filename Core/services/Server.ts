@@ -41,6 +41,7 @@ class Server {
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method)
         );
         app.get("*" ,(req, res) => {
+            console.log("index vuejs")
             res.sendFile(path.join(__dirname,"../../client/dist", "index.html"));
         });
         if (someRoute) {
