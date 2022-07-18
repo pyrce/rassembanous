@@ -8,9 +8,9 @@
     "npm": "^8.13.1"
   },
   "scripts": {
-    "start": "npm run start-server",
+    "start": "npm run start-server && npm run start-client",
     "start-client": "cd client && npm install && npm run start",
-    "start-server": "npm install && node build/app.js && echo \"server start\"",
+    "start-server": "npm install && node build/app.js",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
