@@ -91,7 +91,7 @@ class Server {
             myResponse.emit(data);
         })
 
-        app.get("/*", (req, res) => {
+        app.get("*", (req, res) => {
             console.log("sendind vuejs front")
             res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
           })
