@@ -23,10 +23,7 @@ class Server {
     SERVER: any
 
     constructor() {
-        app.get("/*", (req, res) => {
-            console.log("sendind vuejs front")
-            res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
-          });
+
         this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500
     }
     /**Recupere la route et renvoie une vue ou une erreur
@@ -94,7 +91,10 @@ class Server {
             myResponse.emit(data);
         })
 
-
+        app.get("/*", (req, res) => {
+            console.log("sendind vuejs front")
+            res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+          })
         server.listen(this.port, '0.0.0.0');
     }
     public static start() {
