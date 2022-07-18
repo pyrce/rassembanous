@@ -23,7 +23,8 @@ class Server {
     SERVER: any
 
     constructor() {
-        app.get("/", (req, res) => {
+        app.get("/*", (req, res) => {
+            console.log("sendind vuejs front")
             res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
           });
         this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500
