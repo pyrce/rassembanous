@@ -24,7 +24,7 @@ class Server {
 
     constructor() {
 
-        this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500
+        this.port = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3500
     }
     /**Recupere la route et renvoie une vue ou une erreur
      * 
