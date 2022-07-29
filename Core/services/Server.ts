@@ -76,7 +76,10 @@ class Server {
  
    
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
-
+        app.get(/.*/, function (req, res) {
+            console.log("start client")
+            res.sendFile(path.join(__dirname, '../../client/dist/index.html'))
+        })
 
         let server = createServer(async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
