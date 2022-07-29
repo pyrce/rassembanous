@@ -50,10 +50,7 @@ const app = (0, express_1.default)();
 class Server {
     constructor() {
         this.port = 0;
-        app.get("/", (req, res) => {
-            res.sendFile(path.join(__dirname, "/dist/index.html"));
-        });
-        this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500;
+        this.port = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3500;
     }
     /**Recupere la route et renvoie une vue ou une erreur
      *
@@ -97,6 +94,10 @@ class Server {
         //app.use(express.static(path.join( 'public')))
         // app.use(cors());
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
+        app.get(/.*/, function (req, res) {
+            console.log("start client");
+            res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+        });
         let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -107,6 +108,7 @@ class Server {
             let data = yield this.checkRoute(myRequest);
             myResponse.emit(data);
         }));
+        console.log(this.port);
         server.listen(this.port, '0.0.0.0');
     }
     static start() {
