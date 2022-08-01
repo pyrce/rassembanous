@@ -1,4 +1,4 @@
-server:  npm run start  && npm run start --prefix client
+server:  npm run start 
 
 
 release: npx prisma migrate deploy
