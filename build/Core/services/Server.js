@@ -63,6 +63,10 @@ class Server {
         let baseURI = Url.parse(req.url, true);
         let URIpath = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
         let params = URIpath === null || URIpath === void 0 ? void 0 : URIpath.slice(1)[URIpath.length - 2];
+        app.get('*', (req, res) => {
+            console.log("client");
+            res.sendFile(path.join(__dirname + '/../../client/dist/index.html'));
+        });
         const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
         if (someRoute) {
@@ -91,13 +95,9 @@ class Server {
         return this.instance;
     }
     init() {
-        //app.use(express.static(path.join( 'public')))
         // app.use(cors());
+        app.use(express_1.default.static(path.join(__dirname, "../../client/dist")));
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
-        app.get(/.*/, function (req, res) {
-            console.log("start client");
-            res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-        });
         let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -109,7 +109,7 @@ class Server {
             myResponse.emit(data);
         }));
         console.log(this.port);
-        server.listen(this.port, '0.0.0.0');
+        server.listen(this.port);
     }
     static start() {
         this.getInstance().init();

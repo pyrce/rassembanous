@@ -25,7 +25,10 @@ class Server {
     constructor() {
 
         this.port = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3500
-    }
+    }      
+
+
+ 
     /**Recupere la route et renvoie une vue ou une erreur
      * 
      * @param req 
@@ -71,15 +74,11 @@ class Server {
     }
 
     private init() {
-        //app.use(express.static(path.join( 'public')))
+
         // app.use(cors());
- 
-   
+
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
-        app.get(/.*/, function (req, res) {
-            console.log("start client")
-            res.sendFile(path.join(__dirname, '../../client/dist/index.html'))
-        })
+  
 
         let server = createServer(async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
@@ -92,9 +91,10 @@ class Server {
             let data = await this.checkRoute(myRequest);
 
             myResponse.emit(data);
-        })
+        });     
+
 console.log(this.port)
-        server.listen(this.port, '0.0.0.0');
+        server.listen(this.port);
     }
     public static start() {
 
