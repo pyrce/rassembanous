@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
-    "start-client": "npm run start --prefix client ",
+    "start-client": "npm run start --prefix client",
     "start-server": "npm install && node build/app.js && echo \" serveur\" ",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
