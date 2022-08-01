@@ -6,6 +6,6 @@ module.exports = {
     devServer: {
       allowedHosts: "all",
       proxy: '',
-      port:"2500"
+      port:""
     }
   }
