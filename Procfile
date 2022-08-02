@@ -1,4 +1,4 @@
-server:  npm run start  --optimize_for_size --max_old_space_size=460
+server:  npm run start
 
 
 release: npx prisma migrate deploy
