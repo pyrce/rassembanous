@@ -10,7 +10,7 @@
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-client": "npm run start --prefix client",
-    "start-server": "npm install && node --max_old_space_size=2560 build/app.js && echo \" serveur\" ",
+    "start-server": "npm install && node --optimize_for_size --max_old_space_size=460 build/app.js && echo \" serveur\" ",
     "watch-ts": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
