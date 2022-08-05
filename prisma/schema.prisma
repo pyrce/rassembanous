@@ -12,7 +12,7 @@ datasource db {
 
 model Roles{
   id        Int     @id @default(autoincrement())
-  role String
+  nomRole String
   users Users[]
 }
 
@@ -35,13 +35,6 @@ model Users{
   userquestion question_user[] @relation("userquestion")
 }
 
-model Lieu{
-  id        Int     @id @default(autoincrement())
-  nomLieu   String
-  adresse   String
-  events evenements[]
-}
-
 model Categories{
   id        Int     @id @default(autoincrement())
   categorie String
@@ -55,7 +48,7 @@ model evenements {
   description         String
   id_lieu Int
   id_categorie Int
-  lieu         Lieu?         @relation(fields:  [id_lieu], references: [id])
+  lieu lieu?  @relation(fields:  [id_lieu], references: [id])
   categorie    Categories?   @relation(fields:  [id_categorie], references: [id])
   dateDebut DateTime
   dateFin DateTime
@@ -95,11 +88,12 @@ event evenements? @relation("mediaevent",fields:  [id_event], references: [id])
 typeId mediatype?  @relation("mediatype",fields:  [id_type], references: [id])
 }
 
-model lieu{
+model lieu {
     id              Int           @id @default(autoincrement())
     nomLieu String
     adresse String
     stands stands[]
+    events evenements[]
 }
 
 model stands{

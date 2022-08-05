@@ -42,6 +42,7 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient({
+    errorFormat: 'pretty',
     log: [
         {
             emit: 'stdout',
@@ -50,6 +51,10 @@ const prisma = new client_1.PrismaClient({
         {
             emit: 'stdout',
             level: 'warn'
+        },
+        {
+            emit: 'stdout',
+            level: 'error'
         },
         {
             emit: 'event',
@@ -70,12 +75,18 @@ class EventsController {
                 queryLimit["limit"] = data.limit;
                 queryLimit["offset"] = data.offset;
                 var listeCurrentEvents = [];
+                let currentEvents;
                 // eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
                 //let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
                 //   let currentEvents = await eventsClass.findAll([{ "dateLimit": today, "op": ">" }], queryLimit);
                 /* let currentEvents = await eventsClass.findAll({   offset: data.limit,
                      limit: data.offset, where:{dateFin:{gt:today} }});*/
-                let currentEvents = yield prisma.evenements.findMany();
+                 
+                 currentEvents = yield prisma.evenements.findMany();
+        
+
+
+        
                 //  currentEvents = JSON.parse(JSON.stringify(currentEvents));
                 let response = { currentEvents: currentEvents };
                 return JSON.stringify(response);
