@@ -41,7 +41,6 @@ const Request_1 = __importDefault(require("./Request"));
 const Reponse_1 = __importDefault(require("./Reponse"));
 const Url = __importStar(require("url"));
 const express_1 = __importDefault(require("express"));
-const path = __importStar(require("path"));
 const checkJWT_1 = __importDefault(require("../Routes/middleware/checkJWT"));
 const app = (0, express_1.default)();
 /**
@@ -63,10 +62,7 @@ class Server {
         let baseURI = Url.parse(req.url, true);
         let URIpath = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
         let params = URIpath === null || URIpath === void 0 ? void 0 : URIpath.slice(1)[URIpath.length - 2];
-        app.get('*', (req, res) => {
-            console.log("client");
-            res.sendFile(path.join(__dirname + '/../../client/dist/index.html'));
-        });
+        console.time("checkroute");
         const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
         if (someRoute) {
@@ -81,6 +77,7 @@ class Server {
                 }
             }
             else {
+                console.timeEnd("checkroute");
                 return someRoute.callback(req);
             }
         }
@@ -96,8 +93,9 @@ class Server {
     }
     init() {
         // app.use(cors());
-        app.use(express_1.default.static(path.join(__dirname, "../../client/dist")));
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
+        const used = process.memoryUsage().heapUsed / 1024 / 1024;
+        console.log(`The script uses approximately ${used} MB`);
         let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');

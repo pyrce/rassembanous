@@ -10,22 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Roles{
+model roles{
   id        Int     @id @default(autoincrement())
-  nomRole String
-  users Users[]
+  nomRole String    @db.VarChar(50)
+  users users[]
 }
 
-model Users{
+model users{
   id        Int     @id @default(autoincrement())
-  nom String
-  prenom String
-  login String
-  password String
-  adresse String
-  email String
-  token String?
-  role   Roles?   @relation(fields:  [id_role], references: [id])
+  nom String    @db.VarChar(50)
+  prenom String    @db.VarChar(50)
+  login String    @db.VarChar(50)
+  password String    @db.VarChar(100)
+  adresse String    @db.VarChar(100)
+  email String    @db.VarChar(50)
+  token String?    @db.VarChar(100)
+  role   roles?   @relation(fields:  [id_role], references: [id])
   id_role Int
   mypartenaire partenaire_user[] @relation("mypartenaire")
   user partenaire_user[] @relation("user")
@@ -35,28 +35,28 @@ model Users{
   userquestion question_user[] @relation("userquestion")
 }
 
-model Categories{
+model categories{
   id        Int     @id @default(autoincrement())
-  categorie String
-  icon String
+  categorie String    @db.VarChar(50)
+  icon String    @db.VarChar(50)
   events evenements[]
 }
 
 model evenements {
   id              Int           @id @default(autoincrement())
-  nom           String
-  description         String
+  nom           String    @db.VarChar(50)
+  description         String    @db.VarChar(250)
   id_lieu Int
   id_categorie Int
   lieu lieu?  @relation(fields:  [id_lieu], references: [id])
-  categorie    Categories?   @relation(fields:  [id_categorie], references: [id])
+  categorie    categories?   @relation(fields:  [id_categorie], references: [id])
   dateDebut DateTime
   dateFin DateTime
   dateLimit DateTime
   isPublic Boolean
   nbPlace Int
   prix Int
-  affiche String
+  affiche String    @db.VarChar(50)
   media media[] @relation("mediaevent")
   eventStand event_stand[]
   eventuser event_user[] @relation("eventuser")
@@ -66,39 +66,39 @@ model evenements {
 model partenaire_user{
   id              Int           @id @default(autoincrement())
   id_partenaire Int
-  mypartenaire    Users?   @relation("mypartenaire",fields:  [id_partenaire], references: [id])
+  mypartenaire    users?   @relation("mypartenaire",fields:  [id_partenaire], references: [id])
   id_user Int
-  user    Users?   @relation("user",fields:  [id_user], references: [id])
+  user    users?   @relation("user",fields:  [id_user], references: [id])
 }
 
 model mediatype{
   id              Int           @id @default(autoincrement())
-libelle String
+libelle String    @db.VarChar(50)
 media media[] @relation("mediatype")
 }
 
 model media{
   id              Int           @id @default(autoincrement())
-image String
+image String    @db.VarChar(50)
 id_event Int
 id_user Int?
 id_type Int
-user    Users?   @relation("mediauser",fields:  [id_user], references: [id])
+user    users?   @relation("mediauser",fields:  [id_user], references: [id])
 event evenements? @relation("mediaevent",fields:  [id_event], references: [id])
 typeId mediatype?  @relation("mediatype",fields:  [id_type], references: [id])
 }
 
 model lieu {
     id              Int           @id @default(autoincrement())
-    nomLieu String
-    adresse String
+    nomLieu String    @db.VarChar(50)
+    adresse String    @db.VarChar(50)
     stands stands[]
     events evenements[]
 }
 
 model stands{
   id              Int           @id @default(autoincrement())
-  nomStand String
+  nomStand String    @db.VarChar(50)
   id_lieu Int
   idLieu lieu? @relation(fields:  [id_lieu], references: [id])
   eventStand event_stand[] 
@@ -109,9 +109,10 @@ model event_stand{
     id_stand Int?
     id_event Int
     id_user Int
+    activite String
     idStand stands? @relation(fields:  [id_stand], references: [id])
     idEvent evenements? @relation(fields:  [id_event], references: [id])
-    idUser Users? @relation(fields:  [id_user], references: [id])
+    idUser users? @relation(fields:  [id_user], references: [id])
 }
 
 model event_user{
@@ -119,13 +120,13 @@ model event_user{
     id_event Int
     id_user Int
     idEvent evenements? @relation("eventuser",fields:  [id_event], references: [id])
-    idUser Users? @relation("userevent",fields:  [id_user], references: [id])
+    idUser users? @relation("userevent",fields:  [id_user], references: [id])
 }
 
 model questionnaire{
     id              Int           @id @default(autoincrement())
     id_event Int
-    libelle String
+    libelle String    @db.VarChar(50)
     questionnaire evenements? @relation("eventquestionnaire",fields:  [id_event], references: [id])
     questions questions[]
 }
@@ -133,7 +134,7 @@ model questionnaire{
 model questions{
       id              Int           @id @default(autoincrement())
       id_questionnaire Int
-      question String
+      question String    @db.VarChar(50)
       idQuestionnaire questionnaire @relation(fields:  [id_questionnaire], references: [id])
       users question_user[]
 }
@@ -143,6 +144,6 @@ model question_user{
         id_user Int
         id_question Int
         stars Float
-        iduser Users? @relation("userquestion",fields:  [id_user], references: [id])
+        iduser users? @relation("userquestion",fields:  [id_user], references: [id])
         idquestion questions @relation(fields:  [id_question], references: [id])
 }

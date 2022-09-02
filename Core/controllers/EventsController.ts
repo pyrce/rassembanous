@@ -47,14 +47,18 @@ class EventsController {
 
 
             var listeCurrentEvents: any = [];
-            // eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
-            //let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
-            //   let currentEvents = await eventsClass.findAll([{ "dateLimit": today, "op": ">" }], queryLimit);
-            /* let currentEvents = await eventsClass.findAll({   offset: data.limit,
-                 limit: data.offset, where:{dateFin:{gt:today} }});*/
  
             let currentEvents = await prisma.evenements.findMany(
-
+                {
+                    skip: data.offset != null ? data.offset : undefined,
+                    take: data.limit,
+                    where: {
+                        dateFin: { gt:new Date() },
+                    },
+                    include: {
+                        lieu: true
+                    }
+                }
             );
 
             //  currentEvents = JSON.parse(JSON.stringify(currentEvents));

@@ -39,7 +39,7 @@ class Server {
         let baseURI = Url.parse(req.url, true);
         let URIpath:any = baseURI.pathname?.split('/');
         let params = URIpath?.slice(1)[URIpath.length - 2];
-
+console.time("checkroute");
         const someRoute = Router.getAll().find((element: any) =>
             (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method)
@@ -57,12 +57,14 @@ class Server {
                     return JSON.stringify({ status: "403", msg: "KO - token not found" })
                 }
             } else {
+        console.timeEnd("checkroute");
                 return someRoute.callback(req);
             }
         } else {
 
             return JSON.stringify({ status: "404", msg: "KO - not found" })
         }
+
     }
 
 
