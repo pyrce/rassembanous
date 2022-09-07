@@ -93,7 +93,8 @@ console.time("checkroute");
             let data = await this.checkRoute(myRequest);
 
             myResponse.emit(data);
-        });     
+        });    
+        console.log("info usage mémoire : ") 
         const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
 console.log(this.port)
         server.listen(this.port);
