@@ -81,7 +81,7 @@ console.time("checkroute");
 
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
   
-        const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
+       // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         let server = createServer(async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -94,7 +94,7 @@ console.time("checkroute");
 
             myResponse.emit(data);
         });     
-
+        const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
 console.log(this.port)
         server.listen(this.port);
     }
