@@ -96,7 +96,7 @@ console.time("checkroute");
         });    
         console.log("info usage mémoire : ") 
         const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
-console.log(this.port)
+console.log("listen to : "+this.port)
         server.listen(this.port);
     }
     public static start() {

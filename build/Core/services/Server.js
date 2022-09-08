@@ -94,8 +94,7 @@ class Server {
     init() {
         // app.use(cors());
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
-        const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        console.log(`The script uses approximately ${used} MB`);
+        // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -106,7 +105,10 @@ class Server {
             let data = yield this.checkRoute(myRequest);
             myResponse.emit(data);
         }));
-        console.log(this.port);
+        console.log("info usage mémoire : ");
+        const used = process.memoryUsage().heapUsed / 1024 / 1024;
+        console.log(`The script uses approximately ${used} MB`);
+        console.log("listen to : " + this.port);
         server.listen(this.port);
     }
     static start() {
