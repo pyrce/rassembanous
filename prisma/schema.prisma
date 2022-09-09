@@ -109,7 +109,7 @@ model event_stand{
     id_stand Int?
     id_event Int
     id_user Int
-    activite String
+    activite String?
     idStand stands? @relation(fields:  [id_stand], references: [id])
     idEvent evenements? @relation(fields:  [id_event], references: [id])
     idUser users? @relation(fields:  [id_user], references: [id])
