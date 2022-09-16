@@ -12,7 +12,7 @@
     "start-client": "npm run start --prefix client",
     "start-server": "node --optimize_for_size --max_old_space_size=460  --inspect=9090 build/app.js && echo \"starting serveur\" ",
     "watch-ts": "tsc -w",
-    "heroku-postbuild":"npm i && npm audit fix --force",
+    "heroku-postbuild":"npm i && npm audit fix",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
   "author": "ETHEVE Florent",
