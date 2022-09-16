@@ -105,13 +105,11 @@ class Server {
             let data = yield this.checkRoute(myRequest);
             myResponse.emit(data);
         }));
-        console.log("info usage mémoire : ");
-        const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        console.log(`The script uses approximately ${used} MB`);
-        console.log("listen to : " + this.port);
         server.listen(this.port);
     }
     static start() {
+        //   console.log("info usage mémoire : ") 
+        // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         this.getInstance().init();
     }
 }
