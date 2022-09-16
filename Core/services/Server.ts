@@ -80,9 +80,7 @@ console.time("checkroute");
         // app.use(cors());
 
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
-          console.log("info usage mémoire : ") 
-        const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
-console.log("listen to : "+this.port)
+
        // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         let server = createServer(async (request: IncomingMessage, response: ServerResponse) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
@@ -100,6 +98,8 @@ console.log("listen to : "+this.port)
         server.listen(this.port);
     }
     public static start() {
+          console.log("info usage mémoire : ") 
+        const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
 
         this.getInstance().init();
     }
