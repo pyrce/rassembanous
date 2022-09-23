@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "18.7.0", 
-    "npm": "8.19.1" 
+    "node": "18.5.0", 
+    "npm": "8.13.1" 
   },
   "scripts": {
     "start": "npm i && vue-cli-service serve && echo \"start client\" ",
