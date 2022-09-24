@@ -1,10 +1,10 @@
 {
-  "name": "client",
+  "name": "retrouveanouclient",
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "18.5.0", 
-    "npm": "8.13.1" 
+    "node": "v18.9.0",
+    "npm": "8.19.2"
   },
   "scripts": {
     "start": "npm i && vue-cli-service serve && echo \"start client\" ",
@@ -27,6 +27,7 @@
     "nth-check": "2.1.1",
     "pinia": "^2.0.16",
     "poi": "^12.9.0",
+    "retrouveanouclient": "file:",
     "sweetalert2": "11.4.23",
     "vee-validate": "4.6.2",
     "vite": "3.1.3",
