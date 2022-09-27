@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "engines": {
-    "node": "18.x", 
-    "npm": "8.x" 
+    "node": "18.x" 
   },
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
