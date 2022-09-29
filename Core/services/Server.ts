@@ -76,7 +76,7 @@ console.time("checkroute");
     }
 
     private init() {
-
+console.log("server init !")
         // app.use(cors());
 
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
@@ -94,7 +94,7 @@ console.time("checkroute");
 
             myResponse.emit(data);
         });    
-
+        console.log("server end init !")
         server.listen(this.port);
     }
     public static start() {
