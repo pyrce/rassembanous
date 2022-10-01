@@ -22,15 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -57,178 +48,156 @@ const prisma = new client_1.PrismaClient({
         }
     ],
 });
-prisma.$on('query', (e) => __awaiter(void 0, void 0, void 0, function* () {
+prisma.$on('query', async (e) => {
     console.log(`${e.query} ${e.params} \n`);
-}));
+});
 class UserController {
-    static inscrire(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let { data } = request;
-            data = JSON.parse(data);
-            let dateJour = new Date();
-            let nom = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
-            let userToken = JWToken_1.default.getUser();
-            console.log("user connected :");
-            console.log(userToken);
-            if (userToken != false) {
-                yield prisma.event_user.create({ data: { "id_event": data, "id_user": userToken.id } });
-                qrcode.toFile('./public/image/' + nom + '.png', [{ data: userToken.nom + " " + userToken.prenom, mode: 'byte' }], {
-                    scale: 4,
-                    width: 800
-                }, function () {
-                    return __awaiter(this, void 0, void 0, function* () {
-                        yield prisma.media.create({ data: { id_event: data, id_user: userToken.id, id_type: 2, "image": nom + ".png" } });
-                        console.log("cb");
-                    });
-                });
-                return JSON.stringify({ "msg": "ok" });
-            }
-            else {
-                return JSON.stringify({ "msg": "KO" });
-            }
-        });
-    }
-    static signup(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let { data } = request;
-            data = JSON.parse(data);
-            for (let index in data) {
-                data[index] = UserController.escapeHtml(data[index]);
-            }
-            bcrypt_1.default.hash(data["password"], 1, function (err, hash) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    // Store hash in your password DB.
-                    let user = yield prisma.users.create({
-                        data: {
-                            "nom": data.nom,
-                            "prenom": data.prenom,
-                            "login": data.login,
-                            "password": hash,
-                            "id_role": 2,
-                            "email": data.email,
-                            "adresse": data.adresse
-                        }
-                    });
-                });
+    static async inscrire(request) {
+        let { data } = request;
+        data = JSON.parse(data);
+        let dateJour = new Date();
+        let nom = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
+        let userToken = JWToken_1.default.getUser();
+        console.log("user connected :");
+        console.log(userToken);
+        if (userToken != false) {
+            await prisma.event_user.create({ data: { "id_event": data, "id_user": userToken.id } });
+            qrcode.toFile('./public/image/' + nom + '.png', [{ data: userToken.nom + " " + userToken.prenom }], {
+                scale: 4,
+                width: 800
+            }, async function () {
+                await prisma.media.create({ data: { id_event: data, id_user: userToken.id, id_type: 2, "image": nom + ".png" } });
+                console.log("cb");
             });
-            console.log("inserted");
-        });
-    }
-    static logout() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield JWToken_1.default.logout();
-            return JSON.stringify({ msg: "OK" });
-        });
-    }
-    static follow(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let { data } = request;
-            let user = JWToken_1.default.getUser();
-            if (user) {
-                yield prisma.partenaire_user.create({ data: { id_partenaire: parseInt(data), id_user: user.userId } });
-                return JSON.stringify({ msg: "Ok" });
-            }
-            else {
-                return JSON.stringify({ msg: "KO" });
-            }
-        });
-    }
-    static getUser() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let userToken = yield JWToken_1.default.getUser();
-            console.log("userToken ! :");
-            console.log(userToken);
-            if (userToken) {
-                return JSON.stringify(userToken);
-            }
-            else {
-                return JSON.stringify({ msg: "ko" });
-            }
-        });
-    }
-    static getUserProfil() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let userToken = JWToken_1.default.getToken();
-            if (typeof userToken != "undefined") {
-                let infoUser = JWToken_1.default.getUser();
-                let id = infoUser.userId;
-                let user = yield prisma.users.findFirst({ where: { id: id } });
-                // user = JSON.parse(JSON.stringify(user));
-                return JSON.stringify(user);
-            }
-            else {
-                console.log("ko");
-                return JSON.stringify({ "msg": "ko" });
-            }
-            //return Render.make('profil', { user:user[0],rootDir:rootDir })
-        });
-    }
-    static updateProfil(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let { data } = request;
-            let userToken = JWToken_1.default.getToken();
-            if (userToken) {
-                var base64Payload = userToken.split('.')[1];
-                var payload = Buffer.from(base64Payload, 'base64');
-                let infoUser = JSON.parse(payload.toString());
-                yield prisma.users.update({ data: data, where: { id: infoUser.id } });
-                //partenaireModel.update({ id: infoUser.id }, data);
-            }
-        });
-    }
-    static getQRCODE(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let { data } = request;
-            data = JSON.parse(data);
-            // let userToken = JWTToken.getToken();
-            // var base64Payload = userToken.split('.')[1];
-            // var payload = Buffer.from(base64Payload, 'base64');
-            // let infoUser = JSON.parse(payload.toString());
-            let qrcode = yield prisma.media.findFirst({
-                where: { id_user: 1, "id_event": data.id, "id_type": 2 }
-            });
-            //qrcode = JSON.parse(JSON.stringify(qrcode));
-            if (qrcode != null) {
-                let fichier = qrcode.image;
-                let rootDir = path.resolve('./');
-                var code = fs.readFileSync("./public/image/" + fichier, 'base64');
-                return JSON.stringify({ code: code });
-            }
-            else {
-                return JSON.stringify({ "msg": "ko" });
-            }
-        });
-    }
-    static repondreQuestionnaire(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let { data } = request;
-            data = JSON.parse(data);
-            let userToken = JWToken_1.default.getToken();
-            if (userToken) {
-            }
-            let questionsUser = yield prisma.questions.findMany({
-                where: { id_questionnaire: data.questionnaire },
-                include: { users: { where: { id_user: 1 } } }
-            });
-            data.forEach((element) => __awaiter(this, void 0, void 0, function* () {
-                let quest = questionsUser[0].users.filter((q) => q.id_user == element.id_user);
-                console.log("quest");
-                console.log(quest);
-                if (quest.length > 0) {
-                    yield prisma.question_user.update({ data: { stars: element.stars }, where: { id: quest[0].id } });
-                }
-                else {
-                    yield prisma.question_user.create({
-                        data: {
-                            id_user: 1,
-                            id_question: element.id_question,
-                            stars: element.stars
-                        }
-                    });
-                }
-            }));
             return JSON.stringify({ "msg": "ok" });
+        }
+        else {
+            return JSON.stringify({ "msg": "KO" });
+        }
+    }
+    static async signup(request) {
+        let { data } = request;
+        data = JSON.parse(data);
+        for (let index in data) {
+            data[index] = UserController.escapeHtml(data[index]);
+        }
+        bcrypt_1.default.hash(data["password"], 1, async function (err, hash) {
+            // Store hash in your password DB.
+            let user = await prisma.users.create({
+                data: {
+                    "nom": data.nom,
+                    "prenom": data.prenom,
+                    "login": data.login,
+                    "password": hash,
+                    "id_role": 2,
+                    "email": data.email,
+                    "adresse": data.adresse
+                }
+            });
         });
+        console.log("inserted");
+    }
+    static async logout() {
+        await JWToken_1.default.logout();
+        return JSON.stringify({ msg: "OK" });
+    }
+    static async follow(request) {
+        let { data } = request;
+        let user = JWToken_1.default.getUser();
+        if (user) {
+            await prisma.partenaire_user.create({ data: { id_partenaire: parseInt(data), id_user: user.userId } });
+            return JSON.stringify({ msg: "Ok" });
+        }
+        else {
+            return JSON.stringify({ msg: "KO" });
+        }
+    }
+    static async getUser() {
+        let userToken = await JWToken_1.default.getUser();
+        console.log("userToken ! :");
+        console.log(userToken);
+        if (userToken) {
+            return JSON.stringify(userToken);
+        }
+        else {
+            return JSON.stringify({ msg: "ko" });
+        }
+    }
+    static async getUserProfil() {
+        let userToken = JWToken_1.default.getToken();
+        if (typeof userToken != "undefined") {
+            let infoUser = JWToken_1.default.getUser();
+            let id = infoUser.userId;
+            let user = await prisma.users.findFirst({ where: { id: id } });
+            // user = JSON.parse(JSON.stringify(user));
+            return JSON.stringify(user);
+        }
+        else {
+            console.log("ko");
+            return JSON.stringify({ "msg": "ko" });
+        }
+        //return Render.make('profil', { user:user[0],rootDir:rootDir })
+    }
+    static async updateProfil(request) {
+        let { data } = request;
+        let userToken = JWToken_1.default.getToken();
+        if (userToken) {
+            var base64Payload = userToken.split('.')[1];
+            var payload = Buffer.from(base64Payload, 'base64');
+            let infoUser = JSON.parse(payload.toString());
+            await prisma.users.update({ data: data, where: { id: infoUser.id } });
+            //partenaireModel.update({ id: infoUser.id }, data);
+        }
+    }
+    static async getQRCODE(request) {
+        let { data } = request;
+        data = JSON.parse(data);
+        // let userToken = JWTToken.getToken();
+        // var base64Payload = userToken.split('.')[1];
+        // var payload = Buffer.from(base64Payload, 'base64');
+        // let infoUser = JSON.parse(payload.toString());
+        let qrcode = await prisma.media.findFirst({
+            where: { id_user: 1, "id_event": data.id, "id_type": 2 }
+        });
+        //qrcode = JSON.parse(JSON.stringify(qrcode));
+        if (qrcode != null) {
+            let fichier = qrcode.image;
+            let rootDir = path.resolve('./');
+            var code = fs.readFileSync("./public/image/" + fichier, 'base64');
+            return JSON.stringify({ code: code });
+        }
+        else {
+            return JSON.stringify({ "msg": "ko" });
+        }
+    }
+    static async repondreQuestionnaire(request) {
+        let { data } = request;
+        data = JSON.parse(data);
+        let userToken = JWToken_1.default.getToken();
+        if (userToken) {
+        }
+        let questionsUser = await prisma.questions.findMany({
+            where: { id_questionnaire: data.questionnaire },
+            include: { users: { where: { id_user: 1 } } }
+        });
+        data.forEach(async (element) => {
+            let quest = questionsUser[0].users.filter((q) => q.id_user == element.id_user);
+            console.log("quest");
+            console.log(quest);
+            if (quest.length > 0) {
+                await prisma.question_user.update({ data: { stars: element.stars }, where: { id: quest[0].id } });
+            }
+            else {
+                await prisma.question_user.create({
+                    data: {
+                        id_user: 1,
+                        id_question: element.id_question,
+                        stars: element.stars
+                    }
+                });
+            }
+        });
+        return JSON.stringify({ "msg": "ok" });
     }
     static becomePartner(request) {
         let { data } = request;
@@ -236,22 +205,20 @@ class UserController {
         for (let index in data) {
             data[index] = UserController.escapeHtml(data[index]);
         }
-        bcrypt_1.default.hash(data.password, 1, function (err, hash) {
-            return __awaiter(this, void 0, void 0, function* () {
-                // Store hash in your password DB.
-                console.log(err);
-                yield prisma.users.create({
-                    data: {
-                        "nom": data.nom,
-                        "prenom": data.prenom,
-                        "login": data.login,
-                        "password": hash,
-                        "id_role": 3,
-                        "token": "",
-                        "email": data.email,
-                        "adresse": data.adresse,
-                    }
-                });
+        bcrypt_1.default.hash(data.password, 1, async function (err, hash) {
+            // Store hash in your password DB.
+            console.log(err);
+            await prisma.users.create({
+                data: {
+                    "nom": data.nom,
+                    "prenom": data.prenom,
+                    "login": data.login,
+                    "password": hash,
+                    "id_role": 3,
+                    "token": "",
+                    "email": data.email,
+                    "adresse": data.adresse,
+                }
             });
         });
         console.log("inserted");

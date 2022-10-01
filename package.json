@@ -4,14 +4,14 @@
   "description": "",
   "main": "app.js",
   "engines": {
-    "node": "18.x" 
+    "node": "18.x"
   },
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-client": "npm run start --prefix client",
-    "start-server": "node --inspect=9090 build/app.js && echo \"starting serveur\" ",
+    "start-server": "node --inspect=9090 ./build/app.js && echo \"starting serveur\" ",
     "watch-ts": "tsc -w",
-    "heroku-postbuild":"npm i",
+    "heroku-postbuild": "npm i",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },
   "author": "ETHEVE Florent",
@@ -27,8 +27,8 @@
     "@types/qrcode": "^1.4.2",
     "cross-env": "^7.0.3",
     "jest": "28.1.3",
-    "npm":"^8.13.1",
     "nodemon": "2.0.19",
+    "npm": "^8.13.1",
     "prisma": "4.3.1",
     "rimraf": "^3.0.2",
     "ts-node": "10.9.1",
@@ -65,6 +65,7 @@
     "supertest": "6.2.4",
     "ts-jest": "28.0.7",
     "ts-node-dev": "^2.0.0",
+    "tsc": "^2.0.4",
     "typeorm": "0.3.7"
   }
 }

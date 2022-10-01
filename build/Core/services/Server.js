@@ -22,15 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -49,7 +40,8 @@ const app = (0, express_1.default)();
 class Server {
     constructor() {
         this.port = 0;
-        this.port = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3500;
+        console.log("heroku port : " + process.env.PORT);
+        this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500;
     }
     /**Recupere la route et renvoie une vue ou une erreur
      *
@@ -92,24 +84,27 @@ class Server {
         return this.instance;
     }
     init() {
+        console.log("server init !");
         // app.use(cors());
         //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
-        let server = (0, http_1.createServer)((request, response) => __awaiter(this, void 0, void 0, function* () {
+        let server = (0, http_1.createServer)(async (request, response) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
-            let myRequest = yield Request_1.default.instance(request);
+            let myRequest = await Request_1.default.instance(request);
             let myResponse = new Reponse_1.default(response);
             myRequest.setData(request);
-            let data = yield this.checkRoute(myRequest);
+            let data = await this.checkRoute(myRequest);
             myResponse.emit(data);
-        }));
+        });
+        console.log("server end init !");
         server.listen(this.port);
     }
     static start() {
-        //   console.log("info usage mémoire : ") 
-        // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
+        console.log("info usage mémoire : ");
+        const used = process.memoryUsage().heapUsed / 1024 / 1024;
+        console.log(`The script uses approximately ${used} MB`);
         this.getInstance().init();
     }
 }

@@ -51,7 +51,7 @@ class UserController {
 
             qrcode.toFile(
                 './public/image/' + nom + '.png',
-                [{ data: userToken.nom + " " + userToken.prenom, mode: 'byte' }],
+                [{ data: userToken.nom + " " + userToken.prenom }],
                 {
                     scale: 4,
                     width: 800
