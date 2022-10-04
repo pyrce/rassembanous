@@ -4,7 +4,7 @@ module.exports = {
     ],
     lintOnSave: false,
     devServer: {
-      allowedHosts: 'all'
+      allowedHosts: 'all',
       proxy: '',
       port:"3000"
     }
