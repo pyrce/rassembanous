@@ -9,7 +9,7 @@
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-client": "npm run start --prefix client",
-    "start-server": "node --max-old-space-size=4096 build/app.js && echo \"starting serveur\" ",
+    "start-server": "node --max-old-space-size=2560 build/app.js && echo \"starting serveur\" ",
     "watch-ts": "tsc -w",
     "heroku-postbuild": "npm i",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
