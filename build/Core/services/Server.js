@@ -58,6 +58,7 @@ class Server {
         const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
             (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
         if (someRoute) {
+            console.log(someRoute);
             if (someRoute.middleware != null) {
                 let check = checkJWT_1.default.checkToken(someRoute.middleware);
                 console.log("is check : " + check);

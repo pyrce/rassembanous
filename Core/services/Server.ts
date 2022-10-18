@@ -46,7 +46,7 @@ console.time("checkroute");
         );
 
         if (someRoute) {
-
+console.log(someRoute);
             if (someRoute.middleware != null) {
                 let check = checkJWT.checkToken(someRoute.middleware)
                 console.log("is check : " + check)
