@@ -53,7 +53,7 @@ class EventsController {
                     skip: data.offset != null ? data.offset : undefined,
                     take: data.limit,
                     where: {
-                        dateFin: { gt:new Date() },
+                        dateDebut: { gt:new Date() },
                     },
                     include: {
                         lieu: true
@@ -65,7 +65,7 @@ class EventsController {
 
 
             let response = { currentEvents: currentEvents }
-
+       
             return JSON.stringify(response);
             //  return Render.make('Events', { rootDir: rootDir, user: "toto", page: "detail", lastEvents: lastEvents, currentEvents: currentEvents })
         } catch (error) {
