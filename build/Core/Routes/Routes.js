@@ -13,8 +13,6 @@ const Multer_1 = __importDefault(require("./middleware/Multer"));
 class Routes {
     static make() {
         // Router.get("/", null,HomeController.getHome)
-        Router_1.default.get("/api/login", null, HomeController_1.default.login);
-        Router_1.default.post("/api/identifier", null, HomeController_1.default.identifier);
         Router_1.default.get("/api/categories", null, EventsController_1.default.getCategories);
         Router_1.default.get("/api/lieus", null, EventsController_1.default.getLieu);
         Router_1.default.get("/api/events", null, EventsController_1.default.getEvents);
@@ -53,6 +51,8 @@ class Routes {
         Router_1.default.post("/api/stats", { isAuth: true, id_role: 1 }, AdminController_1.default.eventStats);
         Router_1.default.delete("/api/galleries", { isAuth: true, id_role: 1 }, AdminController_1.default.deleteImage);
         Router_1.default.post("/contact", null, HomeController_1.default.contact);
+        Router_1.default.get("/api/login", null, HomeController_1.default.login);
+        Router_1.default.post("/api/identifier", null, HomeController_1.default.identifier);
     }
 }
 exports.default = Routes;
