@@ -19,8 +19,7 @@ class Routes {
 
 
     // Router.get("/", null,HomeController.getHome)
-    Router.get("/api/login", null, HomeController.login)
-    Router.post("/api/identifier", null, HomeController.identifier)
+
 
 
     Router.get("/api/categories", null, EventsController.getCategories)
@@ -64,6 +63,8 @@ class Routes {
     Router.post("/api/stats", { isAuth: true, id_role: 1 }, AdminController.eventStats);
     Router.delete("/api/galleries", { isAuth: true, id_role: 1 }, AdminController.deleteImage);
     Router.post("/contact", null, HomeController.contact);
+    Router.get("/api/login", null, HomeController.login)
+    Router.post("/api/identifier", null, HomeController.identifier)
   }
 }
 
