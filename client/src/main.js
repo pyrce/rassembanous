@@ -3,7 +3,7 @@ import Vuetify from 'vuetify';
 import Routes from './routes.js';
 import Layout from './layouts/Layout.vue';
 import 'vuetify/dist/vuetify.min.css';
-import moment from 'moment'
+import moment from 'moment/src/moment'
 
 
 Vue.filter('formatDate', function(value) {
