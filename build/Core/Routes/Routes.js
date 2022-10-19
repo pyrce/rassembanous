@@ -13,9 +13,9 @@ const Multer_1 = __importDefault(require("./middleware/Multer"));
 class Routes {
     static make() {
         // Router.get("/", null,HomeController.getHome)
+        Router_1.default.get("/api/events", null, EventsController_1.default.getEvents);
         Router_1.default.get("/api/categories", null, EventsController_1.default.getCategories);
         Router_1.default.get("/api/lieus", null, EventsController_1.default.getLieu);
-        Router_1.default.get("/api/events", null, EventsController_1.default.getEvents);
         Router_1.default.post("/api/allevents", null, EventsController_1.default.getAllEvents);
         Router_1.default.post("/api/galleries", null, EventsController_1.default.getGallerie);
         Router_1.default.post("/api/events", { id_role: 1 }, EventsController_1.default.addEvent);

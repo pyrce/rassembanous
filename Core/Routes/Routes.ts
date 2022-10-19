@@ -21,10 +21,10 @@ class Routes {
     // Router.get("/", null,HomeController.getHome)
 
 
+    Router.get("/api/events", null, EventsController.getEvents)
 
     Router.get("/api/categories", null, EventsController.getCategories)
     Router.get("/api/lieus", null, EventsController.getLieu)
-    Router.get("/api/events", null, EventsController.getEvents)
     Router.post("/api/allevents", null, EventsController.getAllEvents)
     Router.post("/api/galleries", null, EventsController.getGallerie)
     Router.post("/api/events", { id_role: 1 }, EventsController.addEvent)
