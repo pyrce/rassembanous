@@ -11,8 +11,7 @@ class Response {
     }
 
     public emit(data: any) {
-console.log("data");
-console.log(data);
+
         if (typeof data === "string") {
 
             this.reponse.setHeader('Content-Type', 'application/json');

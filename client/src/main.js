@@ -14,7 +14,7 @@ Vue.filter('formatDate', function(value) {
 
 // Vue config
 Vue.use(Vuetify);
-
+console.log("stating vuejs")
 // Main component
 new Vue({
   el: '#app',
