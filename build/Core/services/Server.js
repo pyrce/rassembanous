@@ -41,7 +41,7 @@ class Server {
     constructor() {
         this.port = 0;
         console.log("heroku port : " + process.env.PORT);
-        this.port = process.env.PORT ? parseInt(process.env.PORT) : 3500;
+        this.port = process.env.PORT || 3500;
     }
     /**Recupere la route et renvoie une vue ou une erreur
      *

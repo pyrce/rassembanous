@@ -17,7 +17,7 @@ const app = express();
  * Singleton to initiate nodejs server
  */
 class Server {
-    port: number = 0;
+    port: any = 0;
     private static instance: Server;
     adapter!: CustomAdapter;
     SERVER: any
