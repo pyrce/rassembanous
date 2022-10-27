@@ -101,7 +101,8 @@ console.log("server init !")
           console.log("info usage mémoire : ") 
         const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         app.get("/", (req, res) => {
-            res.sendFile(path.join(__dirname, "/dist/index.html"));
+            console.log("sending vuejs")
+            res.sendFile(path.join(__dirname, "client/dist/index.html"));
           });
         this.getInstance().init();
     }
