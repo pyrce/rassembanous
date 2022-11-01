@@ -11,6 +11,6 @@ module.exports = {
       port:"3000"
     } ,
     outputDir: "./dist",
-    publicPath:"/myapp/"
+
     
   }
