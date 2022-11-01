@@ -9,13 +9,7 @@ module.exports = {
       allowedHosts: 'all',
       proxy: '',
       port:"3000"
-    } ,pages:{
-      index:{
-        entry: 'src/main.js',
-        // the source template
-        template: 'public/index.html',
-      }
-    }
+    } 
     ,    configureWebpack: {
       plugins: [new BundleAnalyzerPlugin()]
   }
