@@ -9,8 +9,8 @@ module.exports = {
       allowedHosts: 'all',
       proxy: '',
       port:"3000"
-    } 
-    ,    configureWebpack: {
-      plugins: [new BundleAnalyzerPlugin()]
-  }
+    } ,
+    outputDir: "./dist",
+    publicPath:"/myapp/"
+    
   }
