@@ -10,7 +10,8 @@ module.exports = {
       proxy: '',
       port:"3000"
     } ,
+    mode: 'production',
     outputDir: "./dist",
-    publicPath: process.env.VUE_APP_BASE_URL + '/',
+    publicPath:  '/',
     assetsDir: "assets",
   }
