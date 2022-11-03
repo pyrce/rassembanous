@@ -6,8 +6,9 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "npm i && vue-cli-service serve && echo \"start client\" ",
-    "devBuild": "npm i && vue-cli-service build",
+    "start": "vue-cli-service serve && echo \"start client\" ",
+    "devBuild": "vue-cli-service build",
+    "build":"npm i",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
