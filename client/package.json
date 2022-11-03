@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "npm i && vue-cli-service serve && echo \"start client\" ",
-    "build": "npm i && vue-cli-service build",
+    "devBuild": "npm i && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
