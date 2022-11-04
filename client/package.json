@@ -6,9 +6,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "vue-cli-service serve && echo \"start client\" ",
+    "start": "npm i && vue-cli-service serve && echo \"start client\" ",
     "devBuild": "vue-cli-service build",
-    "heroku-postbuild": "npm i",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
