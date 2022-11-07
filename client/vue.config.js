@@ -10,7 +10,6 @@ module.exports = {
       proxy: '',
       port:"3000"
     } ,
-    allowedHosts: 'all',
     outputDir: "./dist",
     publicPath:  '/',
     assetsDir: "assets",

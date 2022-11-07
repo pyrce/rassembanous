@@ -107,9 +107,9 @@ class Server {
         console.log("info usage mémoire : ");
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`The script uses approximately ${used} MB`);
-        app.get(/.*/, function (req, res) {
-            console.log("sending vuejs file");
-            res.sendFile(path.join(__dirname, "/client/dist/index.html"));
+        app.get('/', function (req, res) {
+            console.log("vuejs frontend : ");
+            res.sendFile(path.join(__dirname, 'client/dist/index.html'));
         });
         this.getInstance().init();
     }
