@@ -113,7 +113,7 @@ class Server {
         let parsed = JSON.parse(rawJson);
         parsed.proxy = myVar; // or whatever string defines your script
         let backToJson = JSON.stringify(parsed);
-        fs.writeFileSync("package.json", backToJson);
+        fs.writeFileSync("./client/package.json", backToJson);
         this.getInstance().init();
     }
 }
