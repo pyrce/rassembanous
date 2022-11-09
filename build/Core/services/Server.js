@@ -32,7 +32,8 @@ const Request_1 = __importDefault(require("./Request"));
 const Reponse_1 = __importDefault(require("./Reponse"));
 const Url = __importStar(require("url"));
 const express_1 = __importDefault(require("express"));
-const path = __importStar(require("path"));
+const fs = require("fs");
+require("dotenv").config();
 const checkJWT_1 = __importDefault(require("../Routes/middleware/checkJWT"));
 const app = (0, express_1.default)();
 /**
@@ -107,10 +108,12 @@ class Server {
         console.log("info usage mémoire : ");
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`The script uses approximately ${used} MB`);
-        app.get('/', function (req, res) {
-            console.log("vuejs frontend : ");
-            res.sendFile(path.join(__dirname, 'client/dist/index.html'));
-        });
+        const myVar = process.env.VUE_APP_BASE_URL;
+        let rawJson = fs.readFileSync("./client/package.json");
+        let parsed = JSON.parse(rawJson);
+        parsed.proxy = myVar; // or whatever string defines your script
+        let backToJson = JSON.stringify(parsed);
+        fs.writeFileSync("package.json", backToJson);
         this.getInstance().init();
     }
 }
