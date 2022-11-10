@@ -2,7 +2,6 @@
   "name": "retrouveanouclient",
   "version": "0.1.0",
   "private": true,
-  "proxy": "",
   "engines": {
     "node": "18.x"
   },

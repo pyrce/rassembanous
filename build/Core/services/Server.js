@@ -108,12 +108,19 @@ class Server {
         console.log("info usage mémoire : ");
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`The script uses approximately ${used} MB`);
-        const myVar = process.env.VUE_APP_BASE_URL;
-        let rawJson = fs.readFileSync("./client/package.json");
-        let parsed = JSON.parse(rawJson);
-        parsed.proxy = myVar; // or whatever string defines your script
-        let backToJson = JSON.stringify(parsed);
-        fs.writeFileSync("./client/package.json", backToJson);
+        // const myVar = process.env.VUE_APP_BASE_URL;
+        // let rawJson = fs.readFileSync("./client/package.json");
+        // let parsed = JSON.parse(rawJson);
+        // parsed.proxy = myVar; // or whatever string defines your script
+        // let backToJson = JSON.stringify(parsed);
+        // fs.writeFileSync("./client/package.json", backToJson);
+        if (process.env.NODE_ENV === 'production') {
+            // Static folder
+            app.use(express_1.default.static(__dirname + '/public/'));
+            console.log("heroku spa");
+            // Handle SPA
+            app.get(/.*/, (req, res) => res.sendFile(__dirname + '/client/dist/index.html'));
+        }
         this.getInstance().init();
     }
 }
