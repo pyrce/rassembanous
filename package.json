@@ -7,7 +7,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
+    "startdev": "concurrently \"npm run start-server\" \"npm run start-client\"",
+    "start":"node build/app.js",
     "start-client": "npm run start --prefix client",
     "start-server": "node build/app.js && echo \"starting serveur\" ",
     "watch-ts": "tsc -w",
