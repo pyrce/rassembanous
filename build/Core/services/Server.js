@@ -32,6 +32,7 @@ const Request_1 = __importDefault(require("./Request"));
 const Reponse_1 = __importDefault(require("./Reponse"));
 const Url = __importStar(require("url"));
 const express_1 = __importDefault(require("express"));
+const path = __importStar(require("path"));
 const fs = require("fs");
 require("dotenv").config();
 const checkJWT_1 = __importDefault(require("../Routes/middleware/checkJWT"));
@@ -114,13 +115,7 @@ class Server {
         // parsed.proxy = myVar; // or whatever string defines your script
         // let backToJson = JSON.stringify(parsed);
         // fs.writeFileSync("./client/package.json", backToJson);
-        if (process.env.NODE_ENV === 'production') {
-            // Static folder
-            app.use(express_1.default.static(__dirname + '/public/'));
-            console.log("heroku spa");
-            // Handle SPA
-            app.get(/.*/, (req, res) => res.sendFile(__dirname + '/client/dist/index.html'));
-        }
+        app.use('/', express_1.default.static(path.join(__dirname + "/client/dist")));
         this.getInstance().init();
     }
 }

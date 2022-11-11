@@ -112,13 +112,7 @@ console.log("server init !")
         
         // let backToJson = JSON.stringify(parsed);
         // fs.writeFileSync("./client/package.json", backToJson);
-        if (process.env.NODE_ENV === 'production') {
-            // Static folder
-            app.use(express.static(__dirname + '/public/'));
-          console.log("heroku spa")
-            // Handle SPA
-            app.get(/.*/, (req, res) => res.sendFile(__dirname + '/client/dist/index.html'));
-          }
+        app.use('/', express.static(path.join(__dirname+"/client/dist")));
 
         this.getInstance().init();
     }
