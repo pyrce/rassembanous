@@ -9,6 +9,7 @@
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-client": "npm run start --prefix client",
+    "startdev":"node build/app.js",
     "start-server": "node build/app.js && echo \"starting serveur\" ",
     "watch-ts": "tsc -w",
     "heroku-postbuild": "npm i",

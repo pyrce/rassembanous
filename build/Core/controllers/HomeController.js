@@ -37,11 +37,12 @@ dotenv.config();
 class HomeController {
     static getHome() {
         let rootDir = path.resolve('./');
-        let userToken = JWToken_1.default.getToken();
-        var base64Payload = userToken.split('.')[1];
-        var payload = Buffer.from(base64Payload, 'base64');
-        let infoUser = JSON.parse(payload.toString());
+        // let userToken = JWTToken.getToken();
+        // var base64Payload = userToken.split('.')[1];
+        // var payload = Buffer.from(base64Payload, 'base64');
+        // let infoUser = JSON.parse(payload.toString());
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
+        return path.join(__dirname + "/client/dist");
         //   ///  return view;
     }
     static async contact(request) {

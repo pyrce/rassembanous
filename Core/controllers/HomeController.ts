@@ -20,14 +20,14 @@ class HomeController {
 
         let rootDir = path.resolve('./');
 
-        let userToken = JWTToken.getToken();
+        // let userToken = JWTToken.getToken();
 
-        var base64Payload = userToken.split('.')[1];
-        var payload = Buffer.from(base64Payload, 'base64');
-        let infoUser = JSON.parse(payload.toString());
+        // var base64Payload = userToken.split('.')[1];
+        // var payload = Buffer.from(base64Payload, 'base64');
+        // let infoUser = JSON.parse(payload.toString());
 
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
-
+            return path.join(__dirname+"/client/dist")
         //   ///  return view;
 
     }

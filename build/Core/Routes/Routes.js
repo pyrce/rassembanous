@@ -12,7 +12,7 @@ const AdminController_1 = __importDefault(require("../controllers/AdminControlle
 const Multer_1 = __importDefault(require("./middleware/Multer"));
 class Routes {
     static make() {
-        // Router.get("/", null,HomeController.getHome)
+        Router_1.default.get("/", null, HomeController_1.default.getHome);
         Router_1.default.get("/api/events", null, EventsController_1.default.getEvents);
         Router_1.default.get("/api/categories", null, EventsController_1.default.getCategories);
         Router_1.default.get("/api/lieus", null, EventsController_1.default.getLieu);
