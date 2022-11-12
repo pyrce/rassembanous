@@ -27,7 +27,7 @@ class HomeController {
         // let infoUser = JSON.parse(payload.toString());
 
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
-            return path.join(__dirname+"/client/dist")
+            return path.join(__dirname+"/client/dist/index.html")
         //   ///  return view;
 
     }
