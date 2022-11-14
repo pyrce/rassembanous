@@ -1,4 +1,4 @@
-
+import { createServer, IncomingMessage, ServerResponse } from 'http';
 import Request from "../services/Request";
 type route = { data: Object, view: String }
 import * as path from "path";
@@ -9,14 +9,14 @@ import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer"
 import * as dotenv from "dotenv";
 import { PrismaClient } from '@prisma/client'
-
+import  * as fs  from 'fs';
 const prisma = new PrismaClient();
 
 dotenv.config();
 
 class HomeController {
 
-    public static getHome() {
+    public static getHome(res:Response) {
 
         let rootDir = path.resolve('./');
 
@@ -25,9 +25,12 @@ class HomeController {
         // var base64Payload = userToken.split('.')[1];
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
-
+     
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
-            return path.join(__dirname+"/client/dist/index.html")
+        const file="../../client/dist.index.html";
+        const htmlText=fs.readFileSync(file);
+
+        return htmlText;
         //   ///  return view;
 
     }

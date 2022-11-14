@@ -32,17 +32,20 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const dotenv = __importStar(require("dotenv"));
 const client_1 = require("@prisma/client");
+const fs = __importStar(require("fs"));
 const prisma = new client_1.PrismaClient();
 dotenv.config();
 class HomeController {
-    static getHome() {
+    static getHome(res) {
         let rootDir = path.resolve('./');
         // let userToken = JWTToken.getToken();
         // var base64Payload = userToken.split('.')[1];
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
-        return path.join(__dirname + "/client/dist/index.html");
+        const file = "../../client/dist.index.html";
+        const htmlText = fs.readFileSync(file);
+        return htmlText;
         //   ///  return view;
     }
     static async contact(request) {
