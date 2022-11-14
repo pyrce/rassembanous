@@ -113,6 +113,10 @@ class Server {
         // let rawJson = fs.readFileSync("./client/package.json");
         // let parsed = JSON.parse(rawJson);
         // parsed.proxy = myVar; // or whatever string defines your script
+        const file = "./client/dist/index.html";
+        const buffer = fs.readFileSync(file);
+        console.log("buffer type :" + typeof buffer);
+        const fileContent = buffer.toString();
         // let backToJson = JSON.stringify(parsed);
         // fs.writeFileSync("./client/package.json", backToJson);
         app.use('/', express_1.default.static(path.join(__dirname + "/client/dist")));

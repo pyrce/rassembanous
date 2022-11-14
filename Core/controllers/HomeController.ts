@@ -25,12 +25,16 @@ class HomeController {
         // var base64Payload = userToken.split('.')[1];
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
-     
+        let maReponse:any={contentType:""};
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
         const file="./client/dist/index.html";
         const buffer=fs.readFileSync(file);
+        console.log("buffer type :"+typeof buffer)
+        console.log( buffer)
         const fileContent = buffer.toString();
-        return fileContent;
+        maReponse.contentType="text/html";
+        maReponse.content=fileContent;
+        return maReponse;
         //   ///  return view;
 
     }
