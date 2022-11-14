@@ -27,7 +27,7 @@ class HomeController {
         // let infoUser = JSON.parse(payload.toString());
      
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
-        const file="../../client/dist.index.html";
+        const file="../../client/dist/index.html";
         const htmlText=fs.readFileSync(file);
 
         return htmlText;
