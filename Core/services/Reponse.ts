@@ -20,7 +20,7 @@ console.log("typeof data :"+typeof data);
             this.reponse.setHeader('Access-Control-Allow-Methods', '*');
             this.reponse.end(data);
 
-        } else if(data==Object){
+        } else if(data===Object){
             if(data.contentType){
                 this.reponse.writeHead(202,{"Content-type":data.contentType});
                 this.reponse.end(data.content)
