@@ -6,6 +6,7 @@ class Response {
         this.reponse = reponse;
     }
     emit(data) {
+        console.log("typeof data :" + typeof data);
         if (typeof data === "string") {
             this.reponse.setHeader('Content-Type', 'application/json');
             this.reponse.setHeader('Access-Control-Allow-Origin', '*');
