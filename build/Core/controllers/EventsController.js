@@ -54,13 +54,13 @@ prisma.$on('query', async (e) => {
 class EventsController {
     static async getEvents(request) {
         try {
-            let rootDir = path.resolve('./');
+            const rootDir = path.resolve('./');
             const { data } = request;
-            let queryLimit = {};
+            const queryLimit = {};
             queryLimit["limit"] = data.limit;
             queryLimit["offset"] = data.offset;
-            var listeCurrentEvents = [];
-            let currentEvents = await prisma.evenements.findMany({
+            let listeCurrentEvents = [];
+            const currentEvents = await prisma.evenements.findMany({
                 skip: data.offset != null ? data.offset : undefined,
                 take: data.limit,
                 where: {
@@ -71,7 +71,7 @@ class EventsController {
                 }
             });
             //  currentEvents = JSON.parse(JSON.stringify(currentEvents));
-            let response = { currentEvents: currentEvents };
+            let response = { currentEvents };
             return JSON.stringify(response);
             //  return Render.make('Events', { rootDir: rootDir, user: "toto", page: "detail", lastEvents: lastEvents, currentEvents: currentEvents })
         }
@@ -80,12 +80,12 @@ class EventsController {
         }
     }
     static async getCategories() {
-        let categories = await prisma.categories.findMany({});
+        const categories = await prisma.categories.findMany({});
         // categories = JSON.parse(JSON.stringify(categories));
         return JSON.stringify(categories);
     }
     static async getLieu() {
-        let lieus = await prisma.lieu.findMany({});
+        const lieus = await prisma.lieu.findMany({});
         // categories = JSON.parse(JSON.stringify(categories));
         return JSON.stringify(lieus);
     }
@@ -93,10 +93,10 @@ class EventsController {
         let { data } = request;
         data = JSON.parse(data);
         let user = JWToken_1.default.getUser();
-        let queryLimit = {};
+        const queryLimit = {};
         queryLimit["limit"] = data.limit;
         queryLimit["offset"] = data.offset;
-        let search = data.search;
+        const search = data.search;
         // MediaModel.setJoinTable([{ class: eventsClass, fk: "id_event" }]);
         let images = await prisma.media.findMany({
             skip: data.offset != null ? data.offset : undefined,
@@ -119,23 +119,23 @@ class EventsController {
             }
         });
         total = JSON.parse(JSON.stringify(total)).length;
-        return JSON.stringify({ gallerie: images, total: total, user: user });
+        return JSON.stringify({ gallerie: images, total, user });
     }
     static async getAllEvents(request) {
         let { data } = request;
         data = JSON.parse(data);
-        let queryLimit = {};
+        const queryLimit = {};
         queryLimit["limit"] = data.limit;
         queryLimit["offset"] = data.offset;
         console.log("data all event:");
         console.log(data);
         let response = {};
         let total = 0;
-        let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
+        const today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
         // eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
         // eventsClass.setJoinTable([{ class: categoriesModel, fk: "id" }]);
         // let lastEvents = await eventsClass.findAll([{ "dateFin": today, "op": ">" }], queryLimit);
-        let opt = {
+        const opt = {
             include: {
                 events: {
                     include: {
@@ -161,7 +161,7 @@ class EventsController {
         total = await (await prisma.evenements.findMany({ where })).length;
         //  total = JSON.parse(JSON.stringify(total)).length;
         // lastEvents = JSON.parse(JSON.stringify(lastEvents));
-        response = { listEvents: lastEvents, total: total };
+        response = { listEvents: lastEvents, total };
         return JSON.stringify(response);
     }
     static ajoutEvent() {
@@ -180,8 +180,8 @@ class EventsController {
         // for (let index in data) {
         //     data[index] = EventsController.escapeHtml(data[index]);
         // }
-        //await fs.writeFile(path.join(cwd,"client","public","01.txt"),data.affiche,()=>{});
-        let newEvent = await prisma.evenements.create({
+        // await fs.writeFile(path.join(cwd,"client","public","01.txt"),data.affiche,()=>{});
+        const newEvent = await prisma.evenements.create({
             data: {
                 "nom": data.nom,
                 "dateDebut": new Date(data.dateDebut),
@@ -191,7 +191,7 @@ class EventsController {
                 "affiche": "5560.jpg",
                 "id_categorie": data.id_categorie,
                 "dateLimit": new Date(data.dateLimit),
-                "isPublic": data.isPublic == 1 ? true : false,
+                "isPublic": data.isPublic === 1 ? true : false,
                 "description": data.description,
                 "dateFin": new Date(data.dateFin)
             }
@@ -239,18 +239,18 @@ class EventsController {
         try {
             const { data } = request;
             const id = data.params;
-            let event = await prisma.evenements.findFirst({ where: { id: parseInt(id) }, include: { lieu: true } });
+            const event = await prisma.evenements.findFirst({ where: { id: parseInt(id) }, include: { lieu: true } });
             //event = JSON.parse(JSON.stringify(event));
             console.log("event");
-            let estInscrit = await EventsController.isInsrit(id);
-            let estTermine = new Date(event.dateLimit).getTime() < new Date().getTime() ? 1 : 0;
-            let stands = await prisma.stands.findMany({});
+            const estInscrit = await EventsController.isInsrit(id);
+            const estTermine = new Date(event.dateLimit).getTime() < new Date().getTime() ? 1 : 0;
+            const stands = await prisma.stands.findMany({});
             // stands = JSON.parse(JSON.stringify(stands));
             let questionaire = await prisma.questionnaire.findFirst({
                 where: { id_event: parseInt(id) },
                 include: { questions: true },
             });
-            let listePartenaireEvent = await prisma.event_stand.findMany({
+            const listePartenaireEvent = await prisma.event_stand.findMany({
                 where: {
                     id_event: parseInt(id),
                 },
@@ -258,9 +258,9 @@ class EventsController {
                     idUser: true,
                 }
             });
-            let partenaireByStands = EventsController.getPartenaireStand(id);
-            let user = JWToken_1.default.getUser();
-            let response = { estInscrit: estInscrit, listePartenaireEvent: listePartenaireEvent, questionaire: questionaire, estTermine: estTermine, event: event, stands: stands, partenaireByStands: partenaireByStands, user: user };
+            const partenaireByStands = EventsController.getPartenaireStand(id);
+            const user = JWToken_1.default.getUser();
+            const response = { estInscrit: estInscrit, listePartenaireEvent, questionaire, estTermine, event, stands, partenaireByStands, user };
             return JSON.stringify(response);
         }
         catch (error) {
@@ -268,15 +268,13 @@ class EventsController {
         }
     }
     static async isInsrit(id) {
-        let userToken = JWToken_1.default.getUser();
+        const userToken = JWToken_1.default.getUser();
         let myEvent = {};
         if (userToken) {
             myEvent = await prisma.event_user.findFirst({ where: { id_event: parseInt(id), id_user: userToken.userId } });
-            //myEvent = JSON.parse(JSON.stringify(myEvent));
+            // myEvent = JSON.parse(JSON.stringify(myEvent));
         }
-        console.log("myEvent");
-        console.log(myEvent);
-        let estInscrit = myEvent ? 1 : 0;
+        const estInscrit = myEvent ? 1 : 0;
         return estInscrit;
     }
     static async getPartenaireStand(idEvent) {
@@ -292,7 +290,7 @@ class EventsController {
         // partenaireByStands = JSON.parse(JSON.stringify(partenaireByStands));
     }
     static escapeHtml(text) {
-        var map = {
+        const map = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',

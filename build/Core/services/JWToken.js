@@ -35,7 +35,7 @@ class JWTToken {
         this.token = jwt.sign(data, config_1.default.jwtSecret, { expiresIn: '1h' });
     }
     static async logout() {
-        let token = this.getUser();
+        const token = this.getUser();
         await prisma.users.update({ data: { token: "" }, where: { id: token.id } });
         // UserModel.update({id:token.id},{token:null});
     }
@@ -46,11 +46,9 @@ class JWTToken {
         let userToken = JWTToken.getToken();
         let user = {};
         if (this.token) {
-            var base64Payload = this.token.split('.')[1];
-            var payload = Buffer.from(base64Payload, 'base64');
-            let infoUser = JSON.parse(payload.toString());
-            console.log("infouser: ");
-            console.log(infoUser);
+            const base64Payload = this.token.split('.')[1];
+            const payload = Buffer.from(base64Payload, 'base64');
+            const infoUser = JSON.parse(payload.toString());
             user = prisma.users.findFirst({
                 where: { id: infoUser.userId },
             }).then((user) => {

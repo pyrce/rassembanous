@@ -37,17 +37,15 @@ const prisma = new client_1.PrismaClient();
 dotenv.config();
 class HomeController {
     static getHome(res) {
-        let rootDir = path.resolve('./');
+        const rootDir = path.resolve('./');
         // let userToken = JWTToken.getToken();
         // var base64Payload = userToken.split('.')[1];
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
-        let maReponse = { contentType: "" };
+        const maReponse = { contentType: "" };
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
         const file = "./client/dist/index.html";
         const buffer = fs.readFileSync(file);
-        console.log("buffer type :" + typeof buffer);
-        console.log(buffer);
         const fileContent = buffer.toString();
         maReponse.contentType = "text/html";
         maReponse.content = fileContent;
@@ -57,7 +55,6 @@ class HomeController {
     static async contact(request) {
         let { data } = request;
         data = JSON.parse(data);
-        console.log(data);
         const transporter = nodemailer_1.default.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
@@ -91,19 +88,15 @@ class HomeController {
     static async identifier(req) {
         let { data } = req;
         data = JSON.parse(data);
-        let user = await prisma.users.findFirst({ where: { "login": data.login } });
+        const user = await prisma.users.findFirst({ where: { "login": data.login } });
         // user = JSON.parse(JSON.stringify(user));
         let response = "";
         if (user) {
-            console.log("user : ");
-            console.log(user);
             bcrypt_1.default.compare(data.password, user.password, function (err, result) {
-                console.log("result : ");
-                console.log(result);
                 if (result == true) {
-                    let userData = { userId: user.id, role: user.id_role, nom: user.nom, prenom: user.prenom };
+                    const userData = { userId: user.id, role: user.id_role, nom: user.nom, prenom: user.prenom };
                     JWToken_1.default.makeJWT(userData);
-                    let userToken = JWToken_1.default.getToken();
+                    const userToken = JWToken_1.default.getToken();
                     //UsersModel.update({id:user[0].id},{token:userToken});
                     prisma.users.update({ data: { token: userToken }, where: { id: user.id } }).then(() => {
                         response = JSON.stringify({ msg: 'connecter', token: userToken });

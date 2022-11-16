@@ -1,5 +1,5 @@
 import { ServerResponse } from 'http';
-
+import  * as fs  from 'fs';
 
 class Response {
 
@@ -20,12 +20,19 @@ console.log("typeof data :"+typeof data);
             this.reponse.setHeader('Access-Control-Allow-Methods', '*');
             this.reponse.end(data);
 
-        } else if(data===Object){
+        } else if(data.contentType){
+           // console.log(data);
+            const filePath = "./client/dist/index.html";
             if(data.contentType){
                 this.reponse.setHeader('Access-Control-Allow-Origin', '*');
                 this.reponse.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
                 this.reponse.setHeader('Access-Control-Allow-Methods', '*');
-                this.reponse.writeHead(202,{"Content-type":data.contentType});
+                // this.reponse.writeHead(200, {
+                //     "Content-Type": "application/octet-stream",
+                //     "Content-Disposition": "attachment; filename=" + filePath
+                // });
+                fs.createReadStream(filePath).pipe(this.reponse);
+               // this.reponse.writeHead(200,{"Content-type":data.contentType});
                 this.reponse.end(data.content)
             }
         }else{

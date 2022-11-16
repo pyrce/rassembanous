@@ -38,20 +38,20 @@ console.log("heroku port : "+process.env.PORT)
      */
     public checkRoute(req: any) {
         const method = req.method;
-        let baseURI = Url.parse(req.url, true);
-        let URIpath:any = baseURI.pathname?.split('/');
-        let params = URIpath?.slice(1)[URIpath.length - 2];
-console.time("checkroute");
+        const baseURI = Url.parse(req.url, true);
+        const URIpath:any = baseURI.pathname?.split('/');
+        const params = URIpath?.slice(1)[URIpath.length - 2];
+
         const someRoute = Router.getAll().find((element: any) =>
-            (element.url.match(baseURI.path) && element.method == req.method) ||
-            (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method)
+            (element.url.match(baseURI.path) && element.method === req.method) ||
+            (element.url.match(element.params, params) && element.url.replace(element.params, params) === baseURI.path && element.method === req.method)
         );
 
         if (someRoute) {
-console.log(someRoute);
+
             if (someRoute.middleware != null) {
-                let check = checkJWT.checkToken(someRoute.middleware)
-                console.log("is check : " + check)
+                const check = checkJWT.checkToken(someRoute.middleware)
+
                 if (check) {
                     return someRoute.callback(req);
                 } else {
@@ -59,7 +59,7 @@ console.log(someRoute);
                     return JSON.stringify({ status: "403", msg: "KO - token not found" })
                 }
             } else {
-        console.timeEnd("checkroute");
+
                 return someRoute.callback(req);
             }
         } else {
@@ -81,7 +81,7 @@ console.log(someRoute);
 console.log("server init !")
         // app.use(cors());
 
-        //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
+        // JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
 
        // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         let server = createServer(async (request: IncomingMessage, response: ServerResponse) => {
@@ -89,10 +89,10 @@ console.log("server init !")
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
 
-            let myRequest = await Request.instance(request)
-            let myResponse = new Response(response);
+            const myRequest = await Request.instance(request)
+            const myResponse = new Response(response);
             myRequest.setData(request);
-            let data = await this.checkRoute(myRequest);
+            const data = await this.checkRoute(myRequest);
 
             myResponse.emit(data);
         });    

@@ -6,7 +6,7 @@ class Router {
     // private maRoute : Route;
     private routes: Array<any> = [];
     private constructor() {
-        //...
+        // ...
         // this.maRoute=new Route();
 
     }
@@ -36,7 +36,7 @@ class Router {
 
     public add(method: string, url: string, middleware: any, callback: any) {
 
-        let maRoute = new Route(method, url, middleware, callback);
+        const maRoute = new Route(method, url, middleware, callback);
 
         this.routes.push(maRoute)
     }

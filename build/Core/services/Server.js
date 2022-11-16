@@ -54,17 +54,14 @@ class Server {
     checkRoute(req) {
         var _a;
         const method = req.method;
-        let baseURI = Url.parse(req.url, true);
-        let URIpath = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
-        let params = URIpath === null || URIpath === void 0 ? void 0 : URIpath.slice(1)[URIpath.length - 2];
-        console.time("checkroute");
-        const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method == req.method) ||
-            (element.url.match(element.params, params) && element.url.replace(element.params, params) == baseURI.path && element.method == req.method));
+        const baseURI = Url.parse(req.url, true);
+        const URIpath = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
+        const params = URIpath === null || URIpath === void 0 ? void 0 : URIpath.slice(1)[URIpath.length - 2];
+        const someRoute = Router_1.default.getAll().find((element) => (element.url.match(baseURI.path) && element.method === req.method) ||
+            (element.url.match(element.params, params) && element.url.replace(element.params, params) === baseURI.path && element.method === req.method));
         if (someRoute) {
-            console.log(someRoute);
             if (someRoute.middleware != null) {
-                let check = checkJWT_1.default.checkToken(someRoute.middleware);
-                console.log("is check : " + check);
+                const check = checkJWT_1.default.checkToken(someRoute.middleware);
                 if (check) {
                     return someRoute.callback(req);
                 }
@@ -73,7 +70,6 @@ class Server {
                 }
             }
             else {
-                console.timeEnd("checkroute");
                 return someRoute.callback(req);
             }
         }
@@ -90,16 +86,16 @@ class Server {
     init() {
         console.log("server init !");
         // app.use(cors());
-        //JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
+        // JWTToken.makeJWT({id:1,id_role:1,nom:"DOE",prenom:"John"});
         // const used = process.memoryUsage().heapUsed / 1024 / 1024; console.log(`The script uses approximately ${used} MB`);
         let server = (0, http_1.createServer)(async (request, response) => {
             response.setHeader('Access-Control-Allow-Origin', '*');
             response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
             response.setHeader('Access-Control-Allow-Methods', '*');
-            let myRequest = await Request_1.default.instance(request);
-            let myResponse = new Reponse_1.default(response);
+            const myRequest = await Request_1.default.instance(request);
+            const myResponse = new Reponse_1.default(response);
             myRequest.setData(request);
-            let data = await this.checkRoute(myRequest);
+            const data = await this.checkRoute(myRequest);
             myResponse.emit(data);
         });
         console.log("server end init !");

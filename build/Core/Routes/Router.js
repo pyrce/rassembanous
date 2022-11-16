@@ -7,7 +7,7 @@ const MethodEnum_1 = __importDefault(require("./MethodEnum"));
 const Route_1 = __importDefault(require("./Route"));
 class Router {
     constructor() {
-        //...
+        // ...
         // this.maRoute=new Route();
         // private maRoute : Route;
         this.routes = [];
@@ -33,7 +33,7 @@ class Router {
         instance.add(MethodEnum_1.default.DELETE, url, middleware, callback);
     }
     add(method, url, middleware, callback) {
-        let maRoute = new Route_1.default(method, url, middleware, callback);
+        const maRoute = new Route_1.default(method, url, middleware, callback);
         this.routes.push(maRoute);
     }
     static getAll() {

@@ -51,7 +51,7 @@ prisma.$on('query', async (e) => {
 class PartenairesController {
     static async getPartenaires() {
         try {
-            let partenaires = await prisma.users.findMany({ where: { id_role: 2 } });
+            const partenaires = await prisma.users.findMany({ where: { id_role: 2 } });
             //partenaires = JSON.parse(JSON.stringify(partenaires));
             return JSON.stringify(partenaires);
             //  return Render.make('partenaires', { user: "toto", page: "detail", partenaires: partenaires})
@@ -83,19 +83,16 @@ class PartenairesController {
             let follow = {};
             let isFollowed = false;
             let userToken = JWToken_1.default.getUser();
-            console.log("usertoken");
-            console.log(userToken);
             if (userToken != false) {
                 let follow = await prisma.partenaire_user.findFirst({
                     where: {
                         id_user: userToken.id, id_partenaire: +id
                     }
                 });
-                console.log(follow);
                 // follow = JSON.parse(JSON.stringify(follow));
                 isFollowed = follow ? true : false;
             }
-            let response = { isFollowed: isFollowed, listEvents: listEvents, partenaire: partenaire };
+            const response = { isFollowed: isFollowed, listEvents, partenaire };
             return JSON.stringify(response);
             //return Render.make('partenaire', { user: "toto", page: "detail",isFollowed:isFollowed,listEvents:listEvents, partenaire: partenaire[0] })
         }
@@ -111,7 +108,7 @@ class PartenairesController {
         queryLimit["offset"] = data.offset;
         let response = {};
         let total = {};
-        let today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
+        const today = new Date().toISOString().substring(0, 10) + " " + new Date().toLocaleTimeString();
         //eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
         /// eventsClass.setJoinTable([{ class: categoriesModel, fk: "id_categorie" }]);
         //  eventsClass.setJoinTable([{ class: eventPartenaire, fk: "id_partenaire" }]);
@@ -130,7 +127,7 @@ class PartenairesController {
         });
         total = JSON.parse(JSON.stringify(total)).length;
         lastEvents = JSON.parse(JSON.stringify(lastEvents));
-        response = { listEvents: lastEvents, total: total };
+        response = { listEvents: lastEvents, total };
         return JSON.stringify(response);
     }
     static async getMyEvent(request) {
@@ -138,17 +135,16 @@ class PartenairesController {
             let { data } = request;
             data = JSON.parse(data);
             const id = data.id;
-            console.log("my events");
             // eventsClass.setJoinTable([{class:LieuModel,fk:"id_lieu"}]);
             let event = await prisma.evenements.findFirst({ where: { id: parseInt(id) } });
             //event = JSON.parse(JSON.stringify(event));
             let rootDir = path.resolve('./');
-            let userToken = JWToken_1.default.getUser();
+            const userToken = JWToken_1.default.getUser();
             let response = {};
             let myEvent = [];
-            let categories = await prisma.categories.findMany();
-            let estTermine = new Date(event.dateLimit).getTime() < new Date().getTime() ? 1 : 0;
-            response = { estTermine: estTermine, event: event, categories: categories };
+            const categories = await prisma.categories.findMany();
+            const estTermine = new Date(event.dateLimit).getTime() < new Date().getTime() ? 1 : 0;
+            response = { estTermine, event, categories };
             return JSON.stringify(response);
         }
         catch (error) {

@@ -1,9 +1,8 @@
 interface RouteInterface {
-    url :String;
+    url :string;
     callback :string;
     method: String;
     params:any
-
 } 
 
 export default RouteInterface;

@@ -31,14 +31,14 @@ const config_1 = __importDefault(require("../config/config"));
 const JWToken_1 = __importDefault(require("../../services/JWToken"));
 class checkJWT {
     static checkToken(options) {
-        //Get the jwt token from the head
+        // Get the jwt token from the head
         const token = JWToken_1.default.getToken();
         let jwtPayload;
         if (options.isAuth) {
-            //Try to validate the token and get data
-            if (token != undefined) {
+            // Try to validate the token and get data
+            if (token !== undefined) {
                 jwtPayload = jwt.verify(token, config_1.default.jwtSecret);
-                let user = JWToken_1.default.getUser();
+                const user = JWToken_1.default.getUser();
                 if (options.id_role === user.role) {
                     return false;
                 }

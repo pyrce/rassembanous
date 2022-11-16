@@ -1,7 +1,7 @@
 
 
 import Request from "../services/Request";
-type route = { data: Object, view: String }
+type route = { data: object, view: string }
 import * as path from "path";
 import Response from "../services/Reponse";
 import JWTToken from "../services/JWToken";
@@ -38,7 +38,7 @@ class HomeController {
         data = JSON.parse(data);
 
 
-        let search = data.search != "undefined" ? data.search : "";
+        const search = data.search !== "undefined" ? data.search : "";
 
         // UsersModel.setJoinTable([{class:RolesModel,fk:"id"}]);
         let allUsers = await prisma.users.findMany({
@@ -56,20 +56,20 @@ class HomeController {
 
         let roles = await prisma.roles.findMany({});
 
-        return JSON.stringify({ alluser: allUsers, roles: roles, total: total });
+        return JSON.stringify({ alluser: allUsers, roles, total });
 
     }
 
     public static async getCategories(request: Request) {
-        let { data } = request;
-        //data = JSON.parse(data);
+        const { data } = request;
+        // data = JSON.parse(data);
 
         let categories = await prisma.categories.findMany({
             skip: data.offset != null ? data.offset : undefined,
             take: data.limit
         });
 
-        return JSON.stringify({ categories: categories });
+        return JSON.stringify({ categories });
     }
 
     public static async addCategorie(request: Request) {
@@ -80,7 +80,7 @@ class HomeController {
             await prisma.categories.update({ data: { categorie: data.categorie, icon: data.icon }, where: { id: data.id } })
 
         } else {
-            let categories = await prisma.categories.create({ data: data });
+            const categories = await prisma.categories.create({ data });
         }
         return JSON.stringify({ "msg": "ok" });
     }
@@ -90,7 +90,7 @@ class HomeController {
 
         let { data } = request;
         data = JSON.parse(data);
-        let user = data.data
+        const user = data.data
 
 
         try {
@@ -107,11 +107,11 @@ class HomeController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let id = data.id
+        const id = data.id
         try {
 
 
-            await prisma.users.delete({ where: { id: id } })
+            await prisma.users.delete({ where: { id } })
             return JSON.stringify({ "msg": "ok" })
         } catch (error) {
             console.log(error)
@@ -124,7 +124,7 @@ class HomeController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let id = data.id
+        const id = data.id
         try {
 
 
@@ -140,11 +140,11 @@ class HomeController {
         //  data = JSON.parse(data);
         console.log("data media")
         console.log(data)
-        let id = data.id
+        const id = data.id
         try {
 
 
-            await prisma.media.delete({ where: { id: id } })
+            await prisma.media.delete({ where: { id } })
             return JSON.stringify({ "msg": "ok" })
         } catch (error) {
             console.log(error)
@@ -175,7 +175,7 @@ class HomeController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let exist = await prisma.event_stand.findFirst({ where: { id_user: data.idPartenaire, id_event: data.idEvent } });
+        const exist = await prisma.event_stand.findFirst({ where: { id_user: data.idPartenaire, id_event: data.idEvent } });
 
         if (exist) {
             await prisma.event_stand.update({ data: { id_stand: data.idStand, id_user: data.idPartenaire }, where: { id: exist.id } });
@@ -202,7 +202,7 @@ class HomeController {
 
         const id = data.params;
 
-        let questions = await prisma.questionnaire.findFirst({
+        const questions = await prisma.questionnaire.findFirst({
             where: { id: data.id },
             include: { questions: { include: { users: true } }, questionnaire: true }
         });
@@ -215,7 +215,7 @@ class HomeController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let quest = await prisma.questionnaire.findFirst({
+        const quest = await prisma.questionnaire.findFirst({
             where: { id_event: data.id },
             include: { questions: { include: { users: true } } },
 
@@ -253,7 +253,7 @@ class HomeController {
         console.log(questions);
 
         data.questions.forEach(async (element: any) => {
-            let quest: any = questions.filter(q => q.id == element.id);
+            let quest: any = questions.filter(q => q.id === element.id);
             console.log("question : ")
             console.log(quest);
 

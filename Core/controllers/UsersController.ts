@@ -40,12 +40,11 @@ class UserController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let dateJour = new Date();
-        let nom: any = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
+        const dateJour = new Date();
+        const nom: any = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
 
-        let userToken: any = JWTToken.getUser();
-        console.log("user connected :");
-        console.log(userToken);
+        const userToken: any = JWTToken.getUser();
+
         if (userToken != false) {
             await prisma.event_user.create({ data: { "id_event": data, "id_user": userToken.id } });
 
@@ -81,7 +80,7 @@ class UserController {
         bcrypt.hash(data["password"], 1, async function (err, hash) {
             // Store hash in your password DB.
 
-            let user = await prisma.users.create({
+            const user = await prisma.users.create({
                 data: {
                     "nom": data.nom,
                     "prenom": data.prenom,
@@ -94,7 +93,7 @@ class UserController {
             });
         });
 
-        console.log("inserted")
+
     }
 
 
@@ -108,7 +107,7 @@ class UserController {
     public static async follow(request: Request) {
 
         let { data } = request;
-        let user: any = JWTToken.getUser();
+        const user: any = JWTToken.getUser();
 
         if (user) {
             await prisma.partenaire_user.create({ data: { id_partenaire: parseInt(data), id_user: user.userId } });
@@ -120,9 +119,8 @@ class UserController {
 
     public static async getUser() {
 
-        let userToken: any = await JWTToken.getUser();
-        console.log("userToken ! :");
-        console.log(userToken);
+        const userToken: any = await JWTToken.getUser();
+  
         if (userToken) {
 
 
@@ -134,21 +132,21 @@ class UserController {
 
     public static async getUserProfil() {
 
-        let userToken: any = JWTToken.getToken();
+        const userToken: any = JWTToken.getToken();
 
-        if (typeof userToken != "undefined") {
+        if (typeof userToken !== "undefined") {
 
             let infoUser: any = JWTToken.getUser();
 
             let id = infoUser.userId;
 
-            let user = await prisma.users.findFirst({ where: { id: id } });
+            const user = await prisma.users.findFirst({ where: { id } });
 
             // user = JSON.parse(JSON.stringify(user));
 
             return JSON.stringify(user);
         } else {
-            console.log("ko")
+
             return JSON.stringify({ "msg": "ko" });
         }
         //return Render.make('profil', { user:user[0],rootDir:rootDir })
@@ -158,13 +156,13 @@ class UserController {
     public static async updateProfil(request: Request) {
         let { data } = request;
 
-        let userToken = JWTToken.getToken();
+        const userToken = JWTToken.getToken();
         if (userToken) {
-            var base64Payload = userToken.split('.')[1];
-            var payload = Buffer.from(base64Payload, 'base64');
-            let infoUser = JSON.parse(payload.toString());
+            const base64Payload = userToken.split('.')[1];
+            const payload = Buffer.from(base64Payload, 'base64');
+            const infoUser = JSON.parse(payload.toString());
 
-            await prisma.users.update({ data: data, where: { id: infoUser.id } })
+            await prisma.users.update({ data, where: { id: infoUser.id } })
             //partenaireModel.update({ id: infoUser.id }, data);
         }
     }
@@ -179,19 +177,19 @@ class UserController {
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
 
-        let qrcode: any = await prisma.media.findFirst({
+        const qrcode: any = await prisma.media.findFirst({
             where: { id_user: 1, "id_event": data.id, "id_type": 2 }
         });
-        //qrcode = JSON.parse(JSON.stringify(qrcode));
+        // qrcode = JSON.parse(JSON.stringify(qrcode));
 
         if (qrcode != null) {
-            let fichier = qrcode.image;
-            let rootDir = path.resolve('./');
+            const fichier = qrcode.image;
+            const rootDir = path.resolve('./');
 
-            var code = fs.readFileSync("./public/image/" + fichier, 'base64');
+            const code = fs.readFileSync("./public/image/" + fichier, 'base64');
 
 
-            return JSON.stringify({ code: code });
+            return JSON.stringify({ code });
         } else {
             return JSON.stringify({ "msg": "ko" });
         }
@@ -202,7 +200,7 @@ class UserController {
         let { data } = request;
         data = JSON.parse(data);
 
-        let userToken = JWTToken.getToken();
+        const userToken = JWTToken.getToken();
 
         if (userToken) {
         }
@@ -215,9 +213,8 @@ class UserController {
 
         data.forEach(async (element: any) => {
 
-            let quest: any = questionsUser[0].users.filter((q: any) => q.id_user == element.id_user);
-            console.log("quest");
-            console.log(quest);
+            const quest: any = questionsUser[0].users.filter((q: any) => q.id_user == element.id_user);
+
             if (quest.length > 0) {
 
                 await prisma.question_user.update({ data: { stars: element.stars }, where: { id: quest[0].id } })
@@ -264,7 +261,7 @@ class UserController {
             });
         });
 
-        console.log("inserted")
+
         return JSON.stringify({ "msg": "ok" });
     }
     private static escapeHtml(text: any) {

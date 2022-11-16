@@ -55,11 +55,9 @@ class UserController {
     static async inscrire(request) {
         let { data } = request;
         data = JSON.parse(data);
-        let dateJour = new Date();
-        let nom = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
-        let userToken = JWToken_1.default.getUser();
-        console.log("user connected :");
-        console.log(userToken);
+        const dateJour = new Date();
+        const nom = dateJour.getDate() + dateJour.getMonth() + dateJour.getFullYear() + "_" + dateJour.getHours() + dateJour.getMinutes() + dateJour.getSeconds();
+        const userToken = JWToken_1.default.getUser();
         if (userToken != false) {
             await prisma.event_user.create({ data: { "id_event": data, "id_user": userToken.id } });
             qrcode.toFile('./public/image/' + nom + '.png', [{ data: userToken.nom + " " + userToken.prenom }], {
@@ -83,7 +81,7 @@ class UserController {
         }
         bcrypt_1.default.hash(data["password"], 1, async function (err, hash) {
             // Store hash in your password DB.
-            let user = await prisma.users.create({
+            const user = await prisma.users.create({
                 data: {
                     "nom": data.nom,
                     "prenom": data.prenom,
@@ -95,7 +93,6 @@ class UserController {
                 }
             });
         });
-        console.log("inserted");
     }
     static async logout() {
         await JWToken_1.default.logout();
@@ -103,7 +100,7 @@ class UserController {
     }
     static async follow(request) {
         let { data } = request;
-        let user = JWToken_1.default.getUser();
+        const user = JWToken_1.default.getUser();
         if (user) {
             await prisma.partenaire_user.create({ data: { id_partenaire: parseInt(data), id_user: user.userId } });
             return JSON.stringify({ msg: "Ok" });
@@ -113,9 +110,7 @@ class UserController {
         }
     }
     static async getUser() {
-        let userToken = await JWToken_1.default.getUser();
-        console.log("userToken ! :");
-        console.log(userToken);
+        const userToken = await JWToken_1.default.getUser();
         if (userToken) {
             return JSON.stringify(userToken);
         }
@@ -124,28 +119,27 @@ class UserController {
         }
     }
     static async getUserProfil() {
-        let userToken = JWToken_1.default.getToken();
-        if (typeof userToken != "undefined") {
+        const userToken = JWToken_1.default.getToken();
+        if (typeof userToken !== "undefined") {
             let infoUser = JWToken_1.default.getUser();
             let id = infoUser.userId;
-            let user = await prisma.users.findFirst({ where: { id: id } });
+            const user = await prisma.users.findFirst({ where: { id } });
             // user = JSON.parse(JSON.stringify(user));
             return JSON.stringify(user);
         }
         else {
-            console.log("ko");
             return JSON.stringify({ "msg": "ko" });
         }
         //return Render.make('profil', { user:user[0],rootDir:rootDir })
     }
     static async updateProfil(request) {
         let { data } = request;
-        let userToken = JWToken_1.default.getToken();
+        const userToken = JWToken_1.default.getToken();
         if (userToken) {
-            var base64Payload = userToken.split('.')[1];
-            var payload = Buffer.from(base64Payload, 'base64');
-            let infoUser = JSON.parse(payload.toString());
-            await prisma.users.update({ data: data, where: { id: infoUser.id } });
+            const base64Payload = userToken.split('.')[1];
+            const payload = Buffer.from(base64Payload, 'base64');
+            const infoUser = JSON.parse(payload.toString());
+            await prisma.users.update({ data, where: { id: infoUser.id } });
             //partenaireModel.update({ id: infoUser.id }, data);
         }
     }
@@ -156,15 +150,15 @@ class UserController {
         // var base64Payload = userToken.split('.')[1];
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
-        let qrcode = await prisma.media.findFirst({
+        const qrcode = await prisma.media.findFirst({
             where: { id_user: 1, "id_event": data.id, "id_type": 2 }
         });
-        //qrcode = JSON.parse(JSON.stringify(qrcode));
+        // qrcode = JSON.parse(JSON.stringify(qrcode));
         if (qrcode != null) {
-            let fichier = qrcode.image;
-            let rootDir = path.resolve('./');
-            var code = fs.readFileSync("./public/image/" + fichier, 'base64');
-            return JSON.stringify({ code: code });
+            const fichier = qrcode.image;
+            const rootDir = path.resolve('./');
+            const code = fs.readFileSync("./public/image/" + fichier, 'base64');
+            return JSON.stringify({ code });
         }
         else {
             return JSON.stringify({ "msg": "ko" });
@@ -173,7 +167,7 @@ class UserController {
     static async repondreQuestionnaire(request) {
         let { data } = request;
         data = JSON.parse(data);
-        let userToken = JWToken_1.default.getToken();
+        const userToken = JWToken_1.default.getToken();
         if (userToken) {
         }
         let questionsUser = await prisma.questions.findMany({
@@ -181,9 +175,7 @@ class UserController {
             include: { users: { where: { id_user: 1 } } }
         });
         data.forEach(async (element) => {
-            let quest = questionsUser[0].users.filter((q) => q.id_user == element.id_user);
-            console.log("quest");
-            console.log(quest);
+            const quest = questionsUser[0].users.filter((q) => q.id_user == element.id_user);
             if (quest.length > 0) {
                 await prisma.question_user.update({ data: { stars: element.stars }, where: { id: quest[0].id } });
             }
@@ -221,7 +213,6 @@ class UserController {
                 }
             });
         });
-        console.log("inserted");
         return JSON.stringify({ "msg": "ok" });
     }
     static escapeHtml(text) {

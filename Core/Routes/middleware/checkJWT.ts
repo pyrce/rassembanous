@@ -9,16 +9,16 @@ import JWTToken from "../../services/JWToken";
 class checkJWT {
 
   public static checkToken(options: any) {
-    //Get the jwt token from the head
-    const token = <string>JWTToken.getToken();
+    // Get the jwt token from the head
+    const token = JWTToken.getToken();
     let jwtPayload;
 
     if (options.isAuth) {
-      //Try to validate the token and get data
-      if (token != undefined) {
-        jwtPayload = <any>jwt.verify(token, config.jwtSecret);
+      // Try to validate the token and get data
+      if (token !== undefined) {
+        jwtPayload =  jwt.verify(token, config.jwtSecret);
 
-        let user: any = JWTToken.getUser();
+        const user: any = JWTToken.getUser();
 
 
         if (options.id_role === user.role) {

@@ -1,6 +1,6 @@
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import Request from "../services/Request";
-type route = { data: Object, view: String }
+type route = { data: object, view: string }
 import * as path from "path";
 import Response from "../services/Reponse";
 import JWTToken from "../services/JWToken";
@@ -18,19 +18,18 @@ class HomeController {
 
     public static getHome(res:Response) {
 
-        let rootDir = path.resolve('./');
+        const rootDir = path.resolve('./');
 
         // let userToken = JWTToken.getToken();
 
         // var base64Payload = userToken.split('.')[1];
         // var payload = Buffer.from(base64Payload, 'base64');
         // let infoUser = JSON.parse(payload.toString());
-        let maReponse:any={contentType:""};
+        const maReponse:any={contentType:""};
         //     const view = Render.make("home", { rootDir:rootDir,user: infoUser, page: "Home" });
         const file="./client/dist/index.html";
         const buffer=fs.readFileSync(file);
-        console.log("buffer type :"+typeof buffer)
-        console.log( buffer)
+
         const fileContent = buffer.toString();
         maReponse.contentType="text/html";
         maReponse.content=fileContent;
@@ -42,7 +41,6 @@ class HomeController {
     public static async contact(request: Request) {
         let { data } = request;
         data = JSON.parse(data);
-        console.log(data)
 
 
         const transporter = nodemailer.createTransport({
@@ -86,21 +84,18 @@ class HomeController {
         let { data } = req;
         data = JSON.parse(data);
 
-        let user: any = await prisma.users.findFirst({ where: { "login": data.login } });
+        const user: any = await prisma.users.findFirst({ where: { "login": data.login } });
         // user = JSON.parse(JSON.stringify(user));
         let response = "";
 
         if (user) {
-            console.log("user : ");
-            console.log(user)
+
             bcrypt.compare(data.password, user.password, function (err, result) {
-                console.log("result : ");
-                console.log(result)
 
                 if (result == true) {
-                    let userData = { userId: user.id, role: user.id_role, nom: user.nom, prenom: user.prenom }
+                    const userData = { userId: user.id, role: user.id_role, nom: user.nom, prenom: user.prenom }
                     JWTToken.makeJWT(userData);
-                    let userToken = JWTToken.getToken();
+                    const userToken = JWTToken.getToken();
                     //UsersModel.update({id:user[0].id},{token:userToken});
                     prisma.users.update({ data: { token: userToken }, where: { id: user.id } }).then(() => {
 
