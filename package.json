@@ -7,9 +7,9 @@
     "node": "18.x"
   },
   "scripts": {
-    "startdev": "concurrently \"npm run start-server\" \"npm run start-client\"",
+    "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-client": "npm run start --prefix client",
-    "start": "node build/app.js",
+    "startd": "node build/app.js",
     "start-server": "node build/app.js && echo \"starting serveur\" ",
     "watch-ts": "tsc -w",
     "heroku-postbuild": "npm i",
