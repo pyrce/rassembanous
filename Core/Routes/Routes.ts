@@ -18,7 +18,7 @@ class Routes {
 
 
 
-     Router.get("/", null,HomeController.getHome)
+    // Router.get("/", null,HomeController.getHome)
 
 
     Router.get("/api/events", null, EventsController.getEvents)
